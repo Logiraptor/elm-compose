@@ -15,9 +15,8 @@ main =
     P.beginnerProgram { model = model, view = view, update = update }
         |> Collapse.collapse
         |> Tabs.tabbed "main"
-        |> Tabs.with "other" (P.beginnerProgram { model = model, view = view, update = update })
-        |> Tabs.with "other2" (P.beginnerProgram { model = model, view = view, update = update })
-        |> Tabs.with "other3" (P.beginnerProgram { model = model, view = view, update = update })
+        |> Tabs.with "secondary" (P.beginnerProgram { model = model, view = view, update = update })
+        |> Tabs.with "tertiary" (P.beginnerProgram { model = model, view = view, update = update })
         |> App.program
 
 
