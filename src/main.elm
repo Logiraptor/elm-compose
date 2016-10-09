@@ -3,6 +3,7 @@ module Main exposing (..)
 import Html exposing (Html, button, div, text, p, input, pre)
 import Html.App as App
 import Html.Attributes exposing (style, name)
+import Html.Events
 import String
 import Sexp exposing (..)
 import Compose.Program as P
@@ -12,12 +13,32 @@ import Compose.Tabs as Tabs
 
 main : Program Never
 main =
-    P.beginnerProgram { model = model, view = view, update = update }
-        |> Collapse.collapse
-        |> Tabs.tabbed "main"
+    App.program tabbedInterface
+
+
+tabbedInterface =
+    Tabs.tabbed "main" (P.beginnerProgram { model = model, view = view, update = update })
         |> Tabs.with "secondary" (P.beginnerProgram { model = model, view = view, update = update })
         |> Tabs.with "tertiary" (P.beginnerProgram { model = model, view = view, update = update })
-        |> App.program
+        |> Tabs.end viewTabs
+
+
+viewTabs : Tabs.TabView msg
+viewTabs labels body =
+    Html.div []
+        [ Html.div [] (List.map makeLabel labels)
+        , body
+        ]
+
+
+makeLabel : Tabs.TabLabel msg -> Html.Html msg
+makeLabel label =
+    case label of
+        Tabs.Selected n ->
+            Html.li [] [ Html.text n ]
+
+        Tabs.Unselected n m ->
+            Html.li [ Html.Events.onClick m ] [ Html.text n ]
 
 
 
