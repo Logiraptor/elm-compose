@@ -1,0 +1,27 @@
+<html>
+<body>
+	<div id="main"></div>
+	<script src="main.js"></script>
+	<script src="config.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+
+		firebase.initializeApp(config);
+
+		var database = firebase.database();
+		var rootRef = firebase.database().ref('root');
+		
+		var app = Elm.Main.fullscreen();
+
+		app.ports.put.subscribe(function(model) {
+			rootRef.set(model);
+		});
+		
+		rootRef.on('value', function(snapshot) {
+			app.ports.updates.send(snapshot.val());
+		});
+	</script>
+</body>
+</html>

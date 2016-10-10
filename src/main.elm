@@ -9,6 +9,7 @@ import Sexp exposing (..)
 import Compose.Program as P
 import Compose.Collapse as Collapse
 import Compose.Tabs as Tabs
+import DB
 
 
 main : Program Never
@@ -17,9 +18,8 @@ main =
 
 
 tabbedInterface =
-    Tabs.tabbed "main" (P.beginnerProgram { model = model, view = view, update = update })
-        |> Tabs.with "secondary" (P.beginnerProgram { model = model, view = view, update = update })
-        |> Tabs.with "tertiary" (P.beginnerProgram { model = model, view = view, update = update })
+    Tabs.tabbed "testground" (P.beginnerProgram { model = model, view = view, update = update })
+        |> Tabs.with "counter" (DB.prog)
         |> Tabs.end viewTabs
 
 
@@ -35,7 +35,7 @@ makeLabel : Tabs.TabLabel msg -> Html.Html msg
 makeLabel label =
     case label of
         Tabs.Selected n ->
-            Html.li [] [ Html.text n ]
+            Html.li [] [ Html.text n, Html.text "**" ]
 
         Tabs.Unselected n m ->
             Html.li [ Html.Events.onClick m ] [ Html.text n ]
