@@ -8,12 +8,12 @@
 	<script>
 		// Initialize Firebase
 
-		firebase.initializeApp(config);
+		firebase.initializeApp(window.fbconfig);
 
 		var database = firebase.database();
 		var rootRef = firebase.database().ref('root');
 		
-		var app = Elm.Main.fullscreen();
+		var app = Elm.Budget.fullscreen();
 
 		app.ports.put.subscribe(function(model) {
 			rootRef.set(model);

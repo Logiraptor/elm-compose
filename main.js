@@ -3166,520 +3166,6 @@ var _elm_lang$core$String$fromChar = function ($char) {
 };
 var _elm_lang$core$String$isEmpty = _elm_lang$core$Native_String.isEmpty;
 
-var _elm_lang$lazy$Native_Lazy = function() {
-
-function memoize(thunk)
-{
-    var value;
-    var isForced = false;
-    return function(tuple0) {
-        if (!isForced) {
-            value = thunk(tuple0);
-            isForced = true;
-        }
-        return value;
-    };
-}
-
-return {
-    memoize: memoize
-};
-
-}();
-
-var _elm_lang$lazy$Lazy$force = function (_p0) {
-	var _p1 = _p0;
-	return _p1._0(
-		{ctor: '_Tuple0'});
-};
-var _elm_lang$lazy$Lazy$Lazy = function (a) {
-	return {ctor: 'Lazy', _0: a};
-};
-var _elm_lang$lazy$Lazy$lazy = function (thunk) {
-	return _elm_lang$lazy$Lazy$Lazy(
-		_elm_lang$lazy$Native_Lazy.memoize(thunk));
-};
-var _elm_lang$lazy$Lazy$map = F2(
-	function (f, a) {
-		return _elm_lang$lazy$Lazy$lazy(
-			function (_p2) {
-				var _p3 = _p2;
-				return f(
-					_elm_lang$lazy$Lazy$force(a));
-			});
-	});
-var _elm_lang$lazy$Lazy$map2 = F3(
-	function (f, a, b) {
-		return _elm_lang$lazy$Lazy$lazy(
-			function (_p4) {
-				var _p5 = _p4;
-				return A2(
-					f,
-					_elm_lang$lazy$Lazy$force(a),
-					_elm_lang$lazy$Lazy$force(b));
-			});
-	});
-var _elm_lang$lazy$Lazy$map3 = F4(
-	function (f, a, b, c) {
-		return _elm_lang$lazy$Lazy$lazy(
-			function (_p6) {
-				var _p7 = _p6;
-				return A3(
-					f,
-					_elm_lang$lazy$Lazy$force(a),
-					_elm_lang$lazy$Lazy$force(b),
-					_elm_lang$lazy$Lazy$force(c));
-			});
-	});
-var _elm_lang$lazy$Lazy$map4 = F5(
-	function (f, a, b, c, d) {
-		return _elm_lang$lazy$Lazy$lazy(
-			function (_p8) {
-				var _p9 = _p8;
-				return A4(
-					f,
-					_elm_lang$lazy$Lazy$force(a),
-					_elm_lang$lazy$Lazy$force(b),
-					_elm_lang$lazy$Lazy$force(c),
-					_elm_lang$lazy$Lazy$force(d));
-			});
-	});
-var _elm_lang$lazy$Lazy$map5 = F6(
-	function (f, a, b, c, d, e) {
-		return _elm_lang$lazy$Lazy$lazy(
-			function (_p10) {
-				var _p11 = _p10;
-				return A5(
-					f,
-					_elm_lang$lazy$Lazy$force(a),
-					_elm_lang$lazy$Lazy$force(b),
-					_elm_lang$lazy$Lazy$force(c),
-					_elm_lang$lazy$Lazy$force(d),
-					_elm_lang$lazy$Lazy$force(e));
-			});
-	});
-var _elm_lang$lazy$Lazy$apply = F2(
-	function (f, x) {
-		return _elm_lang$lazy$Lazy$lazy(
-			function (_p12) {
-				var _p13 = _p12;
-				return A2(
-					_elm_lang$lazy$Lazy$force,
-					f,
-					_elm_lang$lazy$Lazy$force(x));
-			});
-	});
-var _elm_lang$lazy$Lazy$andThen = F2(
-	function (a, callback) {
-		return _elm_lang$lazy$Lazy$lazy(
-			function (_p14) {
-				var _p15 = _p14;
-				return _elm_lang$lazy$Lazy$force(
-					callback(
-						_elm_lang$lazy$Lazy$force(a)));
-			});
-	});
-
-var _Dandandan$parser$Parser$funP = function (p) {
-	var _p0 = p;
-	if (_p0.ctor === 'Direct') {
-		return _p0._0;
-	} else {
-		return _elm_lang$lazy$Lazy$force(_p0._0);
-	}
-};
-var _Dandandan$parser$Parser$parse = F2(
-	function (p, xs) {
-		var _p1 = A2(_Dandandan$parser$Parser$funP, p, xs);
-		if (_p1.ctor === '[]') {
-			return _elm_lang$core$Result$Err('parse error');
-		} else {
-			return _elm_lang$core$Result$Ok(
-				_elm_lang$core$Basics$fst(_p1._0));
-		}
-	});
-var _Dandandan$parser$Parser$parseAll = F2(
-	function (p, xs) {
-		var _p2 = A2(_Dandandan$parser$Parser$funP, p, xs);
-		if (_p2.ctor === '[]') {
-			return _elm_lang$core$Result$Err('parse error');
-		} else {
-			return _elm_lang$core$Result$Ok(
-				A2(_elm_lang$core$List$map, _elm_lang$core$Basics$fst, _p2));
-		}
-	});
-var _Dandandan$parser$Parser$Delayed = function (a) {
-	return {ctor: 'Delayed', _0: a};
-};
-var _Dandandan$parser$Parser$recursively = function (t) {
-	return function (_p3) {
-		return _Dandandan$parser$Parser$Delayed(
-			_elm_lang$lazy$Lazy$lazy(_p3));
-	}(
-		function (_p4) {
-			var _p5 = _p4;
-			return _Dandandan$parser$Parser$funP(
-				t(
-					{ctor: '_Tuple0'}));
-		});
-};
-var _Dandandan$parser$Parser$Direct = function (a) {
-	return {ctor: 'Direct', _0: a};
-};
-var _Dandandan$parser$Parser$succeed = function (b) {
-	return _Dandandan$parser$Parser$Direct(
-		function (xs) {
-			return _elm_lang$core$Native_List.fromArray(
-				[
-					{ctor: '_Tuple2', _0: b, _1: xs}
-				]);
-		});
-};
-var _Dandandan$parser$Parser$satisfy = function (p) {
-	return _Dandandan$parser$Parser$Direct(
-		function (xs) {
-			var _p6 = _elm_lang$core$String$uncons(xs);
-			if (_p6.ctor === 'Nothing') {
-				return _elm_lang$core$Native_List.fromArray(
-					[]);
-			} else {
-				var _p7 = _p6._0._0;
-				return p(_p7) ? _elm_lang$core$Native_List.fromArray(
-					[
-						{ctor: '_Tuple2', _0: _p7, _1: _p6._0._1}
-					]) : _elm_lang$core$Native_List.fromArray(
-					[]);
-			}
-		});
-};
-var _Dandandan$parser$Parser$symbol = function (x) {
-	return _Dandandan$parser$Parser$satisfy(
-		function (s) {
-			return _elm_lang$core$Native_Utils.eq(s, x);
-		});
-};
-var _Dandandan$parser$Parser$empty = _Dandandan$parser$Parser$Direct(
-	_elm_lang$core$Basics$always(
-		_elm_lang$core$Native_List.fromArray(
-			[])));
-var _Dandandan$parser$Parser$map = F2(
-	function (f, p) {
-		return _Dandandan$parser$Parser$Direct(
-			function (xs) {
-				return A2(
-					_elm_lang$core$List$map,
-					function (_p8) {
-						var _p9 = _p8;
-						return {
-							ctor: '_Tuple2',
-							_0: f(_p9._0),
-							_1: _p9._1
-						};
-					},
-					A2(_Dandandan$parser$Parser$funP, p, xs));
-			});
-	});
-var _Dandandan$parser$Parser_ops = _Dandandan$parser$Parser_ops || {};
-_Dandandan$parser$Parser_ops['<$'] = F2(
-	function (f, p) {
-		return A2(
-			_Dandandan$parser$Parser$map,
-			_elm_lang$core$Basics$always(f),
-			p);
-	});
-var _Dandandan$parser$Parser$or = F2(
-	function (p, q) {
-		return _Dandandan$parser$Parser$Direct(
-			function (xs) {
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_Dandandan$parser$Parser$funP, p, xs),
-					A2(_Dandandan$parser$Parser$funP, q, xs));
-			});
-	});
-var _Dandandan$parser$Parser$choice = A2(_elm_lang$core$List$foldr, _Dandandan$parser$Parser$or, _Dandandan$parser$Parser$empty);
-var _Dandandan$parser$Parser$optional = F2(
-	function (p, x) {
-		return A2(
-			_Dandandan$parser$Parser$or,
-			p,
-			_Dandandan$parser$Parser$succeed(x));
-	});
-var _Dandandan$parser$Parser$andMap = F2(
-	function (q, p) {
-		return _Dandandan$parser$Parser$Direct(
-			function (xs) {
-				return _elm_lang$core$List$concat(
-					A2(
-						_elm_lang$core$List$map,
-						function (_p10) {
-							var _p11 = _p10;
-							return A2(
-								_elm_lang$core$List$map,
-								function (_p12) {
-									var _p13 = _p12;
-									return {
-										ctor: '_Tuple2',
-										_0: _p11._0(_p13._0),
-										_1: _p13._1
-									};
-								},
-								A2(_Dandandan$parser$Parser$funP, q, _p11._1));
-						},
-						A2(_Dandandan$parser$Parser$funP, p, xs)));
-			});
-	});
-var _Dandandan$parser$Parser$token = function (xs) {
-	var _p14 = _elm_lang$core$String$uncons(xs);
-	if (_p14.ctor === 'Nothing') {
-		return _Dandandan$parser$Parser$succeed('');
-	} else {
-		return A2(
-			_Dandandan$parser$Parser$andMap,
-			_Dandandan$parser$Parser$token(_p14._0._1),
-			A2(
-				_Dandandan$parser$Parser$map,
-				_elm_lang$core$String$cons,
-				_Dandandan$parser$Parser$symbol(_p14._0._0)));
-	}
-};
-var _Dandandan$parser$Parser$some = function (p) {
-	return A2(
-		_Dandandan$parser$Parser$andMap,
-		_Dandandan$parser$Parser$many(p),
-		A2(
-			_Dandandan$parser$Parser$map,
-			F2(
-				function (x, y) {
-					return A2(_elm_lang$core$List_ops['::'], x, y);
-				}),
-			p));
-};
-var _Dandandan$parser$Parser$many = function (p) {
-	return _Dandandan$parser$Parser$Direct(
-		function (xs) {
-			var _p15 = A2(_Dandandan$parser$Parser$funP, p, xs);
-			if (_p15.ctor === '[]') {
-				return A2(
-					_Dandandan$parser$Parser$funP,
-					_Dandandan$parser$Parser$succeed(
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-					xs);
-			} else {
-				return A2(
-					_Dandandan$parser$Parser$funP,
-					_Dandandan$parser$Parser$some(p),
-					xs);
-			}
-		});
-};
-var _Dandandan$parser$Parser$and = F2(
-	function (p, q) {
-		return A2(_Dandandan$parser$Parser$andMap, q, p);
-	});
-var _Dandandan$parser$Parser$separatedBy = F2(
-	function (p, s) {
-		return A3(
-			_elm_lang$core$Basics$flip,
-			_Dandandan$parser$Parser$or,
-			_Dandandan$parser$Parser$succeed(
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-			A2(
-				_Dandandan$parser$Parser$andMap,
-				_Dandandan$parser$Parser$many(
-					A2(
-						_Dandandan$parser$Parser$andMap,
-						p,
-						A2(
-							_Dandandan$parser$Parser$map,
-							F2(
-								function (x, y) {
-									return y;
-								}),
-							s))),
-				A2(
-					_Dandandan$parser$Parser$map,
-					F2(
-						function (x, y) {
-							return A2(_elm_lang$core$List_ops['::'], x, y);
-						}),
-					p)));
-	});
-var _Dandandan$parser$Parser_ops = _Dandandan$parser$Parser_ops || {};
-_Dandandan$parser$Parser_ops['<*'] = F2(
-	function (p, q) {
-		return A2(
-			_Dandandan$parser$Parser$andMap,
-			q,
-			A2(_Dandandan$parser$Parser$map, _elm_lang$core$Basics$always, p));
-	});
-var _Dandandan$parser$Parser_ops = _Dandandan$parser$Parser_ops || {};
-_Dandandan$parser$Parser_ops['*>'] = F2(
-	function (p, q) {
-		return A2(
-			_Dandandan$parser$Parser$andMap,
-			q,
-			A2(
-				_Dandandan$parser$Parser$map,
-				_elm_lang$core$Basics$flip(_elm_lang$core$Basics$always),
-				p));
-	});
-var _Dandandan$parser$Parser$andThen = F2(
-	function (p, f) {
-		return _Dandandan$parser$Parser$Direct(
-			function (xs) {
-				return _elm_lang$core$List$concat(
-					A2(
-						_elm_lang$core$List$map,
-						function (_p16) {
-							var _p17 = _p16;
-							return A2(
-								_Dandandan$parser$Parser$funP,
-								f(_p17._0),
-								_p17._1);
-						},
-						A2(_Dandandan$parser$Parser$funP, p, xs)));
-			});
-	});
-var _Dandandan$parser$Parser$end = _Dandandan$parser$Parser$Direct(
-	function (xs) {
-		var _p18 = xs;
-		if (_p18 === '') {
-			return A2(
-				_Dandandan$parser$Parser$funP,
-				_Dandandan$parser$Parser$succeed(
-					{ctor: '_Tuple0'}),
-				xs);
-		} else {
-			return _elm_lang$core$Native_List.fromArray(
-				[]);
-		}
-	});
-
-var _Dandandan$parser$Parser_Char$between = F3(
-	function (x, y, parser) {
-		return A2(
-			_Dandandan$parser$Parser_ops['<*'],
-			A2(
-				_Dandandan$parser$Parser_ops['*>'],
-				_Dandandan$parser$Parser$symbol(x),
-				parser),
-			_Dandandan$parser$Parser$symbol(y));
-	});
-var _Dandandan$parser$Parser_Char$parenthesized = A2(
-	_Dandandan$parser$Parser_Char$between,
-	_elm_lang$core$Native_Utils.chr('('),
-	_elm_lang$core$Native_Utils.chr(')'));
-var _Dandandan$parser$Parser_Char$bracketed = A2(
-	_Dandandan$parser$Parser_Char$between,
-	_elm_lang$core$Native_Utils.chr('['),
-	_elm_lang$core$Native_Utils.chr(']'));
-var _Dandandan$parser$Parser_Char$braced = A2(
-	_Dandandan$parser$Parser_Char$between,
-	_elm_lang$core$Native_Utils.chr('{'),
-	_elm_lang$core$Native_Utils.chr('}'));
-var _Dandandan$parser$Parser_Char$quoted = A2(
-	_Dandandan$parser$Parser_Char$between,
-	_elm_lang$core$Native_Utils.chr('\"'),
-	_elm_lang$core$Native_Utils.chr('\"'));
-var _Dandandan$parser$Parser_Char$singleQuoted = A2(
-	_Dandandan$parser$Parser_Char$between,
-	_elm_lang$core$Native_Utils.chr('\''),
-	_elm_lang$core$Native_Utils.chr('\''));
-var _Dandandan$parser$Parser_Char$lower = _Dandandan$parser$Parser$satisfy(_elm_lang$core$Char$isLower);
-var _Dandandan$parser$Parser_Char$upper = _Dandandan$parser$Parser$satisfy(_elm_lang$core$Char$isUpper);
-
-var _Dandandan$parser$Parser_Number$fromOk = F2(
-	function ($default, result) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			$default,
-			_elm_lang$core$Result$toMaybe(result));
-	});
-var _Dandandan$parser$Parser_Number$sign = function () {
-	var min = A2(
-		_Dandandan$parser$Parser$map,
-		_elm_lang$core$Basics$always(1),
-		_Dandandan$parser$Parser$symbol(
-			_elm_lang$core$Native_Utils.chr('+')));
-	var plus = A2(
-		_Dandandan$parser$Parser$map,
-		_elm_lang$core$Basics$always(-1),
-		_Dandandan$parser$Parser$symbol(
-			_elm_lang$core$Native_Utils.chr('-')));
-	return A2(
-		_Dandandan$parser$Parser$optional,
-		A2(_Dandandan$parser$Parser$or, plus, min),
-		1);
-}();
-var _Dandandan$parser$Parser_Number$digit = function () {
-	var charToInt = function (c) {
-		return _elm_lang$core$Char$toCode(c) - _elm_lang$core$Char$toCode(
-			_elm_lang$core$Native_Utils.chr('0'));
-	};
-	return A2(
-		_Dandandan$parser$Parser$map,
-		charToInt,
-		_Dandandan$parser$Parser$satisfy(_elm_lang$core$Char$isDigit));
-}();
-var _Dandandan$parser$Parser_Number$natural = A2(
-	_Dandandan$parser$Parser$map,
-	A2(
-		_elm_lang$core$List$foldl,
-		F2(
-			function (b, a) {
-				return (a * 10) + b;
-			}),
-		0),
-	_Dandandan$parser$Parser$some(_Dandandan$parser$Parser_Number$digit));
-var _Dandandan$parser$Parser_Number$integer = A2(
-	_Dandandan$parser$Parser$andMap,
-	_Dandandan$parser$Parser_Number$natural,
-	A2(
-		_Dandandan$parser$Parser$map,
-		F2(
-			function (x, y) {
-				return x * y;
-			}),
-		_Dandandan$parser$Parser_Number$sign));
-var _Dandandan$parser$Parser_Number$float = function () {
-	var toFloatString = function (_p0) {
-		var _p1 = _p0;
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			_elm_lang$core$Basics$toString(_p1._0),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'.',
-				_elm_lang$core$String$concat(
-					A2(_elm_lang$core$List$map, _elm_lang$core$Basics$toString, _p1._1))));
-	};
-	var convertToFloat = F3(
-		function (sig, $int, digs) {
-			return _elm_lang$core$Basics$toFloat(sig) * function (_p2) {
-				return A2(
-					_Dandandan$parser$Parser_Number$fromOk,
-					0.0,
-					_elm_lang$core$String$toFloat(
-						toFloatString(_p2)));
-			}(
-				{ctor: '_Tuple2', _0: $int, _1: digs});
-		});
-	return A2(
-		_Dandandan$parser$Parser$andMap,
-		A2(
-			_Dandandan$parser$Parser_ops['*>'],
-			_Dandandan$parser$Parser$symbol(
-				_elm_lang$core$Native_Utils.chr('.')),
-			_Dandandan$parser$Parser$some(_Dandandan$parser$Parser_Number$digit)),
-		A2(
-			_Dandandan$parser$Parser$andMap,
-			_Dandandan$parser$Parser_Number$integer,
-			A2(_Dandandan$parser$Parser$map, convertToFloat, _Dandandan$parser$Parser_Number$sign)));
-}();
-
 //import Native.List //
 
 var _elm_lang$core$Native_Array = function() {
@@ -6331,141 +5817,6 @@ var _elm_lang$core$Json_Decode$dict = function (decoder) {
 };
 var _elm_lang$core$Json_Decode$Decoder = {ctor: 'Decoder'};
 
-//import Maybe, Native.List //
-
-var _elm_lang$core$Native_Regex = function() {
-
-function escape(str)
-{
-	return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-}
-function caseInsensitive(re)
-{
-	return new RegExp(re.source, 'gi');
-}
-function regex(raw)
-{
-	return new RegExp(raw, 'g');
-}
-
-function contains(re, string)
-{
-	return string.match(re) !== null;
-}
-
-function find(n, re, str)
-{
-	n = n.ctor === 'All' ? Infinity : n._0;
-	var out = [];
-	var number = 0;
-	var string = str;
-	var lastIndex = re.lastIndex;
-	var prevLastIndex = -1;
-	var result;
-	while (number++ < n && (result = re.exec(string)))
-	{
-		if (prevLastIndex === re.lastIndex) break;
-		var i = result.length - 1;
-		var subs = new Array(i);
-		while (i > 0)
-		{
-			var submatch = result[i];
-			subs[--i] = submatch === undefined
-				? _elm_lang$core$Maybe$Nothing
-				: _elm_lang$core$Maybe$Just(submatch);
-		}
-		out.push({
-			match: result[0],
-			submatches: _elm_lang$core$Native_List.fromArray(subs),
-			index: result.index,
-			number: number
-		});
-		prevLastIndex = re.lastIndex;
-	}
-	re.lastIndex = lastIndex;
-	return _elm_lang$core$Native_List.fromArray(out);
-}
-
-function replace(n, re, replacer, string)
-{
-	n = n.ctor === 'All' ? Infinity : n._0;
-	var count = 0;
-	function jsReplacer(match)
-	{
-		if (count++ >= n)
-		{
-			return match;
-		}
-		var i = arguments.length - 3;
-		var submatches = new Array(i);
-		while (i > 0)
-		{
-			var submatch = arguments[i];
-			submatches[--i] = submatch === undefined
-				? _elm_lang$core$Maybe$Nothing
-				: _elm_lang$core$Maybe$Just(submatch);
-		}
-		return replacer({
-			match: match,
-			submatches: _elm_lang$core$Native_List.fromArray(submatches),
-			index: arguments[i - 1],
-			number: count
-		});
-	}
-	return string.replace(re, jsReplacer);
-}
-
-function split(n, re, str)
-{
-	n = n.ctor === 'All' ? Infinity : n._0;
-	if (n === Infinity)
-	{
-		return _elm_lang$core$Native_List.fromArray(str.split(re));
-	}
-	var string = str;
-	var result;
-	var out = [];
-	var start = re.lastIndex;
-	while (n--)
-	{
-		if (!(result = re.exec(string))) break;
-		out.push(string.slice(start, result.index));
-		start = re.lastIndex;
-	}
-	out.push(string.slice(start));
-	return _elm_lang$core$Native_List.fromArray(out);
-}
-
-return {
-	regex: regex,
-	caseInsensitive: caseInsensitive,
-	escape: escape,
-
-	contains: F2(contains),
-	find: F3(find),
-	replace: F4(replace),
-	split: F3(split)
-};
-
-}();
-
-var _elm_lang$core$Regex$split = _elm_lang$core$Native_Regex.split;
-var _elm_lang$core$Regex$replace = _elm_lang$core$Native_Regex.replace;
-var _elm_lang$core$Regex$find = _elm_lang$core$Native_Regex.find;
-var _elm_lang$core$Regex$contains = _elm_lang$core$Native_Regex.contains;
-var _elm_lang$core$Regex$caseInsensitive = _elm_lang$core$Native_Regex.caseInsensitive;
-var _elm_lang$core$Regex$regex = _elm_lang$core$Native_Regex.regex;
-var _elm_lang$core$Regex$escape = _elm_lang$core$Native_Regex.escape;
-var _elm_lang$core$Regex$Match = F4(
-	function (a, b, c, d) {
-		return {match: a, submatches: b, index: c, number: d};
-	});
-var _elm_lang$core$Regex$Regex = {ctor: 'Regex'};
-var _elm_lang$core$Regex$AtMost = function (a) {
-	return {ctor: 'AtMost', _0: a};
-};
-var _elm_lang$core$Regex$All = {ctor: 'All'};
-
 //import Native.Json //
 
 var _elm_lang$virtual_dom$Native_VirtualDom = function() {
@@ -8093,358 +7444,6 @@ var _elm_lang$html$Html_App$beginnerProgram = function (_p1) {
 };
 var _elm_lang$html$Html_App$map = _elm_lang$virtual_dom$VirtualDom$map;
 
-var _elm_lang$html$Html_Attributes$attribute = _elm_lang$virtual_dom$VirtualDom$attribute;
-var _elm_lang$html$Html_Attributes$contextmenu = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'contextmenu', value);
-};
-var _elm_lang$html$Html_Attributes$draggable = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'draggable', value);
-};
-var _elm_lang$html$Html_Attributes$list = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'list', value);
-};
-var _elm_lang$html$Html_Attributes$maxlength = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'maxlength',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$datetime = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'datetime', value);
-};
-var _elm_lang$html$Html_Attributes$pubdate = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'pubdate', value);
-};
-var _elm_lang$html$Html_Attributes$colspan = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'colspan',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$rowspan = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'rowspan',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$property = _elm_lang$virtual_dom$VirtualDom$property;
-var _elm_lang$html$Html_Attributes$stringProperty = F2(
-	function (name, string) {
-		return A2(
-			_elm_lang$html$Html_Attributes$property,
-			name,
-			_elm_lang$core$Json_Encode$string(string));
-	});
-var _elm_lang$html$Html_Attributes$class = function (name) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'className', name);
-};
-var _elm_lang$html$Html_Attributes$id = function (name) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'id', name);
-};
-var _elm_lang$html$Html_Attributes$title = function (name) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'title', name);
-};
-var _elm_lang$html$Html_Attributes$accesskey = function ($char) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'accessKey',
-		_elm_lang$core$String$fromChar($char));
-};
-var _elm_lang$html$Html_Attributes$dir = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'dir', value);
-};
-var _elm_lang$html$Html_Attributes$dropzone = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'dropzone', value);
-};
-var _elm_lang$html$Html_Attributes$itemprop = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'itemprop', value);
-};
-var _elm_lang$html$Html_Attributes$lang = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'lang', value);
-};
-var _elm_lang$html$Html_Attributes$tabindex = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'tabIndex',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$charset = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'charset', value);
-};
-var _elm_lang$html$Html_Attributes$content = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'content', value);
-};
-var _elm_lang$html$Html_Attributes$httpEquiv = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'httpEquiv', value);
-};
-var _elm_lang$html$Html_Attributes$language = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'language', value);
-};
-var _elm_lang$html$Html_Attributes$src = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'src', value);
-};
-var _elm_lang$html$Html_Attributes$height = function (value) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'height',
-		_elm_lang$core$Basics$toString(value));
-};
-var _elm_lang$html$Html_Attributes$width = function (value) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'width',
-		_elm_lang$core$Basics$toString(value));
-};
-var _elm_lang$html$Html_Attributes$alt = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'alt', value);
-};
-var _elm_lang$html$Html_Attributes$preload = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'preload', value);
-};
-var _elm_lang$html$Html_Attributes$poster = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'poster', value);
-};
-var _elm_lang$html$Html_Attributes$kind = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'kind', value);
-};
-var _elm_lang$html$Html_Attributes$srclang = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'srclang', value);
-};
-var _elm_lang$html$Html_Attributes$sandbox = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'sandbox', value);
-};
-var _elm_lang$html$Html_Attributes$srcdoc = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'srcdoc', value);
-};
-var _elm_lang$html$Html_Attributes$type$ = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'type', value);
-};
-var _elm_lang$html$Html_Attributes$value = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'value', value);
-};
-var _elm_lang$html$Html_Attributes$defaultValue = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'defaultValue', value);
-};
-var _elm_lang$html$Html_Attributes$placeholder = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'placeholder', value);
-};
-var _elm_lang$html$Html_Attributes$accept = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'accept', value);
-};
-var _elm_lang$html$Html_Attributes$acceptCharset = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'acceptCharset', value);
-};
-var _elm_lang$html$Html_Attributes$action = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'action', value);
-};
-var _elm_lang$html$Html_Attributes$autocomplete = function (bool) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'autocomplete',
-		bool ? 'on' : 'off');
-};
-var _elm_lang$html$Html_Attributes$autosave = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'autosave', value);
-};
-var _elm_lang$html$Html_Attributes$enctype = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'enctype', value);
-};
-var _elm_lang$html$Html_Attributes$formaction = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'formAction', value);
-};
-var _elm_lang$html$Html_Attributes$minlength = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'minLength',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$method = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'method', value);
-};
-var _elm_lang$html$Html_Attributes$name = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'name', value);
-};
-var _elm_lang$html$Html_Attributes$pattern = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'pattern', value);
-};
-var _elm_lang$html$Html_Attributes$size = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'size',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$for = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'htmlFor', value);
-};
-var _elm_lang$html$Html_Attributes$form = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'form', value);
-};
-var _elm_lang$html$Html_Attributes$max = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'max', value);
-};
-var _elm_lang$html$Html_Attributes$min = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'min', value);
-};
-var _elm_lang$html$Html_Attributes$step = function (n) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'step', n);
-};
-var _elm_lang$html$Html_Attributes$cols = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'cols',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$rows = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'rows',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$wrap = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'wrap', value);
-};
-var _elm_lang$html$Html_Attributes$usemap = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'useMap', value);
-};
-var _elm_lang$html$Html_Attributes$shape = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'shape', value);
-};
-var _elm_lang$html$Html_Attributes$coords = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'coords', value);
-};
-var _elm_lang$html$Html_Attributes$challenge = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'challenge', value);
-};
-var _elm_lang$html$Html_Attributes$keytype = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'keytype', value);
-};
-var _elm_lang$html$Html_Attributes$align = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'align', value);
-};
-var _elm_lang$html$Html_Attributes$cite = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'cite', value);
-};
-var _elm_lang$html$Html_Attributes$href = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'href', value);
-};
-var _elm_lang$html$Html_Attributes$target = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'target', value);
-};
-var _elm_lang$html$Html_Attributes$downloadAs = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'download', value);
-};
-var _elm_lang$html$Html_Attributes$hreflang = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'hreflang', value);
-};
-var _elm_lang$html$Html_Attributes$media = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'media', value);
-};
-var _elm_lang$html$Html_Attributes$ping = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'ping', value);
-};
-var _elm_lang$html$Html_Attributes$rel = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'rel', value);
-};
-var _elm_lang$html$Html_Attributes$start = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'start',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$headers = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'headers', value);
-};
-var _elm_lang$html$Html_Attributes$scope = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'scope', value);
-};
-var _elm_lang$html$Html_Attributes$manifest = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'manifest', value);
-};
-var _elm_lang$html$Html_Attributes$boolProperty = F2(
-	function (name, bool) {
-		return A2(
-			_elm_lang$html$Html_Attributes$property,
-			name,
-			_elm_lang$core$Json_Encode$bool(bool));
-	});
-var _elm_lang$html$Html_Attributes$hidden = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'hidden', bool);
-};
-var _elm_lang$html$Html_Attributes$contenteditable = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'contentEditable', bool);
-};
-var _elm_lang$html$Html_Attributes$spellcheck = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'spellcheck', bool);
-};
-var _elm_lang$html$Html_Attributes$async = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'async', bool);
-};
-var _elm_lang$html$Html_Attributes$defer = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'defer', bool);
-};
-var _elm_lang$html$Html_Attributes$scoped = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'scoped', bool);
-};
-var _elm_lang$html$Html_Attributes$autoplay = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'autoplay', bool);
-};
-var _elm_lang$html$Html_Attributes$controls = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'controls', bool);
-};
-var _elm_lang$html$Html_Attributes$loop = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'loop', bool);
-};
-var _elm_lang$html$Html_Attributes$default = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'default', bool);
-};
-var _elm_lang$html$Html_Attributes$seamless = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'seamless', bool);
-};
-var _elm_lang$html$Html_Attributes$checked = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'checked', bool);
-};
-var _elm_lang$html$Html_Attributes$selected = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'selected', bool);
-};
-var _elm_lang$html$Html_Attributes$autofocus = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'autofocus', bool);
-};
-var _elm_lang$html$Html_Attributes$disabled = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'disabled', bool);
-};
-var _elm_lang$html$Html_Attributes$multiple = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'multiple', bool);
-};
-var _elm_lang$html$Html_Attributes$novalidate = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'noValidate', bool);
-};
-var _elm_lang$html$Html_Attributes$readonly = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'readOnly', bool);
-};
-var _elm_lang$html$Html_Attributes$required = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'required', bool);
-};
-var _elm_lang$html$Html_Attributes$ismap = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'isMap', value);
-};
-var _elm_lang$html$Html_Attributes$download = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'download', bool);
-};
-var _elm_lang$html$Html_Attributes$reversed = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'reversed', bool);
-};
-var _elm_lang$html$Html_Attributes$classList = function (list) {
-	return _elm_lang$html$Html_Attributes$class(
-		A2(
-			_elm_lang$core$String$join,
-			' ',
-			A2(
-				_elm_lang$core$List$map,
-				_elm_lang$core$Basics$fst,
-				A2(_elm_lang$core$List$filter, _elm_lang$core$Basics$snd, list))));
-};
-var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
-
 var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode_ops[':='], 'keyCode', _elm_lang$core$Json_Decode$int);
 var _elm_lang$html$Html_Events$targetChecked = A2(
 	_elm_lang$core$Json_Decode$at,
@@ -8546,861 +7545,293 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
-var _user$project$Compose_Program$noFxUpdate = F3(
-	function (inner, msg, model) {
-		return {
-			ctor: '_Tuple2',
-			_0: A2(inner, msg, model),
-			_1: _elm_lang$core$Platform_Cmd$none
-		};
-	});
-var _user$project$Compose_Program$noSub = function (_p0) {
-	return _elm_lang$core$Platform_Sub$none;
-};
-var _user$project$Compose_Program$beginnerProgram = function (prog) {
-	return {
-		init: {ctor: '_Tuple2', _0: prog.model, _1: _elm_lang$core$Platform_Cmd$none},
-		update: _user$project$Compose_Program$noFxUpdate(prog.update),
-		subscriptions: _user$project$Compose_Program$noSub,
-		view: prog.view
+var _user$project$Budget$serialize = function (model) {
+	var unit = function (u) {
+		var _p0 = u;
+		switch (_p0.ctor) {
+			case 'Day':
+				return 'day';
+			case 'Week':
+				return 'week';
+			case 'Month':
+				return 'month';
+			default:
+				return 'year';
+		}
 	};
-};
-var _user$project$Compose_Program$Program = F4(
-	function (a, b, c, d) {
-		return {init: a, update: b, subscriptions: c, view: d};
-	});
-var _user$project$Compose_Program$BeginnerProgram = F3(
-	function (a, b, c) {
-		return {model: a, update: b, view: c};
-	});
-
-var _user$project$Compose_Collapse$Model = F2(
-	function (a, b) {
-		return {collapsed: a, inner: b};
-	});
-var _user$project$Compose_Collapse$Other = function (a) {
-	return {ctor: 'Other', _0: a};
-};
-var _user$project$Compose_Collapse$collapseSubscription = F2(
-	function (inner, model) {
-		var innerSub = inner(model.inner);
-		return A2(_elm_lang$core$Platform_Sub$map, _user$project$Compose_Collapse$Other, innerSub);
-	});
-var _user$project$Compose_Collapse$collapseUpdate = F3(
-	function (inner, msg, model) {
-		var _p0 = msg;
-		if (_p0.ctor === 'Toggle') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						collapsed: _elm_lang$core$Basics$not(model.collapsed)
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
+	var freq = function (f) {
+		var _p1 = f;
+		if (_p1.ctor === 'Once') {
+			return {ctor: '_Tuple3', _0: 'once', _1: 0, _2: ''};
 		} else {
-			var _p1 = A2(inner, _p0._0, model.inner);
-			var newInner = _p1._0;
-			var c = _p1._1;
 			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{inner: newInner}),
-				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Compose_Collapse$Other, c)
+				ctor: '_Tuple3',
+				_0: 'every',
+				_1: _p1._0,
+				_2: unit(_p1._1)
 			};
 		}
-	});
-var _user$project$Compose_Collapse$Toggle = {ctor: 'Toggle'};
-var _user$project$Compose_Collapse$collapseView = F2(
-	function (inner, model) {
-		return model.collapsed ? A2(
-			_elm_lang$html$Html$a,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Events$onClick(_user$project$Compose_Collapse$Toggle)
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text('+')
-				])) : A2(
-			_elm_lang$html$Html$div,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$html$Html$a,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onClick(_user$project$Compose_Collapse$Toggle)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('-')
-						])),
-					A2(
-					_elm_lang$html$Html_App$map,
-					_user$project$Compose_Collapse$Other,
-					inner(model.inner))
-				]));
-	});
-var _user$project$Compose_Collapse$collapse = function (_p2) {
-	var _p3 = _p2;
-	var _p4 = _p3.init;
-	var m = _p4._0;
-	var c = _p4._1;
+	};
+	var charge = function (c) {
+		return {
+			name: c.name,
+			amount: c.amount,
+			freq: freq(c.freq)
+		};
+	};
 	return {
-		view: _user$project$Compose_Collapse$collapseView(_p3.view),
-		update: _user$project$Compose_Collapse$collapseUpdate(_p3.update),
-		init: {
-			ctor: '_Tuple2',
-			_0: {collapsed: false, inner: m},
-			_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Compose_Collapse$Other, c)
-		},
-		subscriptions: _user$project$Compose_Collapse$collapseSubscription(_p3.subscriptions)
+		charges: A2(_elm_lang$core$List$map, charge, model.charges)
 	};
 };
-
-var _user$project$Compose_Tabs$Model = F3(
-	function (a, b, c) {
-		return {tab: a, names: b, selected: c};
-	});
-var _user$project$Compose_Tabs$TabProgram = F4(
-	function (a, b, c, d) {
-		return {init: a, update: b, subscriptions: c, bodyview: d};
-	});
-var _user$project$Compose_Tabs$TabNever = {ctor: 'TabNever'};
-var _user$project$Compose_Tabs$emptyProgram = {
-	bodyview: function (_p0) {
-		return A2(
-			_elm_lang$html$Html$i,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[]));
-	},
-	update: F2(
-		function (_p2, _p1) {
-			return {
-				ctor: '_Tuple2',
-				_0: {
-					tab: {ctor: '_Tuple2', _0: _user$project$Compose_Tabs$TabNever, _1: _user$project$Compose_Tabs$TabNever},
-					names: _elm_lang$core$Native_List.fromArray(
-						[]),
-					selected: 0
-				},
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		}),
-	init: {
-		ctor: '_Tuple2',
-		_0: {
-			tab: {ctor: '_Tuple2', _0: _user$project$Compose_Tabs$TabNever, _1: _user$project$Compose_Tabs$TabNever},
-			names: _elm_lang$core$Native_List.fromArray(
-				[]),
-			selected: 0
-		},
-		_1: _elm_lang$core$Platform_Cmd$none
-	},
-	subscriptions: function (_p3) {
-		return _elm_lang$core$Platform_Sub$none;
-	}
-};
-var _user$project$Compose_Tabs$Unselected = F2(
-	function (a, b) {
-		return {ctor: 'Unselected', _0: a, _1: b};
-	});
-var _user$project$Compose_Tabs$Selected = function (a) {
-	return {ctor: 'Selected', _0: a};
-};
-var _user$project$Compose_Tabs$Select = function (a) {
-	return {ctor: 'Select', _0: a};
-};
-var _user$project$Compose_Tabs$wrapview = F3(
-	function (tabview, view, model) {
-		var label = F2(
-			function (i, n) {
-				return _elm_lang$core$Native_Utils.eq(i, model.selected) ? _user$project$Compose_Tabs$Selected(n) : A2(
-					_user$project$Compose_Tabs$Unselected,
-					n,
-					_user$project$Compose_Tabs$Select(i));
-			});
-		var labels = A2(_elm_lang$core$List$indexedMap, label, model.names);
-		return A2(
-			tabview,
-			labels,
-			view(model));
-	});
-var _user$project$Compose_Tabs$end = F2(
-	function (view, prog) {
-		return {
-			view: A2(_user$project$Compose_Tabs$wrapview, view, prog.bodyview),
-			init: prog.init,
-			subscriptions: prog.subscriptions,
-			update: prog.update
-		};
-	});
-var _user$project$Compose_Tabs$MsgTail = function (a) {
-	return {ctor: 'MsgTail', _0: a};
-};
-var _user$project$Compose_Tabs$MsgHead = function (a) {
-	return {ctor: 'MsgHead', _0: a};
-};
-var _user$project$Compose_Tabs$tabinit = F3(
-	function (name, _p5, _p4) {
-		var _p6 = _p5;
-		var _p7 = _p4;
-		var _p8 = _p7._0;
-		return {
-			ctor: '_Tuple2',
-			_0: {
-				tab: {ctor: '_Tuple2', _0: _p6._0, _1: _p8.tab},
-				selected: 0,
-				names: A2(_elm_lang$core$List_ops['::'], name, _p8.names)
-			},
-			_1: _elm_lang$core$Platform_Cmd$batch(
+var _user$project$Budget$viewCharge = function (charge) {
+	return A2(
+		_elm_lang$html$Html$li,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(charge.name),
+				_elm_lang$html$Html$text(' '),
+				A2(
+				_elm_lang$html$Html$b,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						A2(_elm_lang$core$Platform_Cmd$map, _user$project$Compose_Tabs$MsgHead, _p6._1),
-						A2(_elm_lang$core$Platform_Cmd$map, _user$project$Compose_Tabs$MsgTail, _p7._1)
+						_elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(charge.amount))
+					])),
+				_elm_lang$html$Html$text(' '),
+				A2(
+				_elm_lang$html$Html$i,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(charge.freq))
 					]))
-		};
-	});
-var _user$project$Compose_Tabs$tabview = F3(
-	function (headView, tailView, model) {
-		var _p9 = model.selected;
-		if (_p9 === 0) {
-			return A2(
-				_elm_lang$html$Html_App$map,
-				_user$project$Compose_Tabs$MsgHead,
-				headView(
-					_elm_lang$core$Basics$fst(model.tab)));
-		} else {
-			return A2(
-				_elm_lang$html$Html_App$map,
-				_user$project$Compose_Tabs$MsgTail,
-				tailView(
-					{
-						names: _elm_lang$core$Native_List.fromArray(
-							[]),
-						selected: model.selected - 1,
-						tab: _elm_lang$core$Basics$snd(model.tab)
-					}));
-		}
-	});
-var _user$project$Compose_Tabs$tabupdate = F4(
-	function (head, tail, msg, model) {
-		var _p10 = msg;
-		switch (_p10.ctor) {
-			case 'MsgHead':
-				var r = A2(
-					head,
-					_p10._0,
-					_elm_lang$core$Basics$fst(model.tab));
-				var _p11 = r;
-				var newHead = _p11._0;
-				var c = _p11._1;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							tab: {
-								ctor: '_Tuple2',
-								_0: newHead,
-								_1: _elm_lang$core$Basics$snd(model.tab)
-							}
-						}),
-					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Compose_Tabs$MsgHead, c)
-				};
-			case 'MsgTail':
-				var r = A2(
-					tail,
-					_p10._0,
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							selected: model.selected - 1,
-							tab: _elm_lang$core$Basics$snd(model.tab)
-						}));
-				var _p12 = r;
-				var newTail = _p12._0;
-				var c = _p12._1;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							tab: {
-								ctor: '_Tuple2',
-								_0: _elm_lang$core$Basics$fst(model.tab),
-								_1: newTail.tab
-							}
-						}),
-					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Compose_Tabs$MsgTail, c)
-				};
-			default:
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{selected: _p10._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-		}
-	});
-var _user$project$Compose_Tabs$tabsubscriptions = F3(
-	function (head, tail, model) {
-		var tailSub = tail(
-			{
-				names: model.names,
-				selected: model.selected - 1,
-				tab: _elm_lang$core$Basics$snd(model.tab)
-			});
-		var headSub = head(
-			_elm_lang$core$Basics$fst(model.tab));
-		return _elm_lang$core$Platform_Sub$batch(
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(_elm_lang$core$Platform_Sub$map, _user$project$Compose_Tabs$MsgHead, headSub),
-					A2(_elm_lang$core$Platform_Sub$map, _user$project$Compose_Tabs$MsgTail, tailSub)
-				]));
-	});
-var _user$project$Compose_Tabs$with = F3(
-	function (name, prog, otherTabs) {
-		return {
-			bodyview: A2(_user$project$Compose_Tabs$tabview, prog.view, otherTabs.bodyview),
-			init: A3(_user$project$Compose_Tabs$tabinit, name, prog.init, otherTabs.init),
-			update: A2(_user$project$Compose_Tabs$tabupdate, prog.update, otherTabs.update),
-			subscriptions: A2(_user$project$Compose_Tabs$tabsubscriptions, prog.subscriptions, otherTabs.subscriptions)
-		};
-	});
-var _user$project$Compose_Tabs$tabbed = F2(
-	function (name, prog) {
-		return A3(_user$project$Compose_Tabs$with, name, prog, _user$project$Compose_Tabs$emptyProgram);
-	});
-
-var _user$project$DB$init = {
-	ctor: '_Tuple2',
-	_0: {count: 0},
-	_1: _elm_lang$core$Platform_Cmd$none
+			]));
 };
-var _user$project$DB$put = _elm_lang$core$Native_Platform.outgoingPort(
+var _user$project$Budget$model = {
+	syncState: _elm_lang$core$Maybe$Nothing,
+	charges: _elm_lang$core$Native_List.fromArray(
+		[])
+};
+var _user$project$Budget$put = _elm_lang$core$Native_Platform.outgoingPort(
 	'put',
 	function (v) {
-		return {count: v.count};
+		return {
+			charges: _elm_lang$core$Native_List.toArray(v.charges).map(
+				function (v) {
+					return {
+						name: v.name,
+						amount: v.amount,
+						freq: [v.freq._0, v.freq._1, v.freq._2]
+					};
+				})
+		};
 	});
-var _user$project$DB$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		if (_p0.ctor === 'Set') {
-			return {
-				ctor: '_Tuple2',
-				_0: model,
-				_1: _user$project$DB$put(_p0._0)
-			};
-		} else {
-			return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
-		}
-	});
-var _user$project$DB$updates = _elm_lang$core$Native_Platform.incomingPort(
+var _user$project$Budget$updates = _elm_lang$core$Native_Platform.incomingPort(
 	'updates',
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		A2(_elm_lang$core$Json_Decode_ops[':='], 'count', _elm_lang$core$Json_Decode$int),
-		function (count) {
+		A2(
+			_elm_lang$core$Json_Decode_ops[':='],
+			'charges',
+			_elm_lang$core$Json_Decode$list(
+				A2(
+					_elm_lang$core$Json_Decode$andThen,
+					A2(_elm_lang$core$Json_Decode_ops[':='], 'name', _elm_lang$core$Json_Decode$string),
+					function (name) {
+						return A2(
+							_elm_lang$core$Json_Decode$andThen,
+							A2(_elm_lang$core$Json_Decode_ops[':='], 'amount', _elm_lang$core$Json_Decode$float),
+							function (amount) {
+								return A2(
+									_elm_lang$core$Json_Decode$andThen,
+									A2(
+										_elm_lang$core$Json_Decode_ops[':='],
+										'freq',
+										A4(
+											_elm_lang$core$Json_Decode$tuple3,
+											F3(
+												function (x1, x2, x3) {
+													return {ctor: '_Tuple3', _0: x1, _1: x2, _2: x3};
+												}),
+											_elm_lang$core$Json_Decode$string,
+											_elm_lang$core$Json_Decode$int,
+											_elm_lang$core$Json_Decode$string)),
+									function (freq) {
+										return _elm_lang$core$Json_Decode$succeed(
+											{name: name, amount: amount, freq: freq});
+									});
+							});
+					}))),
+		function (charges) {
 			return _elm_lang$core$Json_Decode$succeed(
-				{count: count});
+				{charges: charges});
 		}));
-var _user$project$DB$Model = function (a) {
-	return {count: a};
+var _user$project$Budget$Charge = F3(
+	function (a, b, c) {
+		return {name: a, amount: b, freq: c};
+	});
+var _user$project$Budget$Model = F2(
+	function (a, b) {
+		return {syncState: a, charges: b};
+	});
+var _user$project$Budget$SyncedCharge = F3(
+	function (a, b, c) {
+		return {name: a, amount: b, freq: c};
+	});
+var _user$project$Budget$SyncedModel = function (a) {
+	return {charges: a};
 };
-var _user$project$DB$Commit = function (a) {
-	return {ctor: 'Commit', _0: a};
-};
-var _user$project$DB$subscriptions = function (model) {
-	return _user$project$DB$updates(_user$project$DB$Commit);
-};
-var _user$project$DB$Set = function (a) {
-	return {ctor: 'Set', _0: a};
-};
-var _user$project$DB$view = function (model) {
+var _user$project$Budget$AddCharge = {ctor: 'AddCharge'};
+var _user$project$Budget$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(
-						_user$project$DB$Set(
-							_elm_lang$core$Native_Utils.update(
-								model,
-								{count: model.count + 1})))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('+')
-					])),
 				A2(
 				_elm_lang$html$Html$h1,
 				_elm_lang$core$Native_List.fromArray(
 					[]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text(
-						_elm_lang$core$Basics$toString(model.count))
+						_elm_lang$html$Html$text('Charges')
 					])),
+				A2(
+				_elm_lang$html$Html$ul,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				A2(_elm_lang$core$List$map, _user$project$Budget$viewCharge, model.charges)),
 				A2(
 				_elm_lang$html$Html$button,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Events$onClick(
-						_user$project$DB$Set(
-							_elm_lang$core$Native_Utils.update(
-								model,
-								{count: model.count - 1})))
+						_elm_lang$html$Html_Events$onClick(_user$project$Budget$AddCharge)
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('-')
+						_elm_lang$html$Html$text('+')
 					]))
 			]));
 };
-var _user$project$DB$prog = {view: _user$project$DB$view, update: _user$project$DB$update, subscriptions: _user$project$DB$subscriptions, init: _user$project$DB$init};
-
-var _user$project$Sexp$approxLength = function (sexp) {
-	var _p0 = sexp;
-	switch (_p0.ctor) {
-		case 'Atom':
-			return _elm_lang$core$String$length(_p0._0);
-		case 'Number':
-			return _elm_lang$core$String$length(
-				_elm_lang$core$Basics$toString(_p0._0));
-		case 'Str':
-			return A2(
-				F2(
-					function (x, y) {
-						return x + y;
-					}),
-				2,
-				_elm_lang$core$String$length(_p0._0));
-		default:
-			return A2(
-				F2(
-					function (x, y) {
-						return x + y;
-					}),
-				2,
-				_elm_lang$core$List$sum(
-					A2(_elm_lang$core$List$map, _user$project$Sexp$approxLength, _p0._0)));
-	}
+var _user$project$Budget$Commit = function (a) {
+	return {ctor: 'Commit', _0: a};
 };
-var _user$project$Sexp$quoteRegexp = _elm_lang$core$Regex$regex('\\\"');
-var _user$project$Sexp$sexpToString = function (sexp) {
-	var indented = F2(
-		function (depth, sexp) {
-			var _p1 = sexp;
-			switch (_p1.ctor) {
-				case 'Str':
-					var escaped = A4(
-						_elm_lang$core$Regex$replace,
-						_elm_lang$core$Regex$All,
-						_user$project$Sexp$quoteRegexp,
-						function (_p2) {
-							return '\\\"';
-						},
-						_p1._0);
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						'\"',
-						A2(_elm_lang$core$Basics_ops['++'], escaped, '\"'));
-				case 'Number':
-					return _elm_lang$core$Basics$toString(_p1._0);
-				case 'Atom':
-					return _p1._0;
-				default:
-					var _p4 = _p1._0;
-					var partLengths = A2(_elm_lang$core$List$map, _user$project$Sexp$approxLength, _p4);
-					var totalLength = _elm_lang$core$List$sum(partLengths);
-					var _p3 = (_elm_lang$core$Native_Utils.cmp(totalLength, 15) > 0) ? {
-						ctor: '_Tuple2',
-						_0: A2(
-							_elm_lang$core$Basics_ops['++'],
-							'\n',
-							A2(_elm_lang$core$String$repeat, depth + 1, '    ')),
-						_1: depth + 1
-					} : {ctor: '_Tuple2', _0: ' ', _1: depth};
-					var separator = _p3._0;
-					var newDepth = _p3._1;
-					var parts = A2(
-						_elm_lang$core$List$map,
-						indented(newDepth),
-						_p4);
-					var inner = A2(_elm_lang$core$String$join, separator, parts);
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						'(',
-						A2(_elm_lang$core$Basics_ops['++'], inner, ')'));
+var _user$project$Budget$subscriptions = function (model) {
+	return _user$project$Budget$updates(_user$project$Budget$Commit);
+};
+var _user$project$Budget$Every = F2(
+	function (a, b) {
+		return {ctor: 'Every', _0: a, _1: b};
+	});
+var _user$project$Budget$Once = {ctor: 'Once'};
+var _user$project$Budget$Year = {ctor: 'Year'};
+var _user$project$Budget$Month = {ctor: 'Month'};
+var _user$project$Budget$Week = {ctor: 'Week'};
+var _user$project$Budget$Day = {ctor: 'Day'};
+var _user$project$Budget$deserialize = function (model) {
+	var unit = function (u) {
+		var _p2 = u;
+		switch (_p2) {
+			case 'day':
+				return _user$project$Budget$Day;
+			case 'week':
+				return _user$project$Budget$Week;
+			case 'month':
+				return _user$project$Budget$Month;
+			case 'year':
+				return _user$project$Budget$Year;
+			default:
+				return _user$project$Budget$Month;
+		}
+	};
+	var freq = function (_p3) {
+		var _p4 = _p3;
+		var _p5 = {ctor: '_Tuple3', _0: _p4._0, _1: _p4._1, _2: _p4._2};
+		_v4_2:
+		do {
+			if (_p5.ctor === '_Tuple3') {
+				switch (_p5._0) {
+					case 'once':
+						if ((_p5._1 === 0) && (_p5._2 === '')) {
+							return _user$project$Budget$Once;
+						} else {
+							break _v4_2;
+						}
+					case 'every':
+						return A2(
+							_user$project$Budget$Every,
+							_p5._1,
+							unit(_p5._2));
+					default:
+						break _v4_2;
+				}
+			} else {
+				break _v4_2;
 			}
-		});
-	return A2(indented, 0, sexp);
+		} while(false);
+		return _user$project$Budget$Once;
+	};
+	var charge = function (c) {
+		return {
+			name: c.name,
+			amount: c.amount,
+			freq: freq(c.freq)
+		};
+	};
+	return {
+		charges: A2(_elm_lang$core$List$map, charge, model.charges),
+		syncState: _elm_lang$core$Maybe$Nothing
+	};
 };
-var _user$project$Sexp$Group = function (a) {
-	return {ctor: 'Group', _0: a};
-};
-var _user$project$Sexp$Number = function (a) {
-	return {ctor: 'Number', _0: a};
-};
-var _user$project$Sexp$Atom = function (a) {
-	return {ctor: 'Atom', _0: a};
-};
-var _user$project$Sexp$Str = function (a) {
-	return {ctor: 'Str', _0: a};
-};
-var _user$project$Sexp$sexpParser = function () {
-	var strParser = A2(
-		_Dandandan$parser$Parser$map,
-		_user$project$Sexp$Str,
-		_Dandandan$parser$Parser_Char$quoted(
-			A2(
-				_Dandandan$parser$Parser$map,
-				_elm_lang$core$String$fromList,
-				_Dandandan$parser$Parser$many(
-					_Dandandan$parser$Parser$satisfy(
-						function (c) {
-							return !_elm_lang$core$Native_Utils.eq(
-								c,
-								_elm_lang$core$Native_Utils.chr('\"'));
-						})))));
-	var numberParser = A2(_Dandandan$parser$Parser$map, _user$project$Sexp$Number, _Dandandan$parser$Parser_Number$integer);
-	var atomParser = A2(
-		_Dandandan$parser$Parser$map,
-		_user$project$Sexp$Atom,
-		A2(
-			_Dandandan$parser$Parser$map,
-			_elm_lang$core$String$fromList,
-			_Dandandan$parser$Parser$many(
-				_Dandandan$parser$Parser$satisfy(
-					function (c) {
-						return (!_elm_lang$core$Native_Utils.eq(
-							c,
-							_elm_lang$core$Native_Utils.chr(' '))) && ((!_elm_lang$core$Native_Utils.eq(
-							c,
-							_elm_lang$core$Native_Utils.chr('\t'))) && (!_elm_lang$core$Native_Utils.eq(
-							c,
-							_elm_lang$core$Native_Utils.chr('\n'))));
-					}))));
-	var whitespace = _Dandandan$parser$Parser$many(
-		_Dandandan$parser$Parser$choice(
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_Dandandan$parser$Parser$symbol(
-					_elm_lang$core$Native_Utils.chr(' ')),
-					_Dandandan$parser$Parser$symbol(
-					_elm_lang$core$Native_Utils.chr('\t')),
-					_Dandandan$parser$Parser$symbol(
-					_elm_lang$core$Native_Utils.chr('\n'))
-				])));
-	var groupParser = A2(
-		_Dandandan$parser$Parser$map,
-		_user$project$Sexp$Group,
-		_Dandandan$parser$Parser_Char$parenthesized(
-			A2(_Dandandan$parser$Parser$separatedBy, _user$project$Sexp$sexpParser, whitespace)));
-	return _Dandandan$parser$Parser$choice(
-		_elm_lang$core$Native_List.fromArray(
-			[atomParser, numberParser, strParser, groupParser]));
-}();
-var _user$project$Sexp$parse = function (s) {
-	var r = A2(_Dandandan$parser$Parser$parse, _user$project$Sexp$sexpParser, s);
-	var _p5 = r;
-	if (_p5.ctor === 'Ok') {
-		return _elm_lang$core$Maybe$Just(_p5._0);
-	} else {
-		return _elm_lang$core$Maybe$Just(
-			_user$project$Sexp$Str(_p5._0));
-	}
-};
-
-var _user$project$Main$toPixels = function (value) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_elm_lang$core$Basics$toString(value),
-		'px');
-};
-var _user$project$Main$viewWidget = function (widget) {
-	var commonStyle = _elm_lang$core$Native_List.fromArray(
-		[
-			{ctor: '_Tuple2', _0: 'flex', _1: '1'}
-		]);
-	var _p0 = widget;
-	switch (_p0.ctor) {
-		case 'Text':
-			return A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(commonStyle)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(_p0._0)
-					]));
-		case 'Input':
-			return A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(commonStyle)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$name(_p0._0)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[]))
-					]));
-		case 'Button':
-			return A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(commonStyle)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$button,
-						_elm_lang$core$Native_List.fromArray(
-							[]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text(_p0._0)
-							]))
-					]));
-		case 'Rows':
-			return A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Native_List.fromArray(
-								[
-									{ctor: '_Tuple2', _0: 'display', _1: 'flex'},
-									{ctor: '_Tuple2', _0: 'flex-direction', _1: 'column'}
-								]),
-							commonStyle))
-					]),
-				A2(_elm_lang$core$List$map, _user$project$Main$viewWidget, _p0._0));
-		default:
-			return A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Native_List.fromArray(
-								[
-									{ctor: '_Tuple2', _0: 'display', _1: 'flex'},
-									{ctor: '_Tuple2', _0: 'flex-direction', _1: 'row'}
-								]),
-							commonStyle))
-					]),
-				A2(_elm_lang$core$List$map, _user$project$Main$viewWidget, _p0._0));
-	}
-};
-var _user$project$Main$update = F2(
+var _user$project$Budget$update = F2(
 	function (msg, model) {
-		return model;
+		var _p6 = msg;
+		if (_p6.ctor === 'Commit') {
+			var $new = _user$project$Budget$deserialize(_p6._0);
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					$new,
+					{
+						syncState: _elm_lang$core$Maybe$Just(true)
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			var newCharge = {name: 'NewCharge', amount: 0.0, freq: _user$project$Budget$Once};
+			return {
+				ctor: '_Tuple2',
+				_0: model,
+				_1: _user$project$Budget$put(
+					_user$project$Budget$serialize(
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								charges: A2(_elm_lang$core$List_ops['::'], newCharge, model.charges)
+							})))
+			};
+		}
 	});
-var _user$project$Main$toSexp = function (widget) {
-	var _p1 = widget;
-	switch (_p1.ctor) {
-		case 'Text':
-			return _user$project$Sexp$Str(_p1._0);
-		case 'Input':
-			return _user$project$Sexp$Group(
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_user$project$Sexp$Atom('input'),
-						_user$project$Sexp$Str(_p1._0)
-					]));
-		case 'Button':
-			return _user$project$Sexp$Group(
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_user$project$Sexp$Atom('button'),
-						_user$project$Sexp$Str(_p1._0)
-					]));
-		case 'Columns':
-			return _user$project$Sexp$Group(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$Sexp$Atom('columns')
-						]),
-					A2(_elm_lang$core$List$map, _user$project$Main$toSexp, _p1._0)));
-		default:
-			return _user$project$Sexp$Group(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$Sexp$Atom('rows')
-						]),
-					A2(_elm_lang$core$List$map, _user$project$Main$toSexp, _p1._0)));
-	}
+var _user$project$Budget$main = {
+	main: _elm_lang$html$Html_App$program(
+		{
+			init: {ctor: '_Tuple2', _0: _user$project$Budget$model, _1: _elm_lang$core$Platform_Cmd$none},
+			view: _user$project$Budget$view,
+			update: _user$project$Budget$update,
+			subscriptions: _user$project$Budget$subscriptions
+		})
 };
-var _user$project$Main$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$style(
-						_elm_lang$core$Native_List.fromArray(
-							[
-								{ctor: '_Tuple2', _0: 'width', _1: '50%'},
-								{ctor: '_Tuple2', _0: 'height', _1: '100%'}
-							]))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_user$project$Main$viewWidget(model.widget)
-					])),
-				A2(
-				_elm_lang$html$Html$pre,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(
-						_user$project$Sexp$sexpToString(
-							_user$project$Main$toSexp(model.widget)))
-					]))
-			]));
-};
-var _user$project$Main$makeLabel = function (label) {
-	var _p2 = label;
-	if (_p2.ctor === 'Selected') {
-		return A2(
-			_elm_lang$html$Html$li,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text(_p2._0),
-					_elm_lang$html$Html$text('**')
-				]));
-	} else {
-		return A2(
-			_elm_lang$html$Html$li,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Events$onClick(_p2._1)
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text(_p2._0)
-				]));
-	}
-};
-var _user$project$Main$viewTabs = F2(
-	function (labels, body) {
-		return A2(
-			_elm_lang$html$Html$div,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$html$Html$div,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					A2(_elm_lang$core$List$map, _user$project$Main$makeLabel, labels)),
-					body
-				]));
-	});
-var _user$project$Main$Model = function (a) {
-	return {widget: a};
-};
-var _user$project$Main$Rows = function (a) {
-	return {ctor: 'Rows', _0: a};
-};
-var _user$project$Main$Columns = function (a) {
-	return {ctor: 'Columns', _0: a};
-};
-var _user$project$Main$Button = function (a) {
-	return {ctor: 'Button', _0: a};
-};
-var _user$project$Main$Input = function (a) {
-	return {ctor: 'Input', _0: a};
-};
-var _user$project$Main$Text = function (a) {
-	return {ctor: 'Text', _0: a};
-};
-var _user$project$Main$model = {
-	widget: _user$project$Main$Columns(
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Main$Rows(
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_user$project$Main$Text('Username:'),
-						_user$project$Main$Input('username'),
-						_user$project$Main$Text('Password'),
-						_user$project$Main$Input('password'),
-						_user$project$Main$Button('Submit')
-					])),
-				_user$project$Main$Rows(
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_user$project$Main$Text('Username:'),
-						_user$project$Main$Input('username'),
-						_user$project$Main$Text('Password'),
-						_user$project$Main$Input('password'),
-						_user$project$Main$Button('Submit')
-					]))
-			]))
-};
-var _user$project$Main$tabbedInterface = A2(
-	_user$project$Compose_Tabs$end,
-	_user$project$Main$viewTabs,
-	A3(
-		_user$project$Compose_Tabs$with,
-		'counter',
-		_user$project$DB$prog,
-		A2(
-			_user$project$Compose_Tabs$tabbed,
-			'testground',
-			_user$project$Compose_Program$beginnerProgram(
-				{model: _user$project$Main$model, view: _user$project$Main$view, update: _user$project$Main$update}))));
-var _user$project$Main$main = {
-	main: _elm_lang$html$Html_App$program(_user$project$Main$tabbedInterface)
-};
-var _user$project$Main$Nothing = {ctor: 'Nothing'};
 
 var Elm = {};
-Elm['Main'] = Elm['Main'] || {};
-_elm_lang$core$Native_Platform.addPublicModule(Elm['Main'], 'Main', typeof _user$project$Main$main === 'undefined' ? null : _user$project$Main$main);
+Elm['Budget'] = Elm['Budget'] || {};
+_elm_lang$core$Native_Platform.addPublicModule(Elm['Budget'], 'Budget', typeof _user$project$Budget$main === 'undefined' ? null : _user$project$Budget$main);
 
 if (typeof define === "function" && define['amd'])
 {

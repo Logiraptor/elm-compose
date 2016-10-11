@@ -1,64 +1,60 @@
 port module DB exposing (..)
 
+import Html.App as App
 import Html
-import Html.Events
 import Compose.Program as P
+import Json.Decode as Decode
+import Json.Decode as Encode
 
 
-port put : Model -> Cmd msg
+port put : Encode.Value -> Cmd msg
 
 
-port updates : (Model -> msg) -> Sub msg
+port updates : (Encode.Value -> msg) -> Sub msg
 
 
-prog : P.Program Model Msg
-prog =
-    { view = view
-    , update = update
-    , subscriptions = subscriptions
-    , init = init
+persistent : P.Program model msg -> (model -> Encode.Value) -> (Encode.Value -> model) -> P.Program model (Msg model msg)
+persistent prog encoder decoder =
+    { view = persistView prog.view
+    , update = persistUpdates encoder prog.update
+    , subscriptions = persistSubscriptions prog.subscriptions decoder
+    , init = persistInit prog.init
     }
 
 
-type Msg
-    = Set Model
-    | Commit Model
+persistSubscriptions : (model -> Sub msg) -> (Encode.Value -> model) -> model -> Sub (Msg model msg)
+persistSubscriptions inner decoder model =
+    let
+        origSubscriptions =
+            inner model
+    in
+        Sub.batch [ Sub.map Inner origSubscriptions, updates (decoder >> Commit) ]
 
 
-type alias Model =
-    { count : Int
-    }
-
-
-view : Model -> Html.Html Msg
-view model =
-    Html.div []
-        [ Html.button
-            [ Html.Events.onClick (Set { model | count = model.count + 1 }) ]
-            [ Html.text "+" ]
-        , Html.h1 []
-            [ Html.text (toString model.count) ]
-        , Html.button
-            [ Html.Events.onClick (Set { model | count = model.count - 1 }) ]
-            [ Html.text "-" ]
-        ]
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+persistUpdates : (model -> Encode.Value) -> (msg -> model -> ( model, Cmd msg )) -> Msg model msg -> model -> ( model, Cmd (Msg model msg) )
+persistUpdates encoder inner msg model =
     case msg of
-        Set m ->
-            ( model, put m )
+        Inner m ->
+            ( model, model |> encoder |> put )
 
         Commit m ->
             ( m, Cmd.none )
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( { count = 0 }, Cmd.none )
+persistInit : ( model, Cmd msg ) -> ( model, Cmd (Msg model msg) )
+persistInit ( model, c ) =
+    ( model, Cmd.map Inner c )
 
 
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    updates Commit
+persistView : (model -> Html.Html msg) -> model -> Html.Html (Msg model msg)
+persistView inner model =
+    let
+        origView =
+            inner model
+    in
+        App.map Inner origView
+
+
+type Msg model msg
+    = Commit model
+    | Inner msg
