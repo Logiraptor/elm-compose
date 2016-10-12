@@ -1,29 +1,35 @@
-port module Budget exposing (..)
+module Budget exposing (..)
 
 import Html.App as App
 import Html
 import Html.Events
-
-
-port put : SyncedModel -> Cmd msg
-
-
-port updates : (SyncedModel -> msg) -> Sub msg
+import Json.Encode as Encode
+import Json.Decode as Decode exposing ((:=))
+import DB
+import Compose.Program as P
 
 
 main : Program Never
 main =
-    App.program
-        { init = ( model, Cmd.none )
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
+    App.program <| DB.persistent serialize decoder app
+
+
+decoder : Encode.Value -> Model
+decoder =
+    Decode.decodeValue deserialize >> Result.withDefault model
+
+
+app : P.Program Model Msg
+app =
+    { init = ( model, Cmd.none )
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
 
 
 type Msg
-    = Commit SyncedModel
-    | AddCharge
+    = AddCharge
 
 
 type Frequency
@@ -43,12 +49,12 @@ type alias Charge =
 
 
 type alias Model =
-    { syncState : Maybe Bool, charges : List Charge }
+    { charges : List Charge }
 
 
 model : Model
 model =
-    { syncState = Nothing, charges = [] }
+    { charges = [] }
 
 
 view : Model -> Html.Html Msg
@@ -74,67 +80,56 @@ viewCharge charge =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Commit m ->
-            let
-                new =
-                    deserialize m
-            in
-                ( { new | syncState = Just True }, Cmd.none )
-
         AddCharge ->
             let
                 newCharge =
                     { name = "NewCharge", amount = 0.0, freq = Once }
             in
-                ( model, put (serialize { model | charges = newCharge :: model.charges }) )
+                ( { model | charges = newCharge :: model.charges }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    updates Commit
+    Sub.none
 
 
-type alias SyncedCharge =
-    { name : String, amount : Float, freq : ( String, Int, String ) }
-
-
-type alias SyncedModel =
-    { charges : List SyncedCharge }
-
-
-serialize : Model -> SyncedModel
+serialize : Model -> Encode.Value
 serialize model =
     let
         unit u =
             case u of
                 Day ->
-                    "day"
+                    Encode.string "day"
 
                 Week ->
-                    "week"
+                    Encode.string "week"
 
                 Month ->
-                    "month"
+                    Encode.string "month"
 
                 Year ->
-                    "year"
+                    Encode.string "year"
 
         freq f =
             case f of
                 Once ->
-                    ( "once", 0, "" )
+                    Encode.list [ Encode.string "once", Encode.int 0, Encode.string "" ]
 
                 Every n units ->
-                    ( "every", n, (unit units) )
+                    Encode.list [ Encode.string "every", Encode.int n, (unit units) ]
 
         charge c =
-            { name = c.name, amount = c.amount, freq = freq c.freq }
+            Encode.object
+                [ ( "name", Encode.string c.name )
+                , ( "amount", Encode.float c.amount )
+                , ( "freq", freq c.freq )
+                ]
     in
-        { charges = List.map charge model.charges }
+        Encode.object [ ( "charges", Encode.list <| List.map charge model.charges ) ]
 
 
-deserialize : SyncedModel -> Model
-deserialize model =
+deserialize : Decode.Decoder Model
+deserialize =
     let
         unit u =
             case u of
@@ -153,7 +148,8 @@ deserialize model =
                 _ ->
                     Month
 
-        freq ( f, n, u ) =
+        freq : String -> Int -> String -> Frequency
+        freq f n u =
             case ( f, n, u ) of
                 ( "once", 0, "" ) ->
                     Once
@@ -164,7 +160,12 @@ deserialize model =
                 _ ->
                     Once
 
-        charge c =
-            { name = c.name, amount = c.amount, freq = freq c.freq }
+        charge : Decode.Decoder Charge
+        charge =
+            Decode.object3 Charge
+                ("name" := Decode.string)
+                ("amount" := Decode.float)
+                ("freq" := Decode.tuple3 freq Decode.string Decode.int Decode.string)
     in
-        { charges = List.map charge model.charges, syncState = Nothing }
+        Decode.object1 Model
+            ("charges" := Decode.list charge)

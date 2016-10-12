@@ -13,8 +13,8 @@ port put : Encode.Value -> Cmd msg
 port updates : (Encode.Value -> msg) -> Sub msg
 
 
-persistent : P.Program model msg -> (model -> Encode.Value) -> (Encode.Value -> model) -> P.Program model (Msg model msg)
-persistent prog encoder decoder =
+persistent : (model -> Encode.Value) -> (Encode.Value -> model) -> P.Program model msg -> P.Program model (Msg model msg)
+persistent encoder decoder prog =
     { view = persistView prog.view
     , update = persistUpdates encoder prog.update
     , subscriptions = persistSubscriptions prog.subscriptions decoder
@@ -35,7 +35,11 @@ persistUpdates : (model -> Encode.Value) -> (msg -> model -> ( model, Cmd msg ))
 persistUpdates encoder inner msg model =
     case msg of
         Inner m ->
-            ( model, model |> encoder |> put )
+            let
+                ( newModel, c ) =
+                    inner m model
+            in
+                ( model, Cmd.batch [ newModel |> encoder |> put, Cmd.map Inner c ] )
 
         Commit m ->
             ( m, Cmd.none )

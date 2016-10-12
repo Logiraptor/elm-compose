@@ -7545,43 +7545,173 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
+var _user$project$Compose_Program$noFxUpdate = F3(
+	function (inner, msg, model) {
+		return {
+			ctor: '_Tuple2',
+			_0: A2(inner, msg, model),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
+	});
+var _user$project$Compose_Program$noSub = function (_p0) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Compose_Program$beginnerProgram = function (prog) {
+	return {
+		init: {ctor: '_Tuple2', _0: prog.model, _1: _elm_lang$core$Platform_Cmd$none},
+		update: _user$project$Compose_Program$noFxUpdate(prog.update),
+		subscriptions: _user$project$Compose_Program$noSub,
+		view: prog.view
+	};
+};
+var _user$project$Compose_Program$Program = F4(
+	function (a, b, c, d) {
+		return {init: a, update: b, subscriptions: c, view: d};
+	});
+var _user$project$Compose_Program$BeginnerProgram = F3(
+	function (a, b, c) {
+		return {model: a, update: b, view: c};
+	});
+
+var _user$project$DB$put = _elm_lang$core$Native_Platform.outgoingPort(
+	'put',
+	function (v) {
+		return v;
+	});
+var _user$project$DB$updates = _elm_lang$core$Native_Platform.incomingPort('updates', _elm_lang$core$Json_Decode$value);
+var _user$project$DB$Inner = function (a) {
+	return {ctor: 'Inner', _0: a};
+};
+var _user$project$DB$persistUpdates = F4(
+	function (encoder, inner, msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'Inner') {
+			var _p1 = A2(inner, _p0._0, model);
+			var newModel = _p1._0;
+			var c = _p1._1;
+			return {
+				ctor: '_Tuple2',
+				_0: model,
+				_1: _elm_lang$core$Platform_Cmd$batch(
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$DB$put(
+							encoder(newModel)),
+							A2(_elm_lang$core$Platform_Cmd$map, _user$project$DB$Inner, c)
+						]))
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$DB$persistInit = function (_p2) {
+	var _p3 = _p2;
+	return {
+		ctor: '_Tuple2',
+		_0: _p3._0,
+		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$DB$Inner, _p3._1)
+	};
+};
+var _user$project$DB$persistView = F2(
+	function (inner, model) {
+		var origView = inner(model);
+		return A2(_elm_lang$html$Html_App$map, _user$project$DB$Inner, origView);
+	});
+var _user$project$DB$Commit = function (a) {
+	return {ctor: 'Commit', _0: a};
+};
+var _user$project$DB$persistSubscriptions = F3(
+	function (inner, decoder, model) {
+		var origSubscriptions = inner(model);
+		return _elm_lang$core$Platform_Sub$batch(
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(_elm_lang$core$Platform_Sub$map, _user$project$DB$Inner, origSubscriptions),
+					_user$project$DB$updates(
+					function (_p4) {
+						return _user$project$DB$Commit(
+							decoder(_p4));
+					})
+				]));
+	});
+var _user$project$DB$persistent = F3(
+	function (encoder, decoder, prog) {
+		return {
+			view: _user$project$DB$persistView(prog.view),
+			update: A2(_user$project$DB$persistUpdates, encoder, prog.update),
+			subscriptions: A2(_user$project$DB$persistSubscriptions, prog.subscriptions, decoder),
+			init: _user$project$DB$persistInit(prog.init)
+		};
+	});
+
 var _user$project$Budget$serialize = function (model) {
 	var unit = function (u) {
 		var _p0 = u;
 		switch (_p0.ctor) {
 			case 'Day':
-				return 'day';
+				return _elm_lang$core$Json_Encode$string('day');
 			case 'Week':
-				return 'week';
+				return _elm_lang$core$Json_Encode$string('week');
 			case 'Month':
-				return 'month';
+				return _elm_lang$core$Json_Encode$string('month');
 			default:
-				return 'year';
+				return _elm_lang$core$Json_Encode$string('year');
 		}
 	};
 	var freq = function (f) {
 		var _p1 = f;
 		if (_p1.ctor === 'Once') {
-			return {ctor: '_Tuple3', _0: 'once', _1: 0, _2: ''};
+			return _elm_lang$core$Json_Encode$list(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$core$Json_Encode$string('once'),
+						_elm_lang$core$Json_Encode$int(0),
+						_elm_lang$core$Json_Encode$string('')
+					]));
 		} else {
-			return {
-				ctor: '_Tuple3',
-				_0: 'every',
-				_1: _p1._0,
-				_2: unit(_p1._1)
-			};
+			return _elm_lang$core$Json_Encode$list(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$core$Json_Encode$string('every'),
+						_elm_lang$core$Json_Encode$int(_p1._0),
+						unit(_p1._1)
+					]));
 		}
 	};
 	var charge = function (c) {
-		return {
-			name: c.name,
-			amount: c.amount,
-			freq: freq(c.freq)
-		};
+		return _elm_lang$core$Json_Encode$object(
+			_elm_lang$core$Native_List.fromArray(
+				[
+					{
+					ctor: '_Tuple2',
+					_0: 'name',
+					_1: _elm_lang$core$Json_Encode$string(c.name)
+				},
+					{
+					ctor: '_Tuple2',
+					_0: 'amount',
+					_1: _elm_lang$core$Json_Encode$float(c.amount)
+				},
+					{
+					ctor: '_Tuple2',
+					_0: 'freq',
+					_1: freq(c.freq)
+				}
+				]));
 	};
-	return {
-		charges: A2(_elm_lang$core$List$map, charge, model.charges)
-	};
+	return _elm_lang$core$Json_Encode$object(
+		_elm_lang$core$Native_List.fromArray(
+			[
+				{
+				ctor: '_Tuple2',
+				_0: 'charges',
+				_1: _elm_lang$core$Json_Encode$list(
+					A2(_elm_lang$core$List$map, charge, model.charges))
+			}
+			]));
+};
+var _user$project$Budget$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
 };
 var _user$project$Budget$viewCharge = function (charge) {
 	return A2(
@@ -7614,77 +7744,14 @@ var _user$project$Budget$viewCharge = function (charge) {
 			]));
 };
 var _user$project$Budget$model = {
-	syncState: _elm_lang$core$Maybe$Nothing,
 	charges: _elm_lang$core$Native_List.fromArray(
 		[])
 };
-var _user$project$Budget$put = _elm_lang$core$Native_Platform.outgoingPort(
-	'put',
-	function (v) {
-		return {
-			charges: _elm_lang$core$Native_List.toArray(v.charges).map(
-				function (v) {
-					return {
-						name: v.name,
-						amount: v.amount,
-						freq: [v.freq._0, v.freq._1, v.freq._2]
-					};
-				})
-		};
-	});
-var _user$project$Budget$updates = _elm_lang$core$Native_Platform.incomingPort(
-	'updates',
-	A2(
-		_elm_lang$core$Json_Decode$andThen,
-		A2(
-			_elm_lang$core$Json_Decode_ops[':='],
-			'charges',
-			_elm_lang$core$Json_Decode$list(
-				A2(
-					_elm_lang$core$Json_Decode$andThen,
-					A2(_elm_lang$core$Json_Decode_ops[':='], 'name', _elm_lang$core$Json_Decode$string),
-					function (name) {
-						return A2(
-							_elm_lang$core$Json_Decode$andThen,
-							A2(_elm_lang$core$Json_Decode_ops[':='], 'amount', _elm_lang$core$Json_Decode$float),
-							function (amount) {
-								return A2(
-									_elm_lang$core$Json_Decode$andThen,
-									A2(
-										_elm_lang$core$Json_Decode_ops[':='],
-										'freq',
-										A4(
-											_elm_lang$core$Json_Decode$tuple3,
-											F3(
-												function (x1, x2, x3) {
-													return {ctor: '_Tuple3', _0: x1, _1: x2, _2: x3};
-												}),
-											_elm_lang$core$Json_Decode$string,
-											_elm_lang$core$Json_Decode$int,
-											_elm_lang$core$Json_Decode$string)),
-									function (freq) {
-										return _elm_lang$core$Json_Decode$succeed(
-											{name: name, amount: amount, freq: freq});
-									});
-							});
-					}))),
-		function (charges) {
-			return _elm_lang$core$Json_Decode$succeed(
-				{charges: charges});
-		}));
 var _user$project$Budget$Charge = F3(
 	function (a, b, c) {
 		return {name: a, amount: b, freq: c};
 	});
-var _user$project$Budget$Model = F2(
-	function (a, b) {
-		return {syncState: a, charges: b};
-	});
-var _user$project$Budget$SyncedCharge = F3(
-	function (a, b, c) {
-		return {name: a, amount: b, freq: c};
-	});
-var _user$project$Budget$SyncedModel = function (a) {
+var _user$project$Budget$Model = function (a) {
 	return {charges: a};
 };
 var _user$project$Budget$AddCharge = {ctor: 'AddCharge'};
@@ -7720,25 +7787,39 @@ var _user$project$Budget$view = function (model) {
 					]))
 			]));
 };
-var _user$project$Budget$Commit = function (a) {
-	return {ctor: 'Commit', _0: a};
-};
-var _user$project$Budget$subscriptions = function (model) {
-	return _user$project$Budget$updates(_user$project$Budget$Commit);
-};
 var _user$project$Budget$Every = F2(
 	function (a, b) {
 		return {ctor: 'Every', _0: a, _1: b};
 	});
 var _user$project$Budget$Once = {ctor: 'Once'};
+var _user$project$Budget$update = F2(
+	function (msg, model) {
+		var _p2 = msg;
+		var newCharge = {name: 'NewCharge', amount: 0.0, freq: _user$project$Budget$Once};
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					charges: A2(_elm_lang$core$List_ops['::'], newCharge, model.charges)
+				}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
+	});
+var _user$project$Budget$app = {
+	init: {ctor: '_Tuple2', _0: _user$project$Budget$model, _1: _elm_lang$core$Platform_Cmd$none},
+	view: _user$project$Budget$view,
+	update: _user$project$Budget$update,
+	subscriptions: _user$project$Budget$subscriptions
+};
 var _user$project$Budget$Year = {ctor: 'Year'};
 var _user$project$Budget$Month = {ctor: 'Month'};
 var _user$project$Budget$Week = {ctor: 'Week'};
 var _user$project$Budget$Day = {ctor: 'Day'};
-var _user$project$Budget$deserialize = function (model) {
+var _user$project$Budget$deserialize = function () {
 	var unit = function (u) {
-		var _p2 = u;
-		switch (_p2) {
+		var _p3 = u;
+		switch (_p3) {
 			case 'day':
 				return _user$project$Budget$Day;
 			case 'week':
@@ -7751,82 +7832,59 @@ var _user$project$Budget$deserialize = function (model) {
 				return _user$project$Budget$Month;
 		}
 	};
-	var freq = function (_p3) {
-		var _p4 = _p3;
-		var _p5 = {ctor: '_Tuple3', _0: _p4._0, _1: _p4._1, _2: _p4._2};
-		_v4_2:
-		do {
-			if (_p5.ctor === '_Tuple3') {
-				switch (_p5._0) {
-					case 'once':
-						if ((_p5._1 === 0) && (_p5._2 === '')) {
-							return _user$project$Budget$Once;
-						} else {
+	var freq = F3(
+		function (f, n, u) {
+			var _p4 = {ctor: '_Tuple3', _0: f, _1: n, _2: u};
+			_v4_2:
+			do {
+				if (_p4.ctor === '_Tuple3') {
+					switch (_p4._0) {
+						case 'once':
+							if ((_p4._1 === 0) && (_p4._2 === '')) {
+								return _user$project$Budget$Once;
+							} else {
+								break _v4_2;
+							}
+						case 'every':
+							return A2(
+								_user$project$Budget$Every,
+								_p4._1,
+								unit(_p4._2));
+						default:
 							break _v4_2;
-						}
-					case 'every':
-						return A2(
-							_user$project$Budget$Every,
-							_p5._1,
-							unit(_p5._2));
-					default:
-						break _v4_2;
+					}
+				} else {
+					break _v4_2;
 				}
-			} else {
-				break _v4_2;
-			}
-		} while(false);
-		return _user$project$Budget$Once;
-	};
-	var charge = function (c) {
-		return {
-			name: c.name,
-			amount: c.amount,
-			freq: freq(c.freq)
-		};
-	};
-	return {
-		charges: A2(_elm_lang$core$List$map, charge, model.charges),
-		syncState: _elm_lang$core$Maybe$Nothing
-	};
+			} while(false);
+			return _user$project$Budget$Once;
+		});
+	var charge = A4(
+		_elm_lang$core$Json_Decode$object3,
+		_user$project$Budget$Charge,
+		A2(_elm_lang$core$Json_Decode_ops[':='], 'name', _elm_lang$core$Json_Decode$string),
+		A2(_elm_lang$core$Json_Decode_ops[':='], 'amount', _elm_lang$core$Json_Decode$float),
+		A2(
+			_elm_lang$core$Json_Decode_ops[':='],
+			'freq',
+			A4(_elm_lang$core$Json_Decode$tuple3, freq, _elm_lang$core$Json_Decode$string, _elm_lang$core$Json_Decode$int, _elm_lang$core$Json_Decode$string)));
+	return A2(
+		_elm_lang$core$Json_Decode$object1,
+		_user$project$Budget$Model,
+		A2(
+			_elm_lang$core$Json_Decode_ops[':='],
+			'charges',
+			_elm_lang$core$Json_Decode$list(charge)));
+}();
+var _user$project$Budget$decoder = function (_p5) {
+	return A2(
+		_elm_lang$core$Result$withDefault,
+		_user$project$Budget$model,
+		A2(_elm_lang$core$Json_Decode$decodeValue, _user$project$Budget$deserialize, _p5));
 };
-var _user$project$Budget$update = F2(
-	function (msg, model) {
-		var _p6 = msg;
-		if (_p6.ctor === 'Commit') {
-			var $new = _user$project$Budget$deserialize(_p6._0);
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					$new,
-					{
-						syncState: _elm_lang$core$Maybe$Just(true)
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			var newCharge = {name: 'NewCharge', amount: 0.0, freq: _user$project$Budget$Once};
-			return {
-				ctor: '_Tuple2',
-				_0: model,
-				_1: _user$project$Budget$put(
-					_user$project$Budget$serialize(
-						_elm_lang$core$Native_Utils.update(
-							model,
-							{
-								charges: A2(_elm_lang$core$List_ops['::'], newCharge, model.charges)
-							})))
-			};
-		}
-	});
 var _user$project$Budget$main = {
 	main: _elm_lang$html$Html_App$program(
-		{
-			init: {ctor: '_Tuple2', _0: _user$project$Budget$model, _1: _elm_lang$core$Platform_Cmd$none},
-			view: _user$project$Budget$view,
-			update: _user$project$Budget$update,
-			subscriptions: _user$project$Budget$subscriptions
-		})
+		A3(_user$project$DB$persistent, _user$project$Budget$serialize, _user$project$Budget$decoder, _user$project$Budget$app))
 };
 
 var Elm = {};
