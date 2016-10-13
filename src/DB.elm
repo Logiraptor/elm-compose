@@ -1,4 +1,4 @@
-port module DB exposing (..)
+port module DB exposing (persistent)
 
 import Html.App as App
 import Html

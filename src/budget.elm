@@ -2,11 +2,16 @@ module Budget exposing (..)
 
 import Html.App as App
 import Html
+import Html.Attributes
 import Html.Events
 import Json.Encode as Encode
 import Json.Decode as Decode exposing ((:=))
 import DB
 import Compose.Program as P
+import String
+import Date
+import Date.Extra
+import Time
 
 
 main : Program Never
@@ -30,26 +35,31 @@ app =
 
 type Msg
     = AddCharge
+    | RenameCharge Int String
+    | ChangeChargeAmount Int Float
+    | ChangeChargeFreq Int Frequency
+    | RemoveCharge Int
 
 
 type Frequency
     = Once
-    | Every Int TimeUnit
-
-
-type TimeUnit
-    = Day
-    | Week
-    | Month
-    | Year
+    | Every Int Date.Extra.Interval
 
 
 type alias Charge =
-    { name : String, amount : Float, freq : Frequency }
+    { name : String, amount : Float, freq : Frequency, start : Date.Date }
 
 
 type alias Model =
     { charges : List Charge }
+
+
+type alias Balance =
+    { date : Date.Date, balance : Float }
+
+
+type alias Transaction =
+    { date : Date.Date, amount : Float }
 
 
 model : Model
@@ -59,22 +69,157 @@ model =
 
 view : Model -> Html.Html Msg
 view model =
-    Html.div []
-        [ Html.h1 [] [ Html.text "Charges" ]
-        , Html.ul [] (List.map viewCharge model.charges)
-        , Html.button [ Html.Events.onClick AddCharge ] [ Html.text "+" ]
-        ]
+    let
+        futureBalances =
+            projectBalance model.charges
+    in
+        Html.div []
+            [ Html.h1 [] [ Html.text "Charges" ]
+            , Html.button [ Html.Events.onClick AddCharge ] [ Html.text "Add Charge" ]
+            , Html.ul [] (List.indexedMap viewCharge model.charges)
+            , Html.hr [] []
+            , Html.ul [] (List.map viewBalance futureBalances)
+            ]
 
 
-viewCharge : Charge -> Html.Html Msg
-viewCharge charge =
-    Html.li []
-        [ Html.text charge.name
-        , Html.text " "
-        , Html.b [] [ Html.text (toString charge.amount) ]
-        , Html.text " "
-        , Html.i [] [ Html.text (toString charge.freq) ]
-        ]
+viewCharge : Int -> Charge -> Html.Html Msg
+viewCharge i charge =
+    let
+        ( isOnce, isEvery ) =
+            case charge.freq of
+                Once ->
+                    ( True, False )
+
+                Every _ _ ->
+                    ( False, True )
+
+        stringToFreq s =
+            case s of
+                "once" ->
+                    Once
+
+                "every" ->
+                    Every 1 Date.Extra.Month
+
+                _ ->
+                    Once
+
+        stringToUnit s =
+            case s of
+                "day" ->
+                    Date.Extra.Day
+
+                "week" ->
+                    Date.Extra.Week
+
+                "month" ->
+                    Date.Extra.Month
+
+                "year" ->
+                    Date.Extra.Year
+
+                _ ->
+                    Date.Extra.Month
+    in
+        Html.li []
+            ([ Html.a [ Html.Attributes.href "#", Html.Events.onClick (RemoveCharge i) ] [ Html.text "Remove" ]
+             , Html.text (toString charge.start)
+             , Html.input
+                [ Html.Attributes.type' "text"
+                , Html.Attributes.value charge.name
+                , Html.Events.onInput (RenameCharge i)
+                ]
+                []
+             , Html.input
+                [ Html.Attributes.type' "number"
+                , Html.Attributes.value (toString charge.amount)
+                , Html.Events.onInput (String.toFloat >> (Result.withDefault charge.amount) >> ChangeChargeAmount i)
+                ]
+                []
+             , Html.select
+                [ Html.Events.onInput (stringToFreq >> ChangeChargeFreq i)
+                ]
+                [ Html.option [ Html.Attributes.selected isOnce ] [ Html.text "once" ]
+                , Html.option [ Html.Attributes.selected isEvery ] [ Html.text "every" ]
+                ]
+             ]
+                ++ (case charge.freq of
+                        Once ->
+                            []
+
+                        Every n unit ->
+                            [ Html.input
+                                [ Html.Attributes.type' "number"
+                                , Html.Attributes.value (toString n)
+                                , Html.Events.onInput (String.toInt >> (Result.withDefault n) >> (\n -> ChangeChargeFreq i (Every n unit)))
+                                ]
+                                []
+                            , Html.select [ Html.Events.onInput (stringToUnit >> Every n >> ChangeChargeFreq i) ]
+                                [ Html.option [ Html.Attributes.selected (unit == Date.Extra.Day) ] [ Html.text "day" ]
+                                , Html.option [ Html.Attributes.selected (unit == Date.Extra.Week) ] [ Html.text "week" ]
+                                , Html.option [ Html.Attributes.selected (unit == Date.Extra.Month) ] [ Html.text "month" ]
+                                , Html.option [ Html.Attributes.selected (unit == Date.Extra.Year) ] [ Html.text "year" ]
+                                ]
+                            ]
+                   )
+            )
+
+
+viewBalance : Balance -> Html.Html Msg
+viewBalance b =
+    Html.li [] [ Html.text (toString b) ]
+
+
+projectBalance : List Charge -> List Balance
+projectBalance charges =
+    let
+        endDate =
+            Date.Extra.fromCalendarDate 2017 Date.Jan 1
+
+        transactions =
+            List.concatMap (projectCharge endDate) charges
+
+        sortedTransactions =
+            List.sortBy (.date >> Date.toTime >> Time.inMilliseconds) transactions
+
+        addTransaction transaction balance =
+            { date = transaction.date, balance = balance.balance + transaction.amount }
+
+        balances =
+            List.scanl addTransaction { date = Date.Extra.fromCalendarDate 2016 Date.Jan 1, balance = 0 } sortedTransactions
+    in
+        balances
+
+
+projectCharge : Date.Date -> Charge -> List Transaction
+projectCharge until charge =
+    if GT == Date.Extra.compare charge.start until then
+        []
+    else
+        let
+            newCharge =
+                nextCharge charge
+        in
+            case newCharge of
+                Nothing ->
+                    [ { date = charge.start, amount = charge.amount } ]
+
+                Just newCharge ->
+                    { date = charge.start, amount = charge.amount } :: (projectCharge until newCharge)
+
+
+nextCharge : Charge -> Maybe Charge
+nextCharge c =
+    case c.freq of
+        Once ->
+            Nothing
+
+        Every n unit ->
+            let
+                newStart =
+                    Date.Extra.add unit n c.start
+            in
+                Just { c | start = newStart }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -83,9 +228,56 @@ update msg model =
         AddCharge ->
             let
                 newCharge =
-                    { name = "NewCharge", amount = 0.0, freq = Once }
+                    { name = "NewCharge", amount = 0.0, freq = Once, start = Date.Extra.fromParts 2016 Date.Jan 1 0 0 0 0 }
             in
-                ( { model | charges = newCharge :: model.charges }, Cmd.none )
+                ( { model | charges = model.charges ++ [ newCharge ] }, Cmd.none )
+
+        RenameCharge i newName ->
+            let
+                charges =
+                    replaceAt i model.charges (\c -> { c | name = newName })
+            in
+                ( { model | charges = charges }, Cmd.none )
+
+        ChangeChargeAmount i value ->
+            let
+                charges =
+                    replaceAt i model.charges (\c -> { c | amount = value })
+            in
+                ( { model | charges = charges }, Cmd.none )
+
+        ChangeChargeFreq i freq ->
+            let
+                charges =
+                    replaceAt i model.charges (\c -> { c | freq = freq })
+            in
+                ( { model | charges = charges }, Cmd.none )
+
+        RemoveCharge i ->
+            let
+                charges =
+                    removeAt i model.charges
+            in
+                ( { model | charges = charges }, Cmd.none )
+
+
+removeAt : Int -> List a -> List a
+removeAt i l =
+    List.take i l ++ List.drop (i + 1) l
+
+
+replaceAt : Int -> List a -> (a -> a) -> List a
+replaceAt index list func =
+    let
+        elem =
+            List.head <| List.drop index list
+    in
+        case elem of
+            Nothing ->
+                list
+
+            Just elem ->
+                List.take index list ++ [ func elem ] ++ List.drop (index + 1) list
 
 
 subscriptions : Model -> Sub Msg
@@ -98,17 +290,20 @@ serialize model =
     let
         unit u =
             case u of
-                Day ->
+                Date.Extra.Day ->
                     Encode.string "day"
 
-                Week ->
+                Date.Extra.Week ->
                     Encode.string "week"
 
-                Month ->
+                Date.Extra.Month ->
                     Encode.string "month"
 
-                Year ->
+                Date.Extra.Year ->
                     Encode.string "year"
+
+                _ ->
+                    Encode.string "month"
 
         freq f =
             case f of
@@ -123,6 +318,7 @@ serialize model =
                 [ ( "name", Encode.string c.name )
                 , ( "amount", Encode.float c.amount )
                 , ( "freq", freq c.freq )
+                , ( "start", Encode.string (Date.Extra.toIsoString c.start) )
                 ]
     in
         Encode.object [ ( "charges", Encode.list <| List.map charge model.charges ) ]
@@ -134,19 +330,19 @@ deserialize =
         unit u =
             case u of
                 "day" ->
-                    Day
+                    Date.Extra.Day
 
                 "week" ->
-                    Week
+                    Date.Extra.Week
 
                 "month" ->
-                    Month
+                    Date.Extra.Month
 
                 "year" ->
-                    Year
+                    Date.Extra.Year
 
                 _ ->
-                    Month
+                    Date.Extra.Month
 
         freq : String -> Int -> String -> Frequency
         freq f n u =
@@ -162,10 +358,11 @@ deserialize =
 
         charge : Decode.Decoder Charge
         charge =
-            Decode.object3 Charge
+            Decode.object4 Charge
                 ("name" := Decode.string)
                 ("amount" := Decode.float)
                 ("freq" := Decode.tuple3 freq Decode.string Decode.int Decode.string)
+                ("start" := Decode.object1 (Date.Extra.fromIsoString >> Maybe.withDefault (Date.Extra.fromCalendarDate 2016 Date.Jan 1)) Decode.string)
     in
         Decode.object1 Model
             ("charges" := Decode.list charge)
