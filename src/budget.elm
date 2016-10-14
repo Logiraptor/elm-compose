@@ -12,6 +12,8 @@ import String
 import Date
 import Date.Extra
 import Time
+import Viz.LineChart as LineChart
+import D3.Axis as Axis
 
 
 main : Program Never
@@ -72,12 +74,19 @@ view model =
     let
         futureBalances =
             projectBalance model.charges
+
+        chart =
+            LineChart.chart (.date >> Date.toTime) .balance
+                |> LineChart.xAxis (Axis.tickFormat (Date.fromTime >> Date.Extra.toFormattedString "MM-dd-YYYY"))
+                |> LineChart.yAxis (Axis.tickFormat (Basics.round >> toString >> (\amount -> "$" ++ amount)))
+                |> LineChart.width 800
     in
         Html.div []
             [ Html.h1 [] [ Html.text "Charges" ]
             , Html.button [ Html.Events.onClick AddCharge ] [ Html.text "Add Charge" ]
             , Html.ul [] (List.indexedMap viewCharge model.charges)
             , Html.hr [] []
+            , LineChart.render chart futureBalances
             , Html.ul [] (List.map viewBalance futureBalances)
             ]
 
@@ -180,7 +189,7 @@ projectBalance charges =
             List.concatMap (projectCharge endDate) charges
 
         sortedTransactions =
-            List.sortBy (.date >> Date.toTime >> Time.inMilliseconds) transactions
+            List.sortWith compareTransactions transactions
 
         addTransaction transaction balance =
             { date = transaction.date, balance = balance.balance + transaction.amount }
@@ -189,6 +198,25 @@ projectBalance charges =
             List.scanl addTransaction { date = Date.Extra.fromCalendarDate 2016 Date.Jan 1, balance = 0 } sortedTransactions
     in
         balances
+
+
+compareTransactions : Transaction -> Transaction -> Order
+compareTransactions a b =
+    case Date.Extra.compare a.date b.date of
+        EQ ->
+            (case compare a.amount b.amount of
+                GT ->
+                    LT
+
+                LT ->
+                    GT
+
+                EQ ->
+                    EQ
+            )
+
+        other ->
+            other
 
 
 projectCharge : Date.Date -> Charge -> List Transaction

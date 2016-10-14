@@ -8547,6 +8547,354 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
+var _elm_lang$svg$Svg$text = _elm_lang$virtual_dom$VirtualDom$text;
+var _elm_lang$svg$Svg$svgNamespace = A2(
+	_elm_lang$virtual_dom$VirtualDom$property,
+	'namespace',
+	_elm_lang$core$Json_Encode$string('http://www.w3.org/2000/svg'));
+var _elm_lang$svg$Svg$node = F3(
+	function (name, attributes, children) {
+		return A3(
+			_elm_lang$virtual_dom$VirtualDom$node,
+			name,
+			A2(_elm_lang$core$List_ops['::'], _elm_lang$svg$Svg$svgNamespace, attributes),
+			children);
+	});
+var _elm_lang$svg$Svg$svg = _elm_lang$svg$Svg$node('svg');
+var _elm_lang$svg$Svg$foreignObject = _elm_lang$svg$Svg$node('foreignObject');
+var _elm_lang$svg$Svg$animate = _elm_lang$svg$Svg$node('animate');
+var _elm_lang$svg$Svg$animateColor = _elm_lang$svg$Svg$node('animateColor');
+var _elm_lang$svg$Svg$animateMotion = _elm_lang$svg$Svg$node('animateMotion');
+var _elm_lang$svg$Svg$animateTransform = _elm_lang$svg$Svg$node('animateTransform');
+var _elm_lang$svg$Svg$mpath = _elm_lang$svg$Svg$node('mpath');
+var _elm_lang$svg$Svg$set = _elm_lang$svg$Svg$node('set');
+var _elm_lang$svg$Svg$a = _elm_lang$svg$Svg$node('a');
+var _elm_lang$svg$Svg$defs = _elm_lang$svg$Svg$node('defs');
+var _elm_lang$svg$Svg$g = _elm_lang$svg$Svg$node('g');
+var _elm_lang$svg$Svg$marker = _elm_lang$svg$Svg$node('marker');
+var _elm_lang$svg$Svg$mask = _elm_lang$svg$Svg$node('mask');
+var _elm_lang$svg$Svg$missingGlyph = _elm_lang$svg$Svg$node('missingGlyph');
+var _elm_lang$svg$Svg$pattern = _elm_lang$svg$Svg$node('pattern');
+var _elm_lang$svg$Svg$switch = _elm_lang$svg$Svg$node('switch');
+var _elm_lang$svg$Svg$symbol = _elm_lang$svg$Svg$node('symbol');
+var _elm_lang$svg$Svg$desc = _elm_lang$svg$Svg$node('desc');
+var _elm_lang$svg$Svg$metadata = _elm_lang$svg$Svg$node('metadata');
+var _elm_lang$svg$Svg$title = _elm_lang$svg$Svg$node('title');
+var _elm_lang$svg$Svg$feBlend = _elm_lang$svg$Svg$node('feBlend');
+var _elm_lang$svg$Svg$feColorMatrix = _elm_lang$svg$Svg$node('feColorMatrix');
+var _elm_lang$svg$Svg$feComponentTransfer = _elm_lang$svg$Svg$node('feComponentTransfer');
+var _elm_lang$svg$Svg$feComposite = _elm_lang$svg$Svg$node('feComposite');
+var _elm_lang$svg$Svg$feConvolveMatrix = _elm_lang$svg$Svg$node('feConvolveMatrix');
+var _elm_lang$svg$Svg$feDiffuseLighting = _elm_lang$svg$Svg$node('feDiffuseLighting');
+var _elm_lang$svg$Svg$feDisplacementMap = _elm_lang$svg$Svg$node('feDisplacementMap');
+var _elm_lang$svg$Svg$feFlood = _elm_lang$svg$Svg$node('feFlood');
+var _elm_lang$svg$Svg$feFuncA = _elm_lang$svg$Svg$node('feFuncA');
+var _elm_lang$svg$Svg$feFuncB = _elm_lang$svg$Svg$node('feFuncB');
+var _elm_lang$svg$Svg$feFuncG = _elm_lang$svg$Svg$node('feFuncG');
+var _elm_lang$svg$Svg$feFuncR = _elm_lang$svg$Svg$node('feFuncR');
+var _elm_lang$svg$Svg$feGaussianBlur = _elm_lang$svg$Svg$node('feGaussianBlur');
+var _elm_lang$svg$Svg$feImage = _elm_lang$svg$Svg$node('feImage');
+var _elm_lang$svg$Svg$feMerge = _elm_lang$svg$Svg$node('feMerge');
+var _elm_lang$svg$Svg$feMergeNode = _elm_lang$svg$Svg$node('feMergeNode');
+var _elm_lang$svg$Svg$feMorphology = _elm_lang$svg$Svg$node('feMorphology');
+var _elm_lang$svg$Svg$feOffset = _elm_lang$svg$Svg$node('feOffset');
+var _elm_lang$svg$Svg$feSpecularLighting = _elm_lang$svg$Svg$node('feSpecularLighting');
+var _elm_lang$svg$Svg$feTile = _elm_lang$svg$Svg$node('feTile');
+var _elm_lang$svg$Svg$feTurbulence = _elm_lang$svg$Svg$node('feTurbulence');
+var _elm_lang$svg$Svg$font = _elm_lang$svg$Svg$node('font');
+var _elm_lang$svg$Svg$fontFace = _elm_lang$svg$Svg$node('fontFace');
+var _elm_lang$svg$Svg$fontFaceFormat = _elm_lang$svg$Svg$node('fontFaceFormat');
+var _elm_lang$svg$Svg$fontFaceName = _elm_lang$svg$Svg$node('fontFaceName');
+var _elm_lang$svg$Svg$fontFaceSrc = _elm_lang$svg$Svg$node('fontFaceSrc');
+var _elm_lang$svg$Svg$fontFaceUri = _elm_lang$svg$Svg$node('fontFaceUri');
+var _elm_lang$svg$Svg$hkern = _elm_lang$svg$Svg$node('hkern');
+var _elm_lang$svg$Svg$vkern = _elm_lang$svg$Svg$node('vkern');
+var _elm_lang$svg$Svg$linearGradient = _elm_lang$svg$Svg$node('linearGradient');
+var _elm_lang$svg$Svg$radialGradient = _elm_lang$svg$Svg$node('radialGradient');
+var _elm_lang$svg$Svg$stop = _elm_lang$svg$Svg$node('stop');
+var _elm_lang$svg$Svg$circle = _elm_lang$svg$Svg$node('circle');
+var _elm_lang$svg$Svg$ellipse = _elm_lang$svg$Svg$node('ellipse');
+var _elm_lang$svg$Svg$image = _elm_lang$svg$Svg$node('image');
+var _elm_lang$svg$Svg$line = _elm_lang$svg$Svg$node('line');
+var _elm_lang$svg$Svg$path = _elm_lang$svg$Svg$node('path');
+var _elm_lang$svg$Svg$polygon = _elm_lang$svg$Svg$node('polygon');
+var _elm_lang$svg$Svg$polyline = _elm_lang$svg$Svg$node('polyline');
+var _elm_lang$svg$Svg$rect = _elm_lang$svg$Svg$node('rect');
+var _elm_lang$svg$Svg$use = _elm_lang$svg$Svg$node('use');
+var _elm_lang$svg$Svg$feDistantLight = _elm_lang$svg$Svg$node('feDistantLight');
+var _elm_lang$svg$Svg$fePointLight = _elm_lang$svg$Svg$node('fePointLight');
+var _elm_lang$svg$Svg$feSpotLight = _elm_lang$svg$Svg$node('feSpotLight');
+var _elm_lang$svg$Svg$altGlyph = _elm_lang$svg$Svg$node('altGlyph');
+var _elm_lang$svg$Svg$altGlyphDef = _elm_lang$svg$Svg$node('altGlyphDef');
+var _elm_lang$svg$Svg$altGlyphItem = _elm_lang$svg$Svg$node('altGlyphItem');
+var _elm_lang$svg$Svg$glyph = _elm_lang$svg$Svg$node('glyph');
+var _elm_lang$svg$Svg$glyphRef = _elm_lang$svg$Svg$node('glyphRef');
+var _elm_lang$svg$Svg$textPath = _elm_lang$svg$Svg$node('textPath');
+var _elm_lang$svg$Svg$text$ = _elm_lang$svg$Svg$node('text');
+var _elm_lang$svg$Svg$tref = _elm_lang$svg$Svg$node('tref');
+var _elm_lang$svg$Svg$tspan = _elm_lang$svg$Svg$node('tspan');
+var _elm_lang$svg$Svg$clipPath = _elm_lang$svg$Svg$node('clipPath');
+var _elm_lang$svg$Svg$colorProfile = _elm_lang$svg$Svg$node('colorProfile');
+var _elm_lang$svg$Svg$cursor = _elm_lang$svg$Svg$node('cursor');
+var _elm_lang$svg$Svg$filter = _elm_lang$svg$Svg$node('filter');
+var _elm_lang$svg$Svg$script = _elm_lang$svg$Svg$node('script');
+var _elm_lang$svg$Svg$style = _elm_lang$svg$Svg$node('style');
+var _elm_lang$svg$Svg$view = _elm_lang$svg$Svg$node('view');
+
+var _elm_lang$svg$Svg_Attributes$writingMode = _elm_lang$virtual_dom$VirtualDom$attribute('writing-mode');
+var _elm_lang$svg$Svg_Attributes$wordSpacing = _elm_lang$virtual_dom$VirtualDom$attribute('word-spacing');
+var _elm_lang$svg$Svg_Attributes$visibility = _elm_lang$virtual_dom$VirtualDom$attribute('visibility');
+var _elm_lang$svg$Svg_Attributes$unicodeBidi = _elm_lang$virtual_dom$VirtualDom$attribute('unicode-bidi');
+var _elm_lang$svg$Svg_Attributes$textRendering = _elm_lang$virtual_dom$VirtualDom$attribute('text-rendering');
+var _elm_lang$svg$Svg_Attributes$textDecoration = _elm_lang$virtual_dom$VirtualDom$attribute('text-decoration');
+var _elm_lang$svg$Svg_Attributes$textAnchor = _elm_lang$virtual_dom$VirtualDom$attribute('text-anchor');
+var _elm_lang$svg$Svg_Attributes$stroke = _elm_lang$virtual_dom$VirtualDom$attribute('stroke');
+var _elm_lang$svg$Svg_Attributes$strokeWidth = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-width');
+var _elm_lang$svg$Svg_Attributes$strokeOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-opacity');
+var _elm_lang$svg$Svg_Attributes$strokeMiterlimit = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-miterlimit');
+var _elm_lang$svg$Svg_Attributes$strokeLinejoin = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-linejoin');
+var _elm_lang$svg$Svg_Attributes$strokeLinecap = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-linecap');
+var _elm_lang$svg$Svg_Attributes$strokeDashoffset = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-dashoffset');
+var _elm_lang$svg$Svg_Attributes$strokeDasharray = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-dasharray');
+var _elm_lang$svg$Svg_Attributes$stopOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('stop-opacity');
+var _elm_lang$svg$Svg_Attributes$stopColor = _elm_lang$virtual_dom$VirtualDom$attribute('stop-color');
+var _elm_lang$svg$Svg_Attributes$shapeRendering = _elm_lang$virtual_dom$VirtualDom$attribute('shape-rendering');
+var _elm_lang$svg$Svg_Attributes$pointerEvents = _elm_lang$virtual_dom$VirtualDom$attribute('pointer-events');
+var _elm_lang$svg$Svg_Attributes$overflow = _elm_lang$virtual_dom$VirtualDom$attribute('overflow');
+var _elm_lang$svg$Svg_Attributes$opacity = _elm_lang$virtual_dom$VirtualDom$attribute('opacity');
+var _elm_lang$svg$Svg_Attributes$mask = _elm_lang$virtual_dom$VirtualDom$attribute('mask');
+var _elm_lang$svg$Svg_Attributes$markerStart = _elm_lang$virtual_dom$VirtualDom$attribute('marker-start');
+var _elm_lang$svg$Svg_Attributes$markerMid = _elm_lang$virtual_dom$VirtualDom$attribute('marker-mid');
+var _elm_lang$svg$Svg_Attributes$markerEnd = _elm_lang$virtual_dom$VirtualDom$attribute('marker-end');
+var _elm_lang$svg$Svg_Attributes$lightingColor = _elm_lang$virtual_dom$VirtualDom$attribute('lighting-color');
+var _elm_lang$svg$Svg_Attributes$letterSpacing = _elm_lang$virtual_dom$VirtualDom$attribute('letter-spacing');
+var _elm_lang$svg$Svg_Attributes$kerning = _elm_lang$virtual_dom$VirtualDom$attribute('kerning');
+var _elm_lang$svg$Svg_Attributes$imageRendering = _elm_lang$virtual_dom$VirtualDom$attribute('image-rendering');
+var _elm_lang$svg$Svg_Attributes$glyphOrientationVertical = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-orientation-vertical');
+var _elm_lang$svg$Svg_Attributes$glyphOrientationHorizontal = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-orientation-horizontal');
+var _elm_lang$svg$Svg_Attributes$fontWeight = _elm_lang$virtual_dom$VirtualDom$attribute('font-weight');
+var _elm_lang$svg$Svg_Attributes$fontVariant = _elm_lang$virtual_dom$VirtualDom$attribute('font-variant');
+var _elm_lang$svg$Svg_Attributes$fontStyle = _elm_lang$virtual_dom$VirtualDom$attribute('font-style');
+var _elm_lang$svg$Svg_Attributes$fontStretch = _elm_lang$virtual_dom$VirtualDom$attribute('font-stretch');
+var _elm_lang$svg$Svg_Attributes$fontSize = _elm_lang$virtual_dom$VirtualDom$attribute('font-size');
+var _elm_lang$svg$Svg_Attributes$fontSizeAdjust = _elm_lang$virtual_dom$VirtualDom$attribute('font-size-adjust');
+var _elm_lang$svg$Svg_Attributes$fontFamily = _elm_lang$virtual_dom$VirtualDom$attribute('font-family');
+var _elm_lang$svg$Svg_Attributes$floodOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('flood-opacity');
+var _elm_lang$svg$Svg_Attributes$floodColor = _elm_lang$virtual_dom$VirtualDom$attribute('flood-color');
+var _elm_lang$svg$Svg_Attributes$filter = _elm_lang$virtual_dom$VirtualDom$attribute('filter');
+var _elm_lang$svg$Svg_Attributes$fill = _elm_lang$virtual_dom$VirtualDom$attribute('fill');
+var _elm_lang$svg$Svg_Attributes$fillRule = _elm_lang$virtual_dom$VirtualDom$attribute('fill-rule');
+var _elm_lang$svg$Svg_Attributes$fillOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('fill-opacity');
+var _elm_lang$svg$Svg_Attributes$enableBackground = _elm_lang$virtual_dom$VirtualDom$attribute('enable-background');
+var _elm_lang$svg$Svg_Attributes$dominantBaseline = _elm_lang$virtual_dom$VirtualDom$attribute('dominant-baseline');
+var _elm_lang$svg$Svg_Attributes$display = _elm_lang$virtual_dom$VirtualDom$attribute('display');
+var _elm_lang$svg$Svg_Attributes$direction = _elm_lang$virtual_dom$VirtualDom$attribute('direction');
+var _elm_lang$svg$Svg_Attributes$cursor = _elm_lang$virtual_dom$VirtualDom$attribute('cursor');
+var _elm_lang$svg$Svg_Attributes$color = _elm_lang$virtual_dom$VirtualDom$attribute('color');
+var _elm_lang$svg$Svg_Attributes$colorRendering = _elm_lang$virtual_dom$VirtualDom$attribute('color-rendering');
+var _elm_lang$svg$Svg_Attributes$colorProfile = _elm_lang$virtual_dom$VirtualDom$attribute('color-profile');
+var _elm_lang$svg$Svg_Attributes$colorInterpolation = _elm_lang$virtual_dom$VirtualDom$attribute('color-interpolation');
+var _elm_lang$svg$Svg_Attributes$colorInterpolationFilters = _elm_lang$virtual_dom$VirtualDom$attribute('color-interpolation-filters');
+var _elm_lang$svg$Svg_Attributes$clip = _elm_lang$virtual_dom$VirtualDom$attribute('clip');
+var _elm_lang$svg$Svg_Attributes$clipRule = _elm_lang$virtual_dom$VirtualDom$attribute('clip-rule');
+var _elm_lang$svg$Svg_Attributes$clipPath = _elm_lang$virtual_dom$VirtualDom$attribute('clip-path');
+var _elm_lang$svg$Svg_Attributes$baselineShift = _elm_lang$virtual_dom$VirtualDom$attribute('baseline-shift');
+var _elm_lang$svg$Svg_Attributes$alignmentBaseline = _elm_lang$virtual_dom$VirtualDom$attribute('alignment-baseline');
+var _elm_lang$svg$Svg_Attributes$zoomAndPan = _elm_lang$virtual_dom$VirtualDom$attribute('zoomAndPan');
+var _elm_lang$svg$Svg_Attributes$z = _elm_lang$virtual_dom$VirtualDom$attribute('z');
+var _elm_lang$svg$Svg_Attributes$yChannelSelector = _elm_lang$virtual_dom$VirtualDom$attribute('yChannelSelector');
+var _elm_lang$svg$Svg_Attributes$y2 = _elm_lang$virtual_dom$VirtualDom$attribute('y2');
+var _elm_lang$svg$Svg_Attributes$y1 = _elm_lang$virtual_dom$VirtualDom$attribute('y1');
+var _elm_lang$svg$Svg_Attributes$y = _elm_lang$virtual_dom$VirtualDom$attribute('y');
+var _elm_lang$svg$Svg_Attributes$xmlSpace = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:space');
+var _elm_lang$svg$Svg_Attributes$xmlLang = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:lang');
+var _elm_lang$svg$Svg_Attributes$xmlBase = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:base');
+var _elm_lang$svg$Svg_Attributes$xlinkType = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:type');
+var _elm_lang$svg$Svg_Attributes$xlinkTitle = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:title');
+var _elm_lang$svg$Svg_Attributes$xlinkShow = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:show');
+var _elm_lang$svg$Svg_Attributes$xlinkRole = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:role');
+var _elm_lang$svg$Svg_Attributes$xlinkHref = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:href');
+var _elm_lang$svg$Svg_Attributes$xlinkArcrole = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:arcrole');
+var _elm_lang$svg$Svg_Attributes$xlinkActuate = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:actuate');
+var _elm_lang$svg$Svg_Attributes$xChannelSelector = _elm_lang$virtual_dom$VirtualDom$attribute('xChannelSelector');
+var _elm_lang$svg$Svg_Attributes$x2 = _elm_lang$virtual_dom$VirtualDom$attribute('x2');
+var _elm_lang$svg$Svg_Attributes$x1 = _elm_lang$virtual_dom$VirtualDom$attribute('x1');
+var _elm_lang$svg$Svg_Attributes$xHeight = _elm_lang$virtual_dom$VirtualDom$attribute('x-height');
+var _elm_lang$svg$Svg_Attributes$x = _elm_lang$virtual_dom$VirtualDom$attribute('x');
+var _elm_lang$svg$Svg_Attributes$widths = _elm_lang$virtual_dom$VirtualDom$attribute('widths');
+var _elm_lang$svg$Svg_Attributes$width = _elm_lang$virtual_dom$VirtualDom$attribute('width');
+var _elm_lang$svg$Svg_Attributes$viewTarget = _elm_lang$virtual_dom$VirtualDom$attribute('viewTarget');
+var _elm_lang$svg$Svg_Attributes$viewBox = _elm_lang$virtual_dom$VirtualDom$attribute('viewBox');
+var _elm_lang$svg$Svg_Attributes$vertOriginY = _elm_lang$virtual_dom$VirtualDom$attribute('vert-origin-y');
+var _elm_lang$svg$Svg_Attributes$vertOriginX = _elm_lang$virtual_dom$VirtualDom$attribute('vert-origin-x');
+var _elm_lang$svg$Svg_Attributes$vertAdvY = _elm_lang$virtual_dom$VirtualDom$attribute('vert-adv-y');
+var _elm_lang$svg$Svg_Attributes$version = _elm_lang$virtual_dom$VirtualDom$attribute('version');
+var _elm_lang$svg$Svg_Attributes$values = _elm_lang$virtual_dom$VirtualDom$attribute('values');
+var _elm_lang$svg$Svg_Attributes$vMathematical = _elm_lang$virtual_dom$VirtualDom$attribute('v-mathematical');
+var _elm_lang$svg$Svg_Attributes$vIdeographic = _elm_lang$virtual_dom$VirtualDom$attribute('v-ideographic');
+var _elm_lang$svg$Svg_Attributes$vHanging = _elm_lang$virtual_dom$VirtualDom$attribute('v-hanging');
+var _elm_lang$svg$Svg_Attributes$vAlphabetic = _elm_lang$virtual_dom$VirtualDom$attribute('v-alphabetic');
+var _elm_lang$svg$Svg_Attributes$unitsPerEm = _elm_lang$virtual_dom$VirtualDom$attribute('units-per-em');
+var _elm_lang$svg$Svg_Attributes$unicodeRange = _elm_lang$virtual_dom$VirtualDom$attribute('unicode-range');
+var _elm_lang$svg$Svg_Attributes$unicode = _elm_lang$virtual_dom$VirtualDom$attribute('unicode');
+var _elm_lang$svg$Svg_Attributes$underlineThickness = _elm_lang$virtual_dom$VirtualDom$attribute('underline-thickness');
+var _elm_lang$svg$Svg_Attributes$underlinePosition = _elm_lang$virtual_dom$VirtualDom$attribute('underline-position');
+var _elm_lang$svg$Svg_Attributes$u2 = _elm_lang$virtual_dom$VirtualDom$attribute('u2');
+var _elm_lang$svg$Svg_Attributes$u1 = _elm_lang$virtual_dom$VirtualDom$attribute('u1');
+var _elm_lang$svg$Svg_Attributes$type$ = _elm_lang$virtual_dom$VirtualDom$attribute('type');
+var _elm_lang$svg$Svg_Attributes$transform = _elm_lang$virtual_dom$VirtualDom$attribute('transform');
+var _elm_lang$svg$Svg_Attributes$to = _elm_lang$virtual_dom$VirtualDom$attribute('to');
+var _elm_lang$svg$Svg_Attributes$title = _elm_lang$virtual_dom$VirtualDom$attribute('title');
+var _elm_lang$svg$Svg_Attributes$textLength = _elm_lang$virtual_dom$VirtualDom$attribute('textLength');
+var _elm_lang$svg$Svg_Attributes$targetY = _elm_lang$virtual_dom$VirtualDom$attribute('targetY');
+var _elm_lang$svg$Svg_Attributes$targetX = _elm_lang$virtual_dom$VirtualDom$attribute('targetX');
+var _elm_lang$svg$Svg_Attributes$target = _elm_lang$virtual_dom$VirtualDom$attribute('target');
+var _elm_lang$svg$Svg_Attributes$tableValues = _elm_lang$virtual_dom$VirtualDom$attribute('tableValues');
+var _elm_lang$svg$Svg_Attributes$systemLanguage = _elm_lang$virtual_dom$VirtualDom$attribute('systemLanguage');
+var _elm_lang$svg$Svg_Attributes$surfaceScale = _elm_lang$virtual_dom$VirtualDom$attribute('surfaceScale');
+var _elm_lang$svg$Svg_Attributes$style = _elm_lang$virtual_dom$VirtualDom$attribute('style');
+var _elm_lang$svg$Svg_Attributes$string = _elm_lang$virtual_dom$VirtualDom$attribute('string');
+var _elm_lang$svg$Svg_Attributes$strikethroughThickness = _elm_lang$virtual_dom$VirtualDom$attribute('strikethrough-thickness');
+var _elm_lang$svg$Svg_Attributes$strikethroughPosition = _elm_lang$virtual_dom$VirtualDom$attribute('strikethrough-position');
+var _elm_lang$svg$Svg_Attributes$stitchTiles = _elm_lang$virtual_dom$VirtualDom$attribute('stitchTiles');
+var _elm_lang$svg$Svg_Attributes$stemv = _elm_lang$virtual_dom$VirtualDom$attribute('stemv');
+var _elm_lang$svg$Svg_Attributes$stemh = _elm_lang$virtual_dom$VirtualDom$attribute('stemh');
+var _elm_lang$svg$Svg_Attributes$stdDeviation = _elm_lang$virtual_dom$VirtualDom$attribute('stdDeviation');
+var _elm_lang$svg$Svg_Attributes$startOffset = _elm_lang$virtual_dom$VirtualDom$attribute('startOffset');
+var _elm_lang$svg$Svg_Attributes$spreadMethod = _elm_lang$virtual_dom$VirtualDom$attribute('spreadMethod');
+var _elm_lang$svg$Svg_Attributes$speed = _elm_lang$virtual_dom$VirtualDom$attribute('speed');
+var _elm_lang$svg$Svg_Attributes$specularExponent = _elm_lang$virtual_dom$VirtualDom$attribute('specularExponent');
+var _elm_lang$svg$Svg_Attributes$specularConstant = _elm_lang$virtual_dom$VirtualDom$attribute('specularConstant');
+var _elm_lang$svg$Svg_Attributes$spacing = _elm_lang$virtual_dom$VirtualDom$attribute('spacing');
+var _elm_lang$svg$Svg_Attributes$slope = _elm_lang$virtual_dom$VirtualDom$attribute('slope');
+var _elm_lang$svg$Svg_Attributes$seed = _elm_lang$virtual_dom$VirtualDom$attribute('seed');
+var _elm_lang$svg$Svg_Attributes$scale = _elm_lang$virtual_dom$VirtualDom$attribute('scale');
+var _elm_lang$svg$Svg_Attributes$ry = _elm_lang$virtual_dom$VirtualDom$attribute('ry');
+var _elm_lang$svg$Svg_Attributes$rx = _elm_lang$virtual_dom$VirtualDom$attribute('rx');
+var _elm_lang$svg$Svg_Attributes$rotate = _elm_lang$virtual_dom$VirtualDom$attribute('rotate');
+var _elm_lang$svg$Svg_Attributes$result = _elm_lang$virtual_dom$VirtualDom$attribute('result');
+var _elm_lang$svg$Svg_Attributes$restart = _elm_lang$virtual_dom$VirtualDom$attribute('restart');
+var _elm_lang$svg$Svg_Attributes$requiredFeatures = _elm_lang$virtual_dom$VirtualDom$attribute('requiredFeatures');
+var _elm_lang$svg$Svg_Attributes$requiredExtensions = _elm_lang$virtual_dom$VirtualDom$attribute('requiredExtensions');
+var _elm_lang$svg$Svg_Attributes$repeatDur = _elm_lang$virtual_dom$VirtualDom$attribute('repeatDur');
+var _elm_lang$svg$Svg_Attributes$repeatCount = _elm_lang$virtual_dom$VirtualDom$attribute('repeatCount');
+var _elm_lang$svg$Svg_Attributes$renderingIntent = _elm_lang$virtual_dom$VirtualDom$attribute('rendering-intent');
+var _elm_lang$svg$Svg_Attributes$refY = _elm_lang$virtual_dom$VirtualDom$attribute('refY');
+var _elm_lang$svg$Svg_Attributes$refX = _elm_lang$virtual_dom$VirtualDom$attribute('refX');
+var _elm_lang$svg$Svg_Attributes$radius = _elm_lang$virtual_dom$VirtualDom$attribute('radius');
+var _elm_lang$svg$Svg_Attributes$r = _elm_lang$virtual_dom$VirtualDom$attribute('r');
+var _elm_lang$svg$Svg_Attributes$primitiveUnits = _elm_lang$virtual_dom$VirtualDom$attribute('primitiveUnits');
+var _elm_lang$svg$Svg_Attributes$preserveAspectRatio = _elm_lang$virtual_dom$VirtualDom$attribute('preserveAspectRatio');
+var _elm_lang$svg$Svg_Attributes$preserveAlpha = _elm_lang$virtual_dom$VirtualDom$attribute('preserveAlpha');
+var _elm_lang$svg$Svg_Attributes$pointsAtZ = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtZ');
+var _elm_lang$svg$Svg_Attributes$pointsAtY = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtY');
+var _elm_lang$svg$Svg_Attributes$pointsAtX = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtX');
+var _elm_lang$svg$Svg_Attributes$points = _elm_lang$virtual_dom$VirtualDom$attribute('points');
+var _elm_lang$svg$Svg_Attributes$pointOrder = _elm_lang$virtual_dom$VirtualDom$attribute('point-order');
+var _elm_lang$svg$Svg_Attributes$patternUnits = _elm_lang$virtual_dom$VirtualDom$attribute('patternUnits');
+var _elm_lang$svg$Svg_Attributes$patternTransform = _elm_lang$virtual_dom$VirtualDom$attribute('patternTransform');
+var _elm_lang$svg$Svg_Attributes$patternContentUnits = _elm_lang$virtual_dom$VirtualDom$attribute('patternContentUnits');
+var _elm_lang$svg$Svg_Attributes$pathLength = _elm_lang$virtual_dom$VirtualDom$attribute('pathLength');
+var _elm_lang$svg$Svg_Attributes$path = _elm_lang$virtual_dom$VirtualDom$attribute('path');
+var _elm_lang$svg$Svg_Attributes$panose1 = _elm_lang$virtual_dom$VirtualDom$attribute('panose-1');
+var _elm_lang$svg$Svg_Attributes$overlineThickness = _elm_lang$virtual_dom$VirtualDom$attribute('overline-thickness');
+var _elm_lang$svg$Svg_Attributes$overlinePosition = _elm_lang$virtual_dom$VirtualDom$attribute('overline-position');
+var _elm_lang$svg$Svg_Attributes$origin = _elm_lang$virtual_dom$VirtualDom$attribute('origin');
+var _elm_lang$svg$Svg_Attributes$orientation = _elm_lang$virtual_dom$VirtualDom$attribute('orientation');
+var _elm_lang$svg$Svg_Attributes$orient = _elm_lang$virtual_dom$VirtualDom$attribute('orient');
+var _elm_lang$svg$Svg_Attributes$order = _elm_lang$virtual_dom$VirtualDom$attribute('order');
+var _elm_lang$svg$Svg_Attributes$operator = _elm_lang$virtual_dom$VirtualDom$attribute('operator');
+var _elm_lang$svg$Svg_Attributes$offset = _elm_lang$virtual_dom$VirtualDom$attribute('offset');
+var _elm_lang$svg$Svg_Attributes$numOctaves = _elm_lang$virtual_dom$VirtualDom$attribute('numOctaves');
+var _elm_lang$svg$Svg_Attributes$name = _elm_lang$virtual_dom$VirtualDom$attribute('name');
+var _elm_lang$svg$Svg_Attributes$mode = _elm_lang$virtual_dom$VirtualDom$attribute('mode');
+var _elm_lang$svg$Svg_Attributes$min = _elm_lang$virtual_dom$VirtualDom$attribute('min');
+var _elm_lang$svg$Svg_Attributes$method = _elm_lang$virtual_dom$VirtualDom$attribute('method');
+var _elm_lang$svg$Svg_Attributes$media = _elm_lang$virtual_dom$VirtualDom$attribute('media');
+var _elm_lang$svg$Svg_Attributes$max = _elm_lang$virtual_dom$VirtualDom$attribute('max');
+var _elm_lang$svg$Svg_Attributes$mathematical = _elm_lang$virtual_dom$VirtualDom$attribute('mathematical');
+var _elm_lang$svg$Svg_Attributes$maskUnits = _elm_lang$virtual_dom$VirtualDom$attribute('maskUnits');
+var _elm_lang$svg$Svg_Attributes$maskContentUnits = _elm_lang$virtual_dom$VirtualDom$attribute('maskContentUnits');
+var _elm_lang$svg$Svg_Attributes$markerWidth = _elm_lang$virtual_dom$VirtualDom$attribute('markerWidth');
+var _elm_lang$svg$Svg_Attributes$markerUnits = _elm_lang$virtual_dom$VirtualDom$attribute('markerUnits');
+var _elm_lang$svg$Svg_Attributes$markerHeight = _elm_lang$virtual_dom$VirtualDom$attribute('markerHeight');
+var _elm_lang$svg$Svg_Attributes$local = _elm_lang$virtual_dom$VirtualDom$attribute('local');
+var _elm_lang$svg$Svg_Attributes$limitingConeAngle = _elm_lang$virtual_dom$VirtualDom$attribute('limitingConeAngle');
+var _elm_lang$svg$Svg_Attributes$lengthAdjust = _elm_lang$virtual_dom$VirtualDom$attribute('lengthAdjust');
+var _elm_lang$svg$Svg_Attributes$lang = _elm_lang$virtual_dom$VirtualDom$attribute('lang');
+var _elm_lang$svg$Svg_Attributes$keyTimes = _elm_lang$virtual_dom$VirtualDom$attribute('keyTimes');
+var _elm_lang$svg$Svg_Attributes$keySplines = _elm_lang$virtual_dom$VirtualDom$attribute('keySplines');
+var _elm_lang$svg$Svg_Attributes$keyPoints = _elm_lang$virtual_dom$VirtualDom$attribute('keyPoints');
+var _elm_lang$svg$Svg_Attributes$kernelUnitLength = _elm_lang$virtual_dom$VirtualDom$attribute('kernelUnitLength');
+var _elm_lang$svg$Svg_Attributes$kernelMatrix = _elm_lang$virtual_dom$VirtualDom$attribute('kernelMatrix');
+var _elm_lang$svg$Svg_Attributes$k4 = _elm_lang$virtual_dom$VirtualDom$attribute('k4');
+var _elm_lang$svg$Svg_Attributes$k3 = _elm_lang$virtual_dom$VirtualDom$attribute('k3');
+var _elm_lang$svg$Svg_Attributes$k2 = _elm_lang$virtual_dom$VirtualDom$attribute('k2');
+var _elm_lang$svg$Svg_Attributes$k1 = _elm_lang$virtual_dom$VirtualDom$attribute('k1');
+var _elm_lang$svg$Svg_Attributes$k = _elm_lang$virtual_dom$VirtualDom$attribute('k');
+var _elm_lang$svg$Svg_Attributes$intercept = _elm_lang$virtual_dom$VirtualDom$attribute('intercept');
+var _elm_lang$svg$Svg_Attributes$in2 = _elm_lang$virtual_dom$VirtualDom$attribute('in2');
+var _elm_lang$svg$Svg_Attributes$in$ = _elm_lang$virtual_dom$VirtualDom$attribute('in');
+var _elm_lang$svg$Svg_Attributes$ideographic = _elm_lang$virtual_dom$VirtualDom$attribute('ideographic');
+var _elm_lang$svg$Svg_Attributes$id = _elm_lang$virtual_dom$VirtualDom$attribute('id');
+var _elm_lang$svg$Svg_Attributes$horizOriginY = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-origin-y');
+var _elm_lang$svg$Svg_Attributes$horizOriginX = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-origin-x');
+var _elm_lang$svg$Svg_Attributes$horizAdvX = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-adv-x');
+var _elm_lang$svg$Svg_Attributes$height = _elm_lang$virtual_dom$VirtualDom$attribute('height');
+var _elm_lang$svg$Svg_Attributes$hanging = _elm_lang$virtual_dom$VirtualDom$attribute('hanging');
+var _elm_lang$svg$Svg_Attributes$gradientUnits = _elm_lang$virtual_dom$VirtualDom$attribute('gradientUnits');
+var _elm_lang$svg$Svg_Attributes$gradientTransform = _elm_lang$virtual_dom$VirtualDom$attribute('gradientTransform');
+var _elm_lang$svg$Svg_Attributes$glyphRef = _elm_lang$virtual_dom$VirtualDom$attribute('glyphRef');
+var _elm_lang$svg$Svg_Attributes$glyphName = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-name');
+var _elm_lang$svg$Svg_Attributes$g2 = _elm_lang$virtual_dom$VirtualDom$attribute('g2');
+var _elm_lang$svg$Svg_Attributes$g1 = _elm_lang$virtual_dom$VirtualDom$attribute('g1');
+var _elm_lang$svg$Svg_Attributes$fy = _elm_lang$virtual_dom$VirtualDom$attribute('fy');
+var _elm_lang$svg$Svg_Attributes$fx = _elm_lang$virtual_dom$VirtualDom$attribute('fx');
+var _elm_lang$svg$Svg_Attributes$from = _elm_lang$virtual_dom$VirtualDom$attribute('from');
+var _elm_lang$svg$Svg_Attributes$format = _elm_lang$virtual_dom$VirtualDom$attribute('format');
+var _elm_lang$svg$Svg_Attributes$filterUnits = _elm_lang$virtual_dom$VirtualDom$attribute('filterUnits');
+var _elm_lang$svg$Svg_Attributes$filterRes = _elm_lang$virtual_dom$VirtualDom$attribute('filterRes');
+var _elm_lang$svg$Svg_Attributes$externalResourcesRequired = _elm_lang$virtual_dom$VirtualDom$attribute('externalResourcesRequired');
+var _elm_lang$svg$Svg_Attributes$exponent = _elm_lang$virtual_dom$VirtualDom$attribute('exponent');
+var _elm_lang$svg$Svg_Attributes$end = _elm_lang$virtual_dom$VirtualDom$attribute('end');
+var _elm_lang$svg$Svg_Attributes$elevation = _elm_lang$virtual_dom$VirtualDom$attribute('elevation');
+var _elm_lang$svg$Svg_Attributes$edgeMode = _elm_lang$virtual_dom$VirtualDom$attribute('edgeMode');
+var _elm_lang$svg$Svg_Attributes$dy = _elm_lang$virtual_dom$VirtualDom$attribute('dy');
+var _elm_lang$svg$Svg_Attributes$dx = _elm_lang$virtual_dom$VirtualDom$attribute('dx');
+var _elm_lang$svg$Svg_Attributes$dur = _elm_lang$virtual_dom$VirtualDom$attribute('dur');
+var _elm_lang$svg$Svg_Attributes$divisor = _elm_lang$virtual_dom$VirtualDom$attribute('divisor');
+var _elm_lang$svg$Svg_Attributes$diffuseConstant = _elm_lang$virtual_dom$VirtualDom$attribute('diffuseConstant');
+var _elm_lang$svg$Svg_Attributes$descent = _elm_lang$virtual_dom$VirtualDom$attribute('descent');
+var _elm_lang$svg$Svg_Attributes$decelerate = _elm_lang$virtual_dom$VirtualDom$attribute('decelerate');
+var _elm_lang$svg$Svg_Attributes$d = _elm_lang$virtual_dom$VirtualDom$attribute('d');
+var _elm_lang$svg$Svg_Attributes$cy = _elm_lang$virtual_dom$VirtualDom$attribute('cy');
+var _elm_lang$svg$Svg_Attributes$cx = _elm_lang$virtual_dom$VirtualDom$attribute('cx');
+var _elm_lang$svg$Svg_Attributes$contentStyleType = _elm_lang$virtual_dom$VirtualDom$attribute('contentStyleType');
+var _elm_lang$svg$Svg_Attributes$contentScriptType = _elm_lang$virtual_dom$VirtualDom$attribute('contentScriptType');
+var _elm_lang$svg$Svg_Attributes$clipPathUnits = _elm_lang$virtual_dom$VirtualDom$attribute('clipPathUnits');
+var _elm_lang$svg$Svg_Attributes$class = _elm_lang$virtual_dom$VirtualDom$attribute('class');
+var _elm_lang$svg$Svg_Attributes$capHeight = _elm_lang$virtual_dom$VirtualDom$attribute('cap-height');
+var _elm_lang$svg$Svg_Attributes$calcMode = _elm_lang$virtual_dom$VirtualDom$attribute('calcMode');
+var _elm_lang$svg$Svg_Attributes$by = _elm_lang$virtual_dom$VirtualDom$attribute('by');
+var _elm_lang$svg$Svg_Attributes$bias = _elm_lang$virtual_dom$VirtualDom$attribute('bias');
+var _elm_lang$svg$Svg_Attributes$begin = _elm_lang$virtual_dom$VirtualDom$attribute('begin');
+var _elm_lang$svg$Svg_Attributes$bbox = _elm_lang$virtual_dom$VirtualDom$attribute('bbox');
+var _elm_lang$svg$Svg_Attributes$baseProfile = _elm_lang$virtual_dom$VirtualDom$attribute('baseProfile');
+var _elm_lang$svg$Svg_Attributes$baseFrequency = _elm_lang$virtual_dom$VirtualDom$attribute('baseFrequency');
+var _elm_lang$svg$Svg_Attributes$azimuth = _elm_lang$virtual_dom$VirtualDom$attribute('azimuth');
+var _elm_lang$svg$Svg_Attributes$autoReverse = _elm_lang$virtual_dom$VirtualDom$attribute('autoReverse');
+var _elm_lang$svg$Svg_Attributes$attributeType = _elm_lang$virtual_dom$VirtualDom$attribute('attributeType');
+var _elm_lang$svg$Svg_Attributes$attributeName = _elm_lang$virtual_dom$VirtualDom$attribute('attributeName');
+var _elm_lang$svg$Svg_Attributes$ascent = _elm_lang$virtual_dom$VirtualDom$attribute('ascent');
+var _elm_lang$svg$Svg_Attributes$arabicForm = _elm_lang$virtual_dom$VirtualDom$attribute('arabic-form');
+var _elm_lang$svg$Svg_Attributes$amplitude = _elm_lang$virtual_dom$VirtualDom$attribute('amplitude');
+var _elm_lang$svg$Svg_Attributes$allowReorder = _elm_lang$virtual_dom$VirtualDom$attribute('allowReorder');
+var _elm_lang$svg$Svg_Attributes$alphabetic = _elm_lang$virtual_dom$VirtualDom$attribute('alphabetic');
+var _elm_lang$svg$Svg_Attributes$additive = _elm_lang$virtual_dom$VirtualDom$attribute('additive');
+var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$attribute('accumulate');
+var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
+var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
+
 var _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerSecond = 1000;
 var _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerMinute = 60 * _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerSecond;
 var _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerHour = 60 * _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerMinute;
@@ -10281,6 +10629,573 @@ var _user$project$DB$persistent = F3(
 		};
 	});
 
+var _user$project$D3_Scale$transform = F2(
+	function (_p0, x) {
+		var _p1 = _p0;
+		var _p3 = _p1.range;
+		var _p2 = _p1.domain;
+		return (((x - _p2.min) / _p2.range) * _p3.range) + _p3.min;
+	});
+var _user$project$D3_Scale$invert = function (_p4) {
+	var _p5 = _p4;
+	return _user$project$D3_Scale$transform(
+		{domain: _p5.range, range: _p5.domain});
+};
+var _user$project$D3_Scale$interval = function (_p6) {
+	var _p7 = _p6;
+	var _p9 = _p7._0;
+	var _p8 = _p7._1;
+	return {min: _p9, max: _p8, range: _p8 - _p9};
+};
+var _user$project$D3_Scale$linear = F2(
+	function (domain, range) {
+		return {
+			domain: _user$project$D3_Scale$interval(domain),
+			range: _user$project$D3_Scale$interval(range)
+		};
+	});
+var _user$project$D3_Scale$stretch = F2(
+	function (values, range) {
+		var min = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$minimum(values));
+		var max = A2(
+			_elm_lang$core$Maybe$withDefault,
+			min,
+			_elm_lang$core$List$maximum(values));
+		return A2(
+			_user$project$D3_Scale$linear,
+			{ctor: '_Tuple2', _0: min, _1: max},
+			range);
+	});
+var _user$project$D3_Scale$Interval = F3(
+	function (a, b, c) {
+		return {min: a, max: b, range: c};
+	});
+var _user$project$D3_Scale$Scale = F2(
+	function (a, b) {
+		return {domain: a, range: b};
+	});
+
+var _user$project$D3_Format$formatDelim = _elm_lang$core$Regex$regex('\\?');
+var _user$project$D3_Format$formatString = F2(
+	function (fmt, args) {
+		formatString:
+		while (true) {
+			var _p0 = args;
+			if (_p0.ctor === '[]') {
+				return fmt;
+			} else {
+				var _v1 = A4(
+					_elm_lang$core$Regex$replace,
+					_elm_lang$core$Regex$AtMost(1),
+					_user$project$D3_Format$formatDelim,
+					function (_p1) {
+						return _elm_lang$core$Basics$toString(_p0._0);
+					},
+					fmt),
+					_v2 = _p0._1;
+				fmt = _v1;
+				args = _v2;
+				continue formatString;
+			}
+		}
+	});
+var _user$project$D3_Format$px = function (x) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(x),
+		'px');
+};
+
+var _user$project$D3_Axis$render = function (axis) {
+	var pairWithLabel = function (x) {
+		return {
+			ctor: '_Tuple2',
+			_0: x,
+			_1: axis.tickFormat(
+				A2(_user$project$D3_Scale$invert, axis.scale, x))
+		};
+	};
+	var line = F4(
+		function (x1, y1, x2, y2) {
+			return A2(
+				_elm_lang$svg$Svg$line,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$svg$Svg_Attributes$x1(
+						_user$project$D3_Format$px(x1)),
+						_elm_lang$svg$Svg_Attributes$y1(
+						_user$project$D3_Format$px(y1)),
+						_elm_lang$svg$Svg_Attributes$x2(
+						_user$project$D3_Format$px(x2)),
+						_elm_lang$svg$Svg_Attributes$y2(
+						_user$project$D3_Format$px(y2)),
+						_elm_lang$svg$Svg_Attributes$stroke('black')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[]));
+		});
+	var spineCons = function () {
+		var _p0 = axis.orientation;
+		switch (_p0.ctor) {
+			case 'Left':
+				return A3(line, 0, 0, 0);
+			case 'Right':
+				return A3(line, 0, 0, 0);
+			case 'Top':
+				return A2(
+					_elm_lang$core$Basics$flip,
+					A2(line, 0, 0),
+					0);
+			default:
+				return A2(
+					_elm_lang$core$Basics$flip,
+					A2(line, 0, 0),
+					0);
+		}
+	}();
+	var size = _elm_lang$core$Basics$abs(axis.scale.range.range);
+	var spine = spineCons(size);
+	var tickValues = function () {
+		var _p1 = axis.ticks;
+		if (_p1.ctor === 'Exactly') {
+			var _p3 = _p1._0;
+			return A2(
+				_elm_lang$core$List$map,
+				function (_p2) {
+					return A2(
+						F2(
+							function (x, y) {
+								return x * y;
+							}),
+						size / _elm_lang$core$Basics$toFloat(_p3),
+						_elm_lang$core$Basics$toFloat(_p2));
+				},
+				_elm_lang$core$Native_List.range(0, _p3));
+		} else {
+			var _p4 = _p1._0;
+			return A2(
+				_elm_lang$core$List$map,
+				F2(
+					function (x, y) {
+						return x * y;
+					})(_p4),
+				_elm_lang$core$Native_List.range(0, size / _p4));
+		}
+	}();
+	var textSize = 12;
+	var tickLength = 5;
+	var tickWithLabel = F5(
+		function (x1, y1, x2, y2, label) {
+			var _p5 = function () {
+				var _p6 = axis.orientation;
+				switch (_p6.ctor) {
+					case 'Left':
+						return {ctor: '_Tuple4', _0: 0 - tickLength, _1: 0, _2: 'end', _3: 'middle'};
+					case 'Right':
+						return {ctor: '_Tuple4', _0: tickLength, _1: 0, _2: 'start', _3: 'middle'};
+					case 'Top':
+						return {ctor: '_Tuple4', _0: 0, _1: 0 - tickLength, _2: 'middle', _3: 'hanging'};
+					default:
+						return {ctor: '_Tuple4', _0: 0, _1: tickLength, _2: 'middle', _3: 'hanging'};
+				}
+			}();
+			var xOffset = _p5._0;
+			var yOffset = _p5._1;
+			var anchor = _p5._2;
+			var baseline = _p5._3;
+			return A2(
+				_elm_lang$svg$Svg$g,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A4(line, x1, y1, x2, y2),
+						A2(
+						_elm_lang$svg$Svg$text$,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$svg$Svg_Attributes$x(
+								_user$project$D3_Format$px(x1 + xOffset)),
+								_elm_lang$svg$Svg_Attributes$y(
+								_user$project$D3_Format$px(y1 + yOffset)),
+								_elm_lang$svg$Svg_Attributes$fontSize(
+								_user$project$D3_Format$px(textSize)),
+								_elm_lang$svg$Svg_Attributes$textAnchor(anchor),
+								_elm_lang$svg$Svg_Attributes$alignmentBaseline(baseline)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$svg$Svg$text(label)
+							]))
+					]));
+		});
+	var tickCons = function () {
+		var _p7 = axis.orientation;
+		switch (_p7.ctor) {
+			case 'Left':
+				return function (_p8) {
+					var _p9 = _p8;
+					var _p10 = _p9._0;
+					return A5(tickWithLabel, 0, _p10, 0 - tickLength, _p10, _p9._1);
+				};
+			case 'Right':
+				return function (_p11) {
+					var _p12 = _p11;
+					var _p13 = _p12._0;
+					return A5(tickWithLabel, 0, _p13, tickLength, _p13, _p12._1);
+				};
+			case 'Top':
+				return function (_p14) {
+					var _p15 = _p14;
+					var _p16 = _p15._0;
+					return A5(tickWithLabel, _p16, 0, _p16, 0 - tickLength, _p15._1);
+				};
+			default:
+				return function (_p17) {
+					var _p18 = _p17;
+					var _p19 = _p18._0;
+					return A5(tickWithLabel, _p19, 0, _p19, tickLength, _p18._1);
+				};
+		}
+	}();
+	var ticks = A2(
+		_elm_lang$core$List$map,
+		function (_p20) {
+			return tickCons(
+				pairWithLabel(_p20));
+		},
+		tickValues);
+	return A2(
+		_elm_lang$svg$Svg$g,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		A2(_elm_lang$core$List_ops['::'], spine, ticks));
+};
+var _user$project$D3_Axis$tickFormat = F2(
+	function (f, axis) {
+		return _elm_lang$core$Native_Utils.update(
+			axis,
+			{tickFormat: f});
+	});
+var _user$project$D3_Axis$orient = F2(
+	function (o, axis) {
+		return _elm_lang$core$Native_Utils.update(
+			axis,
+			{orientation: o});
+	});
+var _user$project$D3_Axis$Axis = F4(
+	function (a, b, c, d) {
+		return {scale: a, ticks: b, orientation: c, tickFormat: d};
+	});
+var _user$project$D3_Axis$Right = {ctor: 'Right'};
+var _user$project$D3_Axis$Left = {ctor: 'Left'};
+var _user$project$D3_Axis$Bottom = {ctor: 'Bottom'};
+var _user$project$D3_Axis$Top = {ctor: 'Top'};
+var _user$project$D3_Axis$EachPx = function (a) {
+	return {ctor: 'EachPx', _0: a};
+};
+var _user$project$D3_Axis$axis = function (scale) {
+	return {
+		scale: scale,
+		ticks: _user$project$D3_Axis$EachPx(100),
+		orientation: _user$project$D3_Axis$Bottom,
+		tickFormat: _elm_lang$core$Basics$toString
+	};
+};
+var _user$project$D3_Axis$tickSize = F2(
+	function (s, axis) {
+		return _elm_lang$core$Native_Utils.update(
+			axis,
+			{
+				ticks: _user$project$D3_Axis$EachPx(s)
+			});
+	});
+var _user$project$D3_Axis$Exactly = function (a) {
+	return {ctor: 'Exactly', _0: a};
+};
+var _user$project$D3_Axis$ticks = F2(
+	function (s, axis) {
+		return _elm_lang$core$Native_Utils.update(
+			axis,
+			{
+				ticks: _user$project$D3_Axis$Exactly(s)
+			});
+	});
+
+var _user$project$D3_Line$renderPath = F2(
+	function (line, data) {
+		var _p0 = line.interpolator;
+		return A2(
+			_elm_lang$core$String$join,
+			' ',
+			A2(
+				_elm_lang$core$List$map,
+				function (d) {
+					return A2(
+						_user$project$D3_Format$formatString,
+						'L ? ?',
+						_elm_lang$core$Native_List.fromArray(
+							[
+								line.x(d),
+								line.y(d)
+							]));
+				},
+				data));
+	});
+var _user$project$D3_Line$render = F2(
+	function (line, data) {
+		var _p1 = data;
+		if (_p1.ctor === '[]') {
+			return '';
+		} else {
+			var _p2 = _p1._0;
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(
+					_user$project$D3_Format$formatString,
+					'M ? ?',
+					_elm_lang$core$Native_List.fromArray(
+						[
+							line.x(_p2),
+							line.y(_p2)
+						])),
+				A2(_user$project$D3_Line$renderPath, line, data));
+		}
+	});
+var _user$project$D3_Line$path = function (points) {
+	var _p3 = points;
+	if (_p3.ctor === '::') {
+		var d = A2(
+			_elm_lang$core$String$join,
+			' ',
+			A2(
+				_elm_lang$core$List_ops['::'],
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'M ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(_p3._0._0),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' ',
+							_elm_lang$core$Basics$toString(_p3._0._1)))),
+				A2(
+					_elm_lang$core$List$map,
+					function (_p4) {
+						var _p5 = _p4;
+						return A2(
+							_elm_lang$core$Basics_ops['++'],
+							'L ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(_p5._0),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									' ',
+									_elm_lang$core$Basics$toString(_p5._1))));
+					},
+					_p3._1)));
+		return A2(
+			_elm_lang$svg$Svg$path,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$svg$Svg_Attributes$d(d),
+					_elm_lang$svg$Svg_Attributes$fill('none'),
+					_elm_lang$svg$Svg_Attributes$stroke('black')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[]));
+	} else {
+		return A2(
+			_elm_lang$svg$Svg$text$,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$svg$Svg$text('No Data Available')
+				]));
+	}
+};
+var _user$project$D3_Line$Line = F3(
+	function (a, b, c) {
+		return {x: a, y: b, interpolator: c};
+	});
+var _user$project$D3_Line$Linear = {ctor: 'Linear'};
+var _user$project$D3_Line$line = F2(
+	function (x, y) {
+		return {x: x, y: y, interpolator: _user$project$D3_Line$Linear};
+	});
+
+var _user$project$Viz_LineChart$yAxis = F2(
+	function (opt, c) {
+		return _elm_lang$core$Native_Utils.update(
+			c,
+			{
+				yAxisOpts: A2(_elm_lang$core$List_ops['::'], opt, c.yAxisOpts)
+			});
+	});
+var _user$project$Viz_LineChart$xAxis = F2(
+	function (opt, c) {
+		return _elm_lang$core$Native_Utils.update(
+			c,
+			{
+				xAxisOpts: A2(_elm_lang$core$List_ops['::'], opt, c.xAxisOpts)
+			});
+	});
+var _user$project$Viz_LineChart$height = F2(
+	function (h, c) {
+		return _elm_lang$core$Native_Utils.update(
+			c,
+			{height: h});
+	});
+var _user$project$Viz_LineChart$width = F2(
+	function (w, c) {
+		return _elm_lang$core$Native_Utils.update(
+			c,
+			{width: w});
+	});
+var _user$project$Viz_LineChart$render = F2(
+	function (chart, data) {
+		var maxY = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$maximum(
+				A2(_elm_lang$core$List$map, chart.y, data)));
+		var minY = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$minimum(
+				A2(_elm_lang$core$List$map, chart.y, data)));
+		var maxX = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$maximum(
+				A2(_elm_lang$core$List$map, chart.x, data)));
+		var minX = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$minimum(
+				A2(_elm_lang$core$List$map, chart.x, data)));
+		var margin = {top: 40, right: 40, bottom: 40, left: 40};
+		var width = (chart.width - margin.left) - margin.right;
+		var x = A2(
+			_user$project$D3_Scale$linear,
+			{ctor: '_Tuple2', _0: minX, _1: maxX},
+			{ctor: '_Tuple2', _0: 0, _1: width});
+		var xAxis = A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, y) {
+					return x(y);
+				}),
+			_user$project$D3_Axis$axis(x),
+			chart.xAxisOpts);
+		var height = (chart.height - margin.top) - margin.bottom;
+		var y = A2(
+			_user$project$D3_Scale$linear,
+			{ctor: '_Tuple2', _0: minY, _1: maxY},
+			{ctor: '_Tuple2', _0: height, _1: 0});
+		var yAxis = A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, y) {
+					return x(y);
+				}),
+			A2(
+				_user$project$D3_Axis$orient,
+				_user$project$D3_Axis$Left,
+				_user$project$D3_Axis$axis(y)),
+			chart.yAxisOpts);
+		var line = A2(
+			_user$project$D3_Line$line,
+			function (_p0) {
+				return A2(
+					_user$project$D3_Scale$transform,
+					x,
+					chart.x(_p0));
+			},
+			function (_p1) {
+				return A2(
+					_user$project$D3_Scale$transform,
+					y,
+					chart.y(_p1));
+			});
+		return A2(
+			_elm_lang$svg$Svg$svg,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$svg$Svg_Attributes$width(
+					_user$project$D3_Format$px((width + margin.left) + margin.right)),
+					_elm_lang$svg$Svg_Attributes$height(
+					_user$project$D3_Format$px((height + margin.top) + margin.bottom))
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$svg$Svg$g,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$svg$Svg_Attributes$transform(
+							A2(
+								_user$project$D3_Format$formatString,
+								'translate(?,?)',
+								_elm_lang$core$Native_List.fromArray(
+									[margin.left, margin.top])))
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$svg$Svg$g,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$svg$Svg_Attributes$transform(
+									A2(
+										_user$project$D3_Format$formatString,
+										'translate(0,?)',
+										_elm_lang$core$Native_List.fromArray(
+											[height])))
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_user$project$D3_Axis$render(xAxis)
+								])),
+							_user$project$D3_Axis$render(yAxis),
+							A2(
+							_elm_lang$svg$Svg$path,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$svg$Svg_Attributes$fill('none'),
+									_elm_lang$svg$Svg_Attributes$stroke('black'),
+									_elm_lang$svg$Svg_Attributes$d(
+									A2(_user$project$D3_Line$render, line, data))
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[]))
+						]))
+				]));
+	});
+var _user$project$Viz_LineChart$chart = F2(
+	function (x, y) {
+		return {
+			x: x,
+			y: y,
+			height: 300,
+			width: 400,
+			xAxisOpts: _elm_lang$core$Native_List.fromArray(
+				[]),
+			yAxisOpts: _elm_lang$core$Native_List.fromArray(
+				[])
+		};
+	});
+var _user$project$Viz_LineChart$LineChart = F6(
+	function (a, b, c, d, e, f) {
+		return {x: a, y: b, width: c, height: d, xAxisOpts: e, yAxisOpts: f};
+	});
+
 var _user$project$Budget$serialize = function (model) {
 	var unit = function (u) {
 		var _p0 = u;
@@ -10420,6 +11335,23 @@ var _user$project$Budget$projectCharge = F2(
 			}
 		}
 	});
+var _user$project$Budget$compareTransactions = F2(
+	function (a, b) {
+		var _p5 = A2(_justinmimbs$elm_date_extra$Date_Extra$compare, a.date, b.date);
+		if (_p5.ctor === 'EQ') {
+			var _p6 = A2(_elm_lang$core$Basics$compare, a.amount, b.amount);
+			switch (_p6.ctor) {
+				case 'GT':
+					return _elm_lang$core$Basics$LT;
+				case 'LT':
+					return _elm_lang$core$Basics$GT;
+				default:
+					return _elm_lang$core$Basics$EQ;
+			}
+		} else {
+			return _p5;
+		}
+	});
 var _user$project$Budget$projectBalance = function (charges) {
 	var addTransaction = F2(
 		function (transaction, balance) {
@@ -10430,16 +11362,7 @@ var _user$project$Budget$projectBalance = function (charges) {
 		_elm_lang$core$List$concatMap,
 		_user$project$Budget$projectCharge(endDate),
 		charges);
-	var sortedTransactions = A2(
-		_elm_lang$core$List$sortBy,
-		function (_p5) {
-			return _elm_lang$core$Time$inMilliseconds(
-				_elm_lang$core$Date$toTime(
-					function (_) {
-						return _.date;
-					}(_p5)));
-		},
-		transactions);
+	var sortedTransactions = A2(_elm_lang$core$List$sortWith, _user$project$Budget$compareTransactions, transactions);
 	var balances = A3(
 		_elm_lang$core$List$scanl,
 		addTransaction,
@@ -10504,8 +11427,8 @@ var _user$project$Budget$Once = {ctor: 'Once'};
 var _user$project$Budget$viewCharge = F2(
 	function (i, charge) {
 		var stringToUnit = function (s) {
-			var _p6 = s;
-			switch (_p6) {
+			var _p7 = s;
+			switch (_p7) {
 				case 'day':
 					return _justinmimbs$elm_date_extra$Date_Extra$Day;
 				case 'week':
@@ -10519,8 +11442,8 @@ var _user$project$Budget$viewCharge = F2(
 			}
 		};
 		var stringToFreq = function (s) {
-			var _p7 = s;
-			switch (_p7) {
+			var _p8 = s;
+			switch (_p8) {
 				case 'once':
 					return _user$project$Budget$Once;
 				case 'every':
@@ -10529,16 +11452,16 @@ var _user$project$Budget$viewCharge = F2(
 					return _user$project$Budget$Once;
 			}
 		};
-		var _p8 = function () {
-			var _p9 = charge.freq;
-			if (_p9.ctor === 'Once') {
+		var _p9 = function () {
+			var _p10 = charge.freq;
+			if (_p10.ctor === 'Once') {
 				return {ctor: '_Tuple2', _0: true, _1: false};
 			} else {
 				return {ctor: '_Tuple2', _0: false, _1: true};
 			}
 		}();
-		var isOnce = _p8._0;
-		var isEvery = _p8._1;
+		var isOnce = _p9._0;
+		var isEvery = _p9._1;
 		return A2(
 			_elm_lang$html$Html$li,
 			_elm_lang$core$Native_List.fromArray(
@@ -10580,14 +11503,14 @@ var _user$project$Budget$viewCharge = F2(
 								_elm_lang$html$Html_Attributes$value(
 								_elm_lang$core$Basics$toString(charge.amount)),
 								_elm_lang$html$Html_Events$onInput(
-								function (_p10) {
+								function (_p11) {
 									return A2(
 										_user$project$Budget$ChangeChargeAmount,
 										i,
 										A2(
 											_elm_lang$core$Result$withDefault,
 											charge.amount,
-											_elm_lang$core$String$toFloat(_p10)));
+											_elm_lang$core$String$toFloat(_p11)));
 								})
 							]),
 						_elm_lang$core$Native_List.fromArray(
@@ -10597,11 +11520,11 @@ var _user$project$Budget$viewCharge = F2(
 						_elm_lang$core$Native_List.fromArray(
 							[
 								_elm_lang$html$Html_Events$onInput(
-								function (_p11) {
+								function (_p12) {
 									return A2(
 										_user$project$Budget$ChangeChargeFreq,
 										i,
-										stringToFreq(_p11));
+										stringToFreq(_p12));
 								})
 							]),
 						_elm_lang$core$Native_List.fromArray(
@@ -10629,13 +11552,13 @@ var _user$project$Budget$viewCharge = F2(
 							]))
 					]),
 				function () {
-					var _p12 = charge.freq;
-					if (_p12.ctor === 'Once') {
+					var _p13 = charge.freq;
+					if (_p13.ctor === 'Once') {
 						return _elm_lang$core$Native_List.fromArray(
 							[]);
 					} else {
-						var _p16 = _p12._1;
-						var _p15 = _p12._0;
+						var _p17 = _p13._1;
+						var _p16 = _p13._0;
 						return _elm_lang$core$Native_List.fromArray(
 							[
 								A2(
@@ -10644,19 +11567,19 @@ var _user$project$Budget$viewCharge = F2(
 									[
 										_elm_lang$html$Html_Attributes$type$('number'),
 										_elm_lang$html$Html_Attributes$value(
-										_elm_lang$core$Basics$toString(_p15)),
+										_elm_lang$core$Basics$toString(_p16)),
 										_elm_lang$html$Html_Events$onInput(
-										function (_p13) {
+										function (_p14) {
 											return function (n) {
 												return A2(
 													_user$project$Budget$ChangeChargeFreq,
 													i,
-													A2(_user$project$Budget$Every, n, _p16));
+													A2(_user$project$Budget$Every, n, _p17));
 											}(
 												A2(
 													_elm_lang$core$Result$withDefault,
-													_p15,
-													_elm_lang$core$String$toInt(_p13)));
+													_p16,
+													_elm_lang$core$String$toInt(_p14)));
 										})
 									]),
 								_elm_lang$core$Native_List.fromArray(
@@ -10666,14 +11589,14 @@ var _user$project$Budget$viewCharge = F2(
 								_elm_lang$core$Native_List.fromArray(
 									[
 										_elm_lang$html$Html_Events$onInput(
-										function (_p14) {
+										function (_p15) {
 											return A2(
 												_user$project$Budget$ChangeChargeFreq,
 												i,
 												A2(
 													_user$project$Budget$Every,
-													_p15,
-													stringToUnit(_p14)));
+													_p16,
+													stringToUnit(_p15)));
 										})
 									]),
 								_elm_lang$core$Native_List.fromArray(
@@ -10683,7 +11606,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p16, _justinmimbs$elm_date_extra$Date_Extra$Day))
+												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Day))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -10694,7 +11617,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p16, _justinmimbs$elm_date_extra$Date_Extra$Week))
+												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Week))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -10705,7 +11628,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p16, _justinmimbs$elm_date_extra$Date_Extra$Month))
+												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Month))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -10716,7 +11639,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p16, _justinmimbs$elm_date_extra$Date_Extra$Year))
+												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Year))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -10728,6 +11651,39 @@ var _user$project$Budget$viewCharge = F2(
 				}()));
 	});
 var _user$project$Budget$view = function (model) {
+	var chart = A2(
+		_user$project$Viz_LineChart$width,
+		800,
+		A2(
+			_user$project$Viz_LineChart$yAxis,
+			_user$project$D3_Axis$tickFormat(
+				function (_p18) {
+					return function (amount) {
+						return A2(_elm_lang$core$Basics_ops['++'], '$', amount);
+					}(
+						_elm_lang$core$Basics$toString(
+							_elm_lang$core$Basics$round(_p18)));
+				}),
+			A2(
+				_user$project$Viz_LineChart$xAxis,
+				_user$project$D3_Axis$tickFormat(
+					function (_p19) {
+						return A2(
+							_justinmimbs$elm_date_extra$Date_Extra$toFormattedString,
+							'MM-dd-YYYY',
+							_elm_lang$core$Date$fromTime(_p19));
+					}),
+				A2(
+					_user$project$Viz_LineChart$chart,
+					function (_p20) {
+						return _elm_lang$core$Date$toTime(
+							function (_) {
+								return _.date;
+							}(_p20));
+					},
+					function (_) {
+						return _.balance;
+					}))));
 	var futureBalances = _user$project$Budget$projectBalance(model.charges);
 	return A2(
 		_elm_lang$html$Html$div,
@@ -10764,6 +11720,7 @@ var _user$project$Budget$view = function (model) {
 					[]),
 				_elm_lang$core$Native_List.fromArray(
 					[])),
+				A2(_user$project$Viz_LineChart$render, chart, futureBalances),
 				A2(
 				_elm_lang$html$Html$ul,
 				_elm_lang$core$Native_List.fromArray(
@@ -10773,8 +11730,8 @@ var _user$project$Budget$view = function (model) {
 };
 var _user$project$Budget$update = F2(
 	function (msg, model) {
-		var _p17 = msg;
-		switch (_p17.ctor) {
+		var _p21 = msg;
+		switch (_p21.ctor) {
 			case 'AddCharge':
 				var newCharge = {
 					name: 'NewCharge',
@@ -10798,12 +11755,12 @@ var _user$project$Budget$update = F2(
 			case 'RenameCharge':
 				var charges = A3(
 					_user$project$Budget$replaceAt,
-					_p17._0,
+					_p21._0,
 					model.charges,
 					function (c) {
 						return _elm_lang$core$Native_Utils.update(
 							c,
-							{name: _p17._1});
+							{name: _p21._1});
 					});
 				return {
 					ctor: '_Tuple2',
@@ -10815,12 +11772,12 @@ var _user$project$Budget$update = F2(
 			case 'ChangeChargeAmount':
 				var charges = A3(
 					_user$project$Budget$replaceAt,
-					_p17._0,
+					_p21._0,
 					model.charges,
 					function (c) {
 						return _elm_lang$core$Native_Utils.update(
 							c,
-							{amount: _p17._1});
+							{amount: _p21._1});
 					});
 				return {
 					ctor: '_Tuple2',
@@ -10832,12 +11789,12 @@ var _user$project$Budget$update = F2(
 			case 'ChangeChargeFreq':
 				var charges = A3(
 					_user$project$Budget$replaceAt,
-					_p17._0,
+					_p21._0,
 					model.charges,
 					function (c) {
 						return _elm_lang$core$Native_Utils.update(
 							c,
-							{freq: _p17._1});
+							{freq: _p21._1});
 					});
 				return {
 					ctor: '_Tuple2',
@@ -10847,7 +11804,7 @@ var _user$project$Budget$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var charges = A2(_user$project$Budget$removeAt, _p17._0, model.charges);
+				var charges = A2(_user$project$Budget$removeAt, _p21._0, model.charges);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -10865,8 +11822,8 @@ var _user$project$Budget$app = {
 };
 var _user$project$Budget$deserialize = function () {
 	var unit = function (u) {
-		var _p18 = u;
-		switch (_p18) {
+		var _p22 = u;
+		switch (_p22) {
 			case 'day':
 				return _justinmimbs$elm_date_extra$Date_Extra$Day;
 			case 'week':
@@ -10881,27 +11838,27 @@ var _user$project$Budget$deserialize = function () {
 	};
 	var freq = F3(
 		function (f, n, u) {
-			var _p19 = {ctor: '_Tuple3', _0: f, _1: n, _2: u};
-			_v11_2:
+			var _p23 = {ctor: '_Tuple3', _0: f, _1: n, _2: u};
+			_v13_2:
 			do {
-				if (_p19.ctor === '_Tuple3') {
-					switch (_p19._0) {
+				if (_p23.ctor === '_Tuple3') {
+					switch (_p23._0) {
 						case 'once':
-							if ((_p19._1 === 0) && (_p19._2 === '')) {
+							if ((_p23._1 === 0) && (_p23._2 === '')) {
 								return _user$project$Budget$Once;
 							} else {
-								break _v11_2;
+								break _v13_2;
 							}
 						case 'every':
 							return A2(
 								_user$project$Budget$Every,
-								_p19._1,
-								unit(_p19._2));
+								_p23._1,
+								unit(_p23._2));
 						default:
-							break _v11_2;
+							break _v13_2;
 					}
 				} else {
-					break _v11_2;
+					break _v13_2;
 				}
 			} while(false);
 			return _user$project$Budget$Once;
@@ -10920,11 +11877,11 @@ var _user$project$Budget$deserialize = function () {
 			'start',
 			A2(
 				_elm_lang$core$Json_Decode$object1,
-				function (_p20) {
+				function (_p24) {
 					return A2(
 						_elm_lang$core$Maybe$withDefault,
 						A3(_justinmimbs$elm_date_extra$Date_Extra$fromCalendarDate, 2016, _elm_lang$core$Date$Jan, 1),
-						_justinmimbs$elm_date_extra$Date_Extra$fromIsoString(_p20));
+						_justinmimbs$elm_date_extra$Date_Extra$fromIsoString(_p24));
 				},
 				_elm_lang$core$Json_Decode$string)));
 	return A2(
@@ -10935,11 +11892,11 @@ var _user$project$Budget$deserialize = function () {
 			'charges',
 			_elm_lang$core$Json_Decode$list(charge)));
 }();
-var _user$project$Budget$decoder = function (_p21) {
+var _user$project$Budget$decoder = function (_p25) {
 	return A2(
 		_elm_lang$core$Result$withDefault,
 		_user$project$Budget$model,
-		A2(_elm_lang$core$Json_Decode$decodeValue, _user$project$Budget$deserialize, _p21));
+		A2(_elm_lang$core$Json_Decode$decodeValue, _user$project$Budget$deserialize, _p25));
 };
 var _user$project$Budget$main = {
 	main: _elm_lang$html$Html_App$program(
