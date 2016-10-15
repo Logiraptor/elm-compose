@@ -30,9 +30,13 @@ main =
             |> App.program
 
 
-decoder : Encode.Value -> Model
-decoder =
-    Decode.decodeValue deserialize >> Result.withDefault model
+decoder : Model -> Encode.Value -> Model
+decoder model value =
+    let
+        { charges } =
+            Decode.decodeValue deserialize value |> Result.withDefault { charges = [] }
+    in
+        { model | charges = charges }
 
 
 app : P.Program Model Msg
@@ -81,7 +85,7 @@ type alias Charge =
 
 
 type alias Model =
-    { charges : List Charge }
+    { charges : List Charge, user : Auth.User }
 
 
 type alias Balance =
@@ -94,7 +98,7 @@ type alias Transaction =
 
 model : Model
 model =
-    { charges = [] }
+    { charges = [], user = Auth.anonymous }
 
 
 view : Model -> Html.Html Msg
@@ -111,7 +115,9 @@ view model =
     in
         Html.div []
             [ Html.h1 [] [ Html.text "Charges" ]
+            , Html.text ("Logged in as " ++ model.user.displayName)
             , Html.a [ Html.Events.onClick SignOut, Html.Attributes.href "#" ] [ Html.text "sign out" ]
+            , Html.hr [] []
             , Html.button [ Html.Events.onClick AddCharge ] [ Html.text "Add Charge" ]
             , Html.ul [] (List.indexedMap viewCharge model.charges)
             , Html.hr [] []
@@ -383,7 +389,7 @@ serialize model =
         Encode.object [ ( "charges", Encode.list <| List.map charge model.charges ) ]
 
 
-deserialize : Decode.Decoder Model
+deserialize : Decode.Decoder { charges : List Charge }
 deserialize =
     let
         unit u =
@@ -422,6 +428,9 @@ deserialize =
                 ("amount" := Decode.float)
                 ("freq" := Decode.tuple3 freq Decode.string Decode.int Decode.string)
                 ("start" := Decode.object1 (Date.Extra.fromIsoString >> Maybe.withDefault (Date.Extra.fromCalendarDate 2016 Date.Jan 1)) Decode.string)
+
+        output charges =
+            { charges = charges }
     in
-        Decode.object1 Model
+        Decode.object1 output
             ("charges" := Decode.list charge)

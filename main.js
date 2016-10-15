@@ -10541,14 +10541,30 @@ var _user$project$Compose_Program$noFxUpdate = F3(
 var _user$project$Compose_Program$noSub = function (_p0) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Compose_Program$beginnerProgram = function (prog) {
+var _user$project$Compose_Program$program = function (prog) {
 	return {
-		init: {ctor: '_Tuple2', _0: prog.model, _1: _elm_lang$core$Platform_Cmd$none},
-		update: _user$project$Compose_Program$noFxUpdate(prog.update),
-		subscriptions: _user$project$Compose_Program$noSub,
+		init: function (_p1) {
+			var _p2 = _p1;
+			return prog.init;
+		},
+		update: prog.update,
+		subscriptions: prog.subscriptions,
 		view: prog.view
 	};
 };
+var _user$project$Compose_Program$beginnerProgram = function (prog) {
+	return _user$project$Compose_Program$program(
+		{
+			init: {ctor: '_Tuple2', _0: prog.model, _1: _elm_lang$core$Platform_Cmd$none},
+			update: _user$project$Compose_Program$noFxUpdate(prog.update),
+			subscriptions: _user$project$Compose_Program$noSub,
+			view: prog.view
+		});
+};
+var _user$project$Compose_Program$ProgramWithFlags = F4(
+	function (a, b, c, d) {
+		return {init: a, update: b, subscriptions: c, view: d};
+	});
 var _user$project$Compose_Program$Program = F4(
 	function (a, b, c, d) {
 		return {init: a, update: b, subscriptions: c, view: d};
@@ -10558,6 +10574,7 @@ var _user$project$Compose_Program$BeginnerProgram = F3(
 		return {model: a, update: b, view: c};
 	});
 
+var _user$project$Auth$anonymous = {uid: 'anon', displayName: 'Anonymous', isAnonymous: false};
 var _user$project$Auth$authValues = _elm_lang$core$Native_Platform.incomingPort(
 	'authValues',
 	_elm_lang$core$Json_Decode$oneOf(
@@ -10571,8 +10588,18 @@ var _user$project$Auth$authValues = _elm_lang$core$Native_Platform.incomingPort(
 					_elm_lang$core$Json_Decode$andThen,
 					A2(_elm_lang$core$Json_Decode_ops[':='], 'uid', _elm_lang$core$Json_Decode$string),
 					function (uid) {
-						return _elm_lang$core$Json_Decode$succeed(
-							{uid: uid});
+						return A2(
+							_elm_lang$core$Json_Decode$andThen,
+							A2(_elm_lang$core$Json_Decode_ops[':='], 'displayName', _elm_lang$core$Json_Decode$string),
+							function (displayName) {
+								return A2(
+									_elm_lang$core$Json_Decode$andThen,
+									A2(_elm_lang$core$Json_Decode_ops[':='], 'isAnonymous', _elm_lang$core$Json_Decode$bool),
+									function (isAnonymous) {
+										return _elm_lang$core$Json_Decode$succeed(
+											{uid: uid, displayName: displayName, isAnonymous: isAnonymous});
+									});
+							});
 					}))
 			])));
 var _user$project$Auth$signIn = _elm_lang$core$Native_Platform.outgoingPort(
@@ -10589,13 +10616,10 @@ var _user$project$Auth$Model = F3(
 	function (a, b, c) {
 		return {state: a, authed: b, unauthed: c};
 	});
-var _user$project$Auth$User = function (a) {
-	return {uid: a};
-};
-var _user$project$Auth$SignOut = {ctor: 'SignOut'};
-var _user$project$Auth$SignIn = function (a) {
-	return {ctor: 'SignIn', _0: a};
-};
+var _user$project$Auth$User = F3(
+	function (a, b, c) {
+		return {uid: a, displayName: b, isAnonymous: c};
+	});
 var _user$project$Auth$ChangeState = function (a) {
 	return {ctor: 'ChangeState', _0: a};
 };
@@ -10646,19 +10670,6 @@ var _user$project$Auth$authenticatedUpdate = F4(
 						{unauthed: m}),
 					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Auth$Unauthenticated, cmds)
 				};
-			case 'SignIn':
-				return {
-					ctor: '_Tuple2',
-					_0: model,
-					_1: _user$project$Auth$signIn(_p1._0)
-				};
-			case 'SignOut':
-				return {
-					ctor: '_Tuple2',
-					_0: model,
-					_1: _user$project$Auth$signOut(
-						{ctor: '_Tuple0'})
-				};
 			default:
 				var _p4 = _p1._0;
 				if (_p4.ctor === 'Nothing') {
@@ -10670,11 +10681,17 @@ var _user$project$Auth$authenticatedUpdate = F4(
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
+					var authedModel = model.authed;
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{state: true}),
+							{
+								state: true,
+								authed: _elm_lang$core$Native_Utils.update(
+									authedModel,
+									{user: _p4._0})
+							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
@@ -10739,8 +10756,8 @@ var _user$project$DB$updates = _elm_lang$core$Native_Platform.incomingPort('upda
 var _user$project$DB$Inner = function (a) {
 	return {ctor: 'Inner', _0: a};
 };
-var _user$project$DB$persistUpdates = F4(
-	function (encoder, inner, msg, model) {
+var _user$project$DB$persistUpdates = F5(
+	function (encoder, decoder, inner, msg, model) {
 		var _p0 = msg;
 		if (_p0.ctor === 'Inner') {
 			var _p1 = A2(inner, _p0._0, model);
@@ -10758,7 +10775,11 @@ var _user$project$DB$persistUpdates = F4(
 						]))
 			};
 		} else {
-			return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+			return {
+				ctor: '_Tuple2',
+				_0: A2(decoder, model, _p0._0),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
 		}
 	});
 var _user$project$DB$persistInit = function (_p2) {
@@ -10777,26 +10798,22 @@ var _user$project$DB$persistView = F2(
 var _user$project$DB$Commit = function (a) {
 	return {ctor: 'Commit', _0: a};
 };
-var _user$project$DB$persistSubscriptions = F3(
-	function (inner, decoder, model) {
+var _user$project$DB$persistSubscriptions = F2(
+	function (inner, model) {
 		var origSubscriptions = inner(model);
 		return _elm_lang$core$Platform_Sub$batch(
 			_elm_lang$core$Native_List.fromArray(
 				[
 					A2(_elm_lang$core$Platform_Sub$map, _user$project$DB$Inner, origSubscriptions),
-					_user$project$DB$updates(
-					function (_p4) {
-						return _user$project$DB$Commit(
-							decoder(_p4));
-					})
+					_user$project$DB$updates(_user$project$DB$Commit)
 				]));
 	});
 var _user$project$DB$persistent = F3(
 	function (encoder, decoder, prog) {
 		return {
 			view: _user$project$DB$persistView(prog.view),
-			update: A2(_user$project$DB$persistUpdates, encoder, prog.update),
-			subscriptions: A2(_user$project$DB$persistSubscriptions, prog.subscriptions, decoder),
+			update: A3(_user$project$DB$persistUpdates, encoder, decoder, prog.update),
+			subscriptions: _user$project$DB$persistSubscriptions(prog.subscriptions),
 			init: _user$project$DB$persistInit(prog.init)
 		};
 	});
@@ -11558,7 +11575,8 @@ var _user$project$Budget$viewBalance = function (b) {
 };
 var _user$project$Budget$model = {
 	charges: _elm_lang$core$Native_List.fromArray(
-		[])
+		[]),
+	user: _user$project$Auth$anonymous
 };
 var _user$project$Budget$nothingApp = {
 	init: {ctor: '_Tuple2', _0: 0, _1: _elm_lang$core$Platform_Cmd$none},
@@ -11595,9 +11613,10 @@ var _user$project$Budget$Charge = F4(
 	function (a, b, c, d) {
 		return {name: a, amount: b, freq: c, start: d};
 	});
-var _user$project$Budget$Model = function (a) {
-	return {charges: a};
-};
+var _user$project$Budget$Model = F2(
+	function (a, b) {
+		return {charges: a, user: b};
+	});
 var _user$project$Budget$Balance = F2(
 	function (a, b) {
 		return {date: a, balance: b};
@@ -11903,6 +11922,8 @@ var _user$project$Budget$view = function (model) {
 					[
 						_elm_lang$html$Html$text('Charges')
 					])),
+				_elm_lang$html$Html$text(
+				A2(_elm_lang$core$Basics_ops['++'], 'Logged in as ', model.user.displayName)),
 				A2(
 				_elm_lang$html$Html$a,
 				_elm_lang$core$Native_List.fromArray(
@@ -11914,6 +11935,12 @@ var _user$project$Budget$view = function (model) {
 					[
 						_elm_lang$html$Html$text('sign out')
 					])),
+				A2(
+				_elm_lang$html$Html$hr,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
 				A2(
 				_elm_lang$html$Html$button,
 				_elm_lang$core$Native_List.fromArray(
@@ -12038,6 +12065,9 @@ var _user$project$Budget$app = {
 	subscriptions: _user$project$Budget$subscriptions
 };
 var _user$project$Budget$deserialize = function () {
+	var output = function (charges) {
+		return {charges: charges};
+	};
 	var unit = function (u) {
 		var _p23 = u;
 		switch (_p23) {
@@ -12103,18 +12133,26 @@ var _user$project$Budget$deserialize = function () {
 				_elm_lang$core$Json_Decode$string)));
 	return A2(
 		_elm_lang$core$Json_Decode$object1,
-		_user$project$Budget$Model,
+		output,
 		A2(
 			_elm_lang$core$Json_Decode_ops[':='],
 			'charges',
 			_elm_lang$core$Json_Decode$list(charge)));
 }();
-var _user$project$Budget$decoder = function (_p26) {
-	return A2(
-		_elm_lang$core$Result$withDefault,
-		_user$project$Budget$model,
-		A2(_elm_lang$core$Json_Decode$decodeValue, _user$project$Budget$deserialize, _p26));
-};
+var _user$project$Budget$decoder = F2(
+	function (model, value) {
+		var _p26 = A2(
+			_elm_lang$core$Result$withDefault,
+			{
+				charges: _elm_lang$core$Native_List.fromArray(
+					[])
+			},
+			A2(_elm_lang$core$Json_Decode$decodeValue, _user$project$Budget$deserialize, value));
+		var charges = _p26.charges;
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{charges: charges});
+	});
 var _user$project$Budget$main = {
 	main: function () {
 		var unauthed = _user$project$Budget$nothingApp;

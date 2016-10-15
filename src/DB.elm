@@ -13,26 +13,26 @@ port put : Encode.Value -> Cmd msg
 port updates : (Encode.Value -> msg) -> Sub msg
 
 
-persistent : (model -> Encode.Value) -> (Encode.Value -> model) -> P.Program model msg -> P.Program model (Msg model msg)
+persistent : (model -> Encode.Value) -> (model -> Encode.Value -> model) -> P.Program model msg -> P.Program model (Msg msg)
 persistent encoder decoder prog =
     { view = persistView prog.view
-    , update = persistUpdates encoder prog.update
-    , subscriptions = persistSubscriptions prog.subscriptions decoder
+    , update = persistUpdates encoder decoder prog.update
+    , subscriptions = persistSubscriptions prog.subscriptions
     , init = persistInit prog.init
     }
 
 
-persistSubscriptions : (model -> Sub msg) -> (Encode.Value -> model) -> model -> Sub (Msg model msg)
-persistSubscriptions inner decoder model =
+persistSubscriptions : (model -> Sub msg) -> model -> Sub (Msg msg)
+persistSubscriptions inner model =
     let
         origSubscriptions =
             inner model
     in
-        Sub.batch [ Sub.map Inner origSubscriptions, updates (decoder >> Commit) ]
+        Sub.batch [ Sub.map Inner origSubscriptions, updates Commit ]
 
 
-persistUpdates : (model -> Encode.Value) -> (msg -> model -> ( model, Cmd msg )) -> Msg model msg -> model -> ( model, Cmd (Msg model msg) )
-persistUpdates encoder inner msg model =
+persistUpdates : (model -> Encode.Value) -> (model -> Encode.Value -> model) -> (msg -> model -> ( model, Cmd msg )) -> Msg msg -> model -> ( model, Cmd (Msg msg) )
+persistUpdates encoder decoder inner msg model =
     case msg of
         Inner m ->
             let
@@ -42,15 +42,15 @@ persistUpdates encoder inner msg model =
                 ( model, Cmd.batch [ newModel |> encoder |> put, Cmd.map Inner c ] )
 
         Commit m ->
-            ( m, Cmd.none )
+            ( decoder model m, Cmd.none )
 
 
-persistInit : ( model, Cmd msg ) -> ( model, Cmd (Msg model msg) )
+persistInit : ( model, Cmd msg ) -> ( model, Cmd (Msg msg) )
 persistInit ( model, c ) =
     ( model, Cmd.map Inner c )
 
 
-persistView : (model -> Html.Html msg) -> model -> Html.Html (Msg model msg)
+persistView : (model -> Html.Html msg) -> model -> Html.Html (Msg msg)
 persistView inner model =
     let
         origView =
@@ -59,6 +59,6 @@ persistView inner model =
         App.map Inner origView
 
 
-type Msg model msg
-    = Commit model
+type Msg msg
+    = Commit Encode.Value
     | Inner msg

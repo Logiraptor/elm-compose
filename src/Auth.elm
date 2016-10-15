@@ -1,4 +1,4 @@
-port module Auth exposing (authenticated, Msg(ChangeState, SignIn, SignOut), Provider, User, signOut, signIn)
+port module Auth exposing (authenticated, Provider, User, signOut, signIn, anonymous)
 
 import Compose.Program as P
 import Html
@@ -9,16 +9,27 @@ type alias Model authed unauthed =
     { state : Bool, authed : authed, unauthed : unauthed }
 
 
+type alias WithUser a =
+    { a | user : User }
+
+
+type alias AuthedProgram a msg =
+    P.Program (WithUser a) msg
+
+
 type Msg authed unauthed
     = Authenticated authed
     | Unauthenticated unauthed
     | ChangeState (Maybe User)
-    | SignIn Provider
-    | SignOut
 
 
 type alias User =
-    { uid : String }
+    { uid : String, displayName : String, isAnonymous : Bool }
+
+
+anonymous : User
+anonymous =
+    { uid = "anon", displayName = "Anonymous", isAnonymous = False }
 
 
 type alias Provider =
@@ -34,7 +45,7 @@ port signIn : Provider -> Cmd msg
 port signOut : () -> Cmd msg
 
 
-authenticated : P.Program a b -> P.Program c d -> P.Program (Model a c) (Msg b d)
+authenticated : AuthedProgram a b -> P.Program c d -> P.Program (Model (WithUser a) c) (Msg b d)
 authenticated authedProg unauthedProg =
     { view = authenticatedView authedProg.view unauthedProg.view
     , update = authenticatedUpdate authedProg.update unauthedProg.update
@@ -53,7 +64,7 @@ authenticatedView authed unauthed model =
             App.map Unauthenticated (unauthed model.unauthed)
 
 
-authenticatedUpdate : (a -> b -> ( b, Cmd a )) -> (e -> f -> ( f, Cmd e )) -> Msg a e -> Model b f -> ( Model b f, Cmd (Msg a e) )
+authenticatedUpdate : (a -> WithUser b -> ( WithUser b, Cmd a )) -> (e -> f -> ( f, Cmd e )) -> Msg a e -> Model (WithUser b) f -> ( Model (WithUser b) f, Cmd (Msg a e) )
 authenticatedUpdate authed unauthed msg model =
     case msg of
         Authenticated a ->
@@ -70,19 +81,17 @@ authenticatedUpdate authed unauthed msg model =
             in
                 ( { model | unauthed = m }, Cmd.map Unauthenticated cmds )
 
-        SignIn s ->
-            ( model, signIn s )
-
-        SignOut ->
-            ( model, signOut () )
-
         ChangeState user ->
             case user of
                 Nothing ->
                     ( { model | state = False }, Cmd.none )
 
                 Just u ->
-                    ( { model | state = True }, Cmd.none )
+                    let
+                        authedModel =
+                            model.authed
+                    in
+                        ( { model | state = True, authed = { authedModel | user = u } }, Cmd.none )
 
 
 authenticatedSubscriptions : (a -> Sub b) -> (c -> Sub d) -> Model a c -> Sub (Msg b d)

@@ -14,16 +14,19 @@
 		var rootRef = null;
 
 		function pushModel(model) {
+			console.log("pushing to firebase", model);
 			rootRef.set(model);
 		}
 
 		function commitModel(snapshot) {
+			console.log("received from firebase", snapshot.val());
 			app.ports.updates.send(snapshot.val());
 		}
 
 		var app = Elm.Budget.fullscreen();
 
 		firebase.auth().onAuthStateChanged(function(user) {
+			console.log("authstate", user);
 			app.ports.authValues.send(user);
 			if (user) {
 				rootRef = firebase.database().ref('users/'+user.uid);
