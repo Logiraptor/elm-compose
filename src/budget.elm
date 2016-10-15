@@ -87,7 +87,6 @@ view model =
             , Html.ul [] (List.indexedMap viewCharge model.charges)
             , Html.hr [] []
             , LineChart.render chart futureBalances
-            , Html.ul [] (List.map viewBalance futureBalances)
             ]
 
 

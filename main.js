@@ -11720,12 +11720,7 @@ var _user$project$Budget$view = function (model) {
 					[]),
 				_elm_lang$core$Native_List.fromArray(
 					[])),
-				A2(_user$project$Viz_LineChart$render, chart, futureBalances),
-				A2(
-				_elm_lang$html$Html$ul,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				A2(_elm_lang$core$List$map, _user$project$Budget$viewBalance, futureBalances))
+				A2(_user$project$Viz_LineChart$render, chart, futureBalances)
 			]));
 };
 var _user$project$Budget$update = F2(

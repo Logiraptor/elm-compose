@@ -10,18 +10,28 @@
 
 		firebase.initializeApp(window.fbconfig);
 
-		var database = firebase.database();
-		var rootRef = firebase.database().ref('root');
-		
-		var app = Elm.Budget.fullscreen();
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				var database = firebase.database();
+				var rootRef = firebase.database().ref('users/'+user.uid);
+				
+				var app = Elm.Budget.fullscreen();
 
-		app.ports.put.subscribe(function(model) {
-			rootRef.set(model);
+				app.ports.put.subscribe(function(model) {
+					rootRef.set(model);
+				});
+				
+				rootRef.on('value', function(snapshot) {
+					app.ports.updates.send(snapshot.val());
+				});
+			} else {
+				var provider = new firebase.auth.GoogleAuthProvider();
+				firebase.auth().signInWithRedirect(provider);
+			}
 		});
+
+
 		
-		rootRef.on('value', function(snapshot) {
-			app.ports.updates.send(snapshot.val());
-		});
 	</script>
 </body>
 </html>
