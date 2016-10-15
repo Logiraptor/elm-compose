@@ -7,6 +7,7 @@ import Html.Events
 import Json.Encode as Encode
 import Json.Decode as Decode exposing ((:=))
 import DB
+import Auth
 import Compose.Program as P
 import String
 import Date
@@ -18,7 +19,15 @@ import D3.Axis as Axis
 
 main : Program Never
 main =
-    App.program <| DB.persistent serialize decoder app
+    let
+        authed =
+            DB.persistent serialize decoder app
+
+        unauthed =
+            nothingApp
+    in
+        Auth.authenticated authed unauthed
+            |> App.program
 
 
 decoder : Encode.Value -> Model
@@ -35,12 +44,31 @@ app =
     }
 
 
+nothingApp : P.Program Int Int
+nothingApp =
+    { init = ( 0, Cmd.none )
+    , view = (\i -> Html.i [ Html.Events.onClick 0 ] [ Html.text "Hello" ])
+    , update =
+        (\c m ->
+            case c of
+                0 ->
+                    ( 0, Auth.signIn "Google" )
+
+                _ ->
+                    ( 0, Cmd.none )
+        )
+    , subscriptions =
+        (\m -> Sub.none)
+    }
+
+
 type Msg
     = AddCharge
     | RenameCharge Int String
     | ChangeChargeAmount Int Float
     | ChangeChargeFreq Int Frequency
     | RemoveCharge Int
+    | SignOut
 
 
 type Frequency
@@ -83,6 +111,7 @@ view model =
     in
         Html.div []
             [ Html.h1 [] [ Html.text "Charges" ]
+            , Html.a [ Html.Events.onClick SignOut, Html.Attributes.href "#" ] [ Html.text "sign out" ]
             , Html.button [ Html.Events.onClick AddCharge ] [ Html.text "Add Charge" ]
             , Html.ul [] (List.indexedMap viewCharge model.charges)
             , Html.hr [] []
@@ -286,6 +315,9 @@ update msg model =
                     removeAt i model.charges
             in
                 ( { model | charges = charges }, Cmd.none )
+
+        SignOut ->
+            ( model, Auth.signOut () )
 
 
 removeAt : Int -> List a -> List a

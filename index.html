@@ -10,28 +10,47 @@
 
 		firebase.initializeApp(window.fbconfig);
 
-		firebase.auth().onAuthStateChanged(function(user) {
-			if (user) {
-				var database = firebase.database();
-				var rootRef = firebase.database().ref('users/'+user.uid);
-				
-				var app = Elm.Budget.fullscreen();
+		var database = firebase.database();
+		var rootRef = null;
 
-				app.ports.put.subscribe(function(model) {
-					rootRef.set(model);
-				});
-				
-				rootRef.on('value', function(snapshot) {
-					app.ports.updates.send(snapshot.val());
-				});
+		function pushModel(model) {
+			rootRef.set(model);
+		}
+
+		function commitModel(snapshot) {
+			app.ports.updates.send(snapshot.val());
+		}
+
+		var app = Elm.Budget.fullscreen();
+
+		firebase.auth().onAuthStateChanged(function(user) {
+			app.ports.authValues.send(user);
+			if (user) {
+				rootRef = firebase.database().ref('users/'+user.uid);
+				rootRef.on('value', commitModel);
+				app.ports.put.subscribe(pushModel);
 			} else {
-				var provider = new firebase.auth.GoogleAuthProvider();
-				firebase.auth().signInWithRedirect(provider);
+				if (rootRef != null) {
+					rootRef.off('value', commitModel);
+				}
+				app.ports.put.unsubscribe(pushModel);
 			}
 		});
 
+		app.ports.signIn.subscribe(function(provider) {
+			console.log("signing in to " + provider);
+			switch (provider) {
+				case "Google":
+					var provider = new firebase.auth.GoogleAuthProvider();
+					firebase.auth().signInWithRedirect(provider);
+				default:
+			}
+		});
 
-		
+		app.ports.signOut.subscribe(function() {
+			console.log("signing out...");
+			firebase.auth().signOut();
+		});		
 	</script>
 </body>
 </html>

@@ -10558,6 +10558,178 @@ var _user$project$Compose_Program$BeginnerProgram = F3(
 		return {model: a, update: b, view: c};
 	});
 
+var _user$project$Auth$authValues = _elm_lang$core$Native_Platform.incomingPort(
+	'authValues',
+	_elm_lang$core$Json_Decode$oneOf(
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
+				A2(
+				_elm_lang$core$Json_Decode$map,
+				_elm_lang$core$Maybe$Just,
+				A2(
+					_elm_lang$core$Json_Decode$andThen,
+					A2(_elm_lang$core$Json_Decode_ops[':='], 'uid', _elm_lang$core$Json_Decode$string),
+					function (uid) {
+						return _elm_lang$core$Json_Decode$succeed(
+							{uid: uid});
+					}))
+			])));
+var _user$project$Auth$signIn = _elm_lang$core$Native_Platform.outgoingPort(
+	'signIn',
+	function (v) {
+		return v;
+	});
+var _user$project$Auth$signOut = _elm_lang$core$Native_Platform.outgoingPort(
+	'signOut',
+	function (v) {
+		return null;
+	});
+var _user$project$Auth$Model = F3(
+	function (a, b, c) {
+		return {state: a, authed: b, unauthed: c};
+	});
+var _user$project$Auth$User = function (a) {
+	return {uid: a};
+};
+var _user$project$Auth$SignOut = {ctor: 'SignOut'};
+var _user$project$Auth$SignIn = function (a) {
+	return {ctor: 'SignIn', _0: a};
+};
+var _user$project$Auth$ChangeState = function (a) {
+	return {ctor: 'ChangeState', _0: a};
+};
+var _user$project$Auth$Unauthenticated = function (a) {
+	return {ctor: 'Unauthenticated', _0: a};
+};
+var _user$project$Auth$Authenticated = function (a) {
+	return {ctor: 'Authenticated', _0: a};
+};
+var _user$project$Auth$authenticatedView = F3(
+	function (authed, unauthed, model) {
+		var _p0 = model.state;
+		if (_p0 === true) {
+			return A2(
+				_elm_lang$html$Html_App$map,
+				_user$project$Auth$Authenticated,
+				authed(model.authed));
+		} else {
+			return A2(
+				_elm_lang$html$Html_App$map,
+				_user$project$Auth$Unauthenticated,
+				unauthed(model.unauthed));
+		}
+	});
+var _user$project$Auth$authenticatedUpdate = F4(
+	function (authed, unauthed, msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'Authenticated':
+				var _p2 = A2(authed, _p1._0, model.authed);
+				var m = _p2._0;
+				var cmds = _p2._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{authed: m}),
+					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Auth$Authenticated, cmds)
+				};
+			case 'Unauthenticated':
+				var _p3 = A2(unauthed, _p1._0, model.unauthed);
+				var m = _p3._0;
+				var cmds = _p3._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{unauthed: m}),
+					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Auth$Unauthenticated, cmds)
+				};
+			case 'SignIn':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Auth$signIn(_p1._0)
+				};
+			case 'SignOut':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Auth$signOut(
+						{ctor: '_Tuple0'})
+				};
+			default:
+				var _p4 = _p1._0;
+				if (_p4.ctor === 'Nothing') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{state: false}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{state: true}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
+		}
+	});
+var _user$project$Auth$authenticatedSubscriptions = F3(
+	function (authed, unauthed, model) {
+		var _p5 = model.state;
+		if (_p5 === true) {
+			return _elm_lang$core$Platform_Sub$batch(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$core$Platform_Sub$map,
+						_user$project$Auth$Authenticated,
+						authed(model.authed)),
+						_user$project$Auth$authValues(_user$project$Auth$ChangeState)
+					]));
+		} else {
+			return _elm_lang$core$Platform_Sub$batch(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$core$Platform_Sub$map,
+						_user$project$Auth$Unauthenticated,
+						unauthed(model.unauthed)),
+						_user$project$Auth$authValues(_user$project$Auth$ChangeState)
+					]));
+		}
+	});
+var _user$project$Auth$authenticatedInit = F2(
+	function (_p7, _p6) {
+		var _p8 = _p7;
+		var _p9 = _p6;
+		return {
+			ctor: '_Tuple2',
+			_0: {state: false, authed: _p8._0, unauthed: _p9._0},
+			_1: _elm_lang$core$Platform_Cmd$batch(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(_elm_lang$core$Platform_Cmd$map, _user$project$Auth$Authenticated, _p8._1),
+						A2(_elm_lang$core$Platform_Cmd$map, _user$project$Auth$Unauthenticated, _p9._1)
+					]))
+		};
+	});
+var _user$project$Auth$authenticated = F2(
+	function (authedProg, unauthedProg) {
+		return {
+			view: A2(_user$project$Auth$authenticatedView, authedProg.view, unauthedProg.view),
+			update: A2(_user$project$Auth$authenticatedUpdate, authedProg.update, unauthedProg.update),
+			subscriptions: A2(_user$project$Auth$authenticatedSubscriptions, authedProg.subscriptions, unauthedProg.subscriptions),
+			init: A2(_user$project$Auth$authenticatedInit, authedProg.init, unauthedProg.init)
+		};
+	});
+
 var _user$project$DB$put = _elm_lang$core$Native_Platform.outgoingPort(
 	'put',
 	function (v) {
@@ -11388,6 +11560,37 @@ var _user$project$Budget$model = {
 	charges: _elm_lang$core$Native_List.fromArray(
 		[])
 };
+var _user$project$Budget$nothingApp = {
+	init: {ctor: '_Tuple2', _0: 0, _1: _elm_lang$core$Platform_Cmd$none},
+	view: function (i) {
+		return A2(
+			_elm_lang$html$Html$i,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Events$onClick(0)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Hello')
+				]));
+	},
+	update: F2(
+		function (c, m) {
+			var _p7 = c;
+			if (_p7 === 0) {
+				return {
+					ctor: '_Tuple2',
+					_0: 0,
+					_1: _user$project$Auth$signIn('Google')
+				};
+			} else {
+				return {ctor: '_Tuple2', _0: 0, _1: _elm_lang$core$Platform_Cmd$none};
+			}
+		}),
+	subscriptions: function (m) {
+		return _elm_lang$core$Platform_Sub$none;
+	}
+};
 var _user$project$Budget$Charge = F4(
 	function (a, b, c, d) {
 		return {name: a, amount: b, freq: c, start: d};
@@ -11403,6 +11606,7 @@ var _user$project$Budget$Transaction = F2(
 	function (a, b) {
 		return {date: a, amount: b};
 	});
+var _user$project$Budget$SignOut = {ctor: 'SignOut'};
 var _user$project$Budget$RemoveCharge = function (a) {
 	return {ctor: 'RemoveCharge', _0: a};
 };
@@ -11427,8 +11631,8 @@ var _user$project$Budget$Once = {ctor: 'Once'};
 var _user$project$Budget$viewCharge = F2(
 	function (i, charge) {
 		var stringToUnit = function (s) {
-			var _p7 = s;
-			switch (_p7) {
+			var _p8 = s;
+			switch (_p8) {
 				case 'day':
 					return _justinmimbs$elm_date_extra$Date_Extra$Day;
 				case 'week':
@@ -11442,8 +11646,8 @@ var _user$project$Budget$viewCharge = F2(
 			}
 		};
 		var stringToFreq = function (s) {
-			var _p8 = s;
-			switch (_p8) {
+			var _p9 = s;
+			switch (_p9) {
 				case 'once':
 					return _user$project$Budget$Once;
 				case 'every':
@@ -11452,16 +11656,16 @@ var _user$project$Budget$viewCharge = F2(
 					return _user$project$Budget$Once;
 			}
 		};
-		var _p9 = function () {
-			var _p10 = charge.freq;
-			if (_p10.ctor === 'Once') {
+		var _p10 = function () {
+			var _p11 = charge.freq;
+			if (_p11.ctor === 'Once') {
 				return {ctor: '_Tuple2', _0: true, _1: false};
 			} else {
 				return {ctor: '_Tuple2', _0: false, _1: true};
 			}
 		}();
-		var isOnce = _p9._0;
-		var isEvery = _p9._1;
+		var isOnce = _p10._0;
+		var isEvery = _p10._1;
 		return A2(
 			_elm_lang$html$Html$li,
 			_elm_lang$core$Native_List.fromArray(
@@ -11503,14 +11707,14 @@ var _user$project$Budget$viewCharge = F2(
 								_elm_lang$html$Html_Attributes$value(
 								_elm_lang$core$Basics$toString(charge.amount)),
 								_elm_lang$html$Html_Events$onInput(
-								function (_p11) {
+								function (_p12) {
 									return A2(
 										_user$project$Budget$ChangeChargeAmount,
 										i,
 										A2(
 											_elm_lang$core$Result$withDefault,
 											charge.amount,
-											_elm_lang$core$String$toFloat(_p11)));
+											_elm_lang$core$String$toFloat(_p12)));
 								})
 							]),
 						_elm_lang$core$Native_List.fromArray(
@@ -11520,11 +11724,11 @@ var _user$project$Budget$viewCharge = F2(
 						_elm_lang$core$Native_List.fromArray(
 							[
 								_elm_lang$html$Html_Events$onInput(
-								function (_p12) {
+								function (_p13) {
 									return A2(
 										_user$project$Budget$ChangeChargeFreq,
 										i,
-										stringToFreq(_p12));
+										stringToFreq(_p13));
 								})
 							]),
 						_elm_lang$core$Native_List.fromArray(
@@ -11552,13 +11756,13 @@ var _user$project$Budget$viewCharge = F2(
 							]))
 					]),
 				function () {
-					var _p13 = charge.freq;
-					if (_p13.ctor === 'Once') {
+					var _p14 = charge.freq;
+					if (_p14.ctor === 'Once') {
 						return _elm_lang$core$Native_List.fromArray(
 							[]);
 					} else {
-						var _p17 = _p13._1;
-						var _p16 = _p13._0;
+						var _p18 = _p14._1;
+						var _p17 = _p14._0;
 						return _elm_lang$core$Native_List.fromArray(
 							[
 								A2(
@@ -11567,19 +11771,19 @@ var _user$project$Budget$viewCharge = F2(
 									[
 										_elm_lang$html$Html_Attributes$type$('number'),
 										_elm_lang$html$Html_Attributes$value(
-										_elm_lang$core$Basics$toString(_p16)),
+										_elm_lang$core$Basics$toString(_p17)),
 										_elm_lang$html$Html_Events$onInput(
-										function (_p14) {
+										function (_p15) {
 											return function (n) {
 												return A2(
 													_user$project$Budget$ChangeChargeFreq,
 													i,
-													A2(_user$project$Budget$Every, n, _p17));
+													A2(_user$project$Budget$Every, n, _p18));
 											}(
 												A2(
 													_elm_lang$core$Result$withDefault,
-													_p16,
-													_elm_lang$core$String$toInt(_p14)));
+													_p17,
+													_elm_lang$core$String$toInt(_p15)));
 										})
 									]),
 								_elm_lang$core$Native_List.fromArray(
@@ -11589,14 +11793,14 @@ var _user$project$Budget$viewCharge = F2(
 								_elm_lang$core$Native_List.fromArray(
 									[
 										_elm_lang$html$Html_Events$onInput(
-										function (_p15) {
+										function (_p16) {
 											return A2(
 												_user$project$Budget$ChangeChargeFreq,
 												i,
 												A2(
 													_user$project$Budget$Every,
-													_p16,
-													stringToUnit(_p15)));
+													_p17,
+													stringToUnit(_p16)));
 										})
 									]),
 								_elm_lang$core$Native_List.fromArray(
@@ -11606,7 +11810,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Day))
+												_elm_lang$core$Native_Utils.eq(_p18, _justinmimbs$elm_date_extra$Date_Extra$Day))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -11617,7 +11821,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Week))
+												_elm_lang$core$Native_Utils.eq(_p18, _justinmimbs$elm_date_extra$Date_Extra$Week))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -11628,7 +11832,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Month))
+												_elm_lang$core$Native_Utils.eq(_p18, _justinmimbs$elm_date_extra$Date_Extra$Month))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -11639,7 +11843,7 @@ var _user$project$Budget$viewCharge = F2(
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html_Attributes$selected(
-												_elm_lang$core$Native_Utils.eq(_p17, _justinmimbs$elm_date_extra$Date_Extra$Year))
+												_elm_lang$core$Native_Utils.eq(_p18, _justinmimbs$elm_date_extra$Date_Extra$Year))
 											]),
 										_elm_lang$core$Native_List.fromArray(
 											[
@@ -11657,29 +11861,29 @@ var _user$project$Budget$view = function (model) {
 		A2(
 			_user$project$Viz_LineChart$yAxis,
 			_user$project$D3_Axis$tickFormat(
-				function (_p18) {
+				function (_p19) {
 					return function (amount) {
 						return A2(_elm_lang$core$Basics_ops['++'], '$', amount);
 					}(
 						_elm_lang$core$Basics$toString(
-							_elm_lang$core$Basics$round(_p18)));
+							_elm_lang$core$Basics$round(_p19)));
 				}),
 			A2(
 				_user$project$Viz_LineChart$xAxis,
 				_user$project$D3_Axis$tickFormat(
-					function (_p19) {
+					function (_p20) {
 						return A2(
 							_justinmimbs$elm_date_extra$Date_Extra$toFormattedString,
 							'MM-dd-YYYY',
-							_elm_lang$core$Date$fromTime(_p19));
+							_elm_lang$core$Date$fromTime(_p20));
 					}),
 				A2(
 					_user$project$Viz_LineChart$chart,
-					function (_p20) {
+					function (_p21) {
 						return _elm_lang$core$Date$toTime(
 							function (_) {
 								return _.date;
-							}(_p20));
+							}(_p21));
 					},
 					function (_) {
 						return _.balance;
@@ -11698,6 +11902,17 @@ var _user$project$Budget$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html$text('Charges')
+					])),
+				A2(
+				_elm_lang$html$Html$a,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Events$onClick(_user$project$Budget$SignOut),
+						_elm_lang$html$Html_Attributes$href('#')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('sign out')
 					])),
 				A2(
 				_elm_lang$html$Html$button,
@@ -11725,8 +11940,8 @@ var _user$project$Budget$view = function (model) {
 };
 var _user$project$Budget$update = F2(
 	function (msg, model) {
-		var _p21 = msg;
-		switch (_p21.ctor) {
+		var _p22 = msg;
+		switch (_p22.ctor) {
 			case 'AddCharge':
 				var newCharge = {
 					name: 'NewCharge',
@@ -11750,12 +11965,12 @@ var _user$project$Budget$update = F2(
 			case 'RenameCharge':
 				var charges = A3(
 					_user$project$Budget$replaceAt,
-					_p21._0,
+					_p22._0,
 					model.charges,
 					function (c) {
 						return _elm_lang$core$Native_Utils.update(
 							c,
-							{name: _p21._1});
+							{name: _p22._1});
 					});
 				return {
 					ctor: '_Tuple2',
@@ -11767,12 +11982,12 @@ var _user$project$Budget$update = F2(
 			case 'ChangeChargeAmount':
 				var charges = A3(
 					_user$project$Budget$replaceAt,
-					_p21._0,
+					_p22._0,
 					model.charges,
 					function (c) {
 						return _elm_lang$core$Native_Utils.update(
 							c,
-							{amount: _p21._1});
+							{amount: _p22._1});
 					});
 				return {
 					ctor: '_Tuple2',
@@ -11784,12 +11999,12 @@ var _user$project$Budget$update = F2(
 			case 'ChangeChargeFreq':
 				var charges = A3(
 					_user$project$Budget$replaceAt,
-					_p21._0,
+					_p22._0,
 					model.charges,
 					function (c) {
 						return _elm_lang$core$Native_Utils.update(
 							c,
-							{freq: _p21._1});
+							{freq: _p22._1});
 					});
 				return {
 					ctor: '_Tuple2',
@@ -11798,14 +12013,21 @@ var _user$project$Budget$update = F2(
 						{charges: charges}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
-				var charges = A2(_user$project$Budget$removeAt, _p21._0, model.charges);
+			case 'RemoveCharge':
+				var charges = A2(_user$project$Budget$removeAt, _p22._0, model.charges);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{charges: charges}),
 					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Auth$signOut(
+						{ctor: '_Tuple0'})
 				};
 		}
 	});
@@ -11817,8 +12039,8 @@ var _user$project$Budget$app = {
 };
 var _user$project$Budget$deserialize = function () {
 	var unit = function (u) {
-		var _p22 = u;
-		switch (_p22) {
+		var _p23 = u;
+		switch (_p23) {
 			case 'day':
 				return _justinmimbs$elm_date_extra$Date_Extra$Day;
 			case 'week':
@@ -11833,27 +12055,27 @@ var _user$project$Budget$deserialize = function () {
 	};
 	var freq = F3(
 		function (f, n, u) {
-			var _p23 = {ctor: '_Tuple3', _0: f, _1: n, _2: u};
-			_v13_2:
+			var _p24 = {ctor: '_Tuple3', _0: f, _1: n, _2: u};
+			_v14_2:
 			do {
-				if (_p23.ctor === '_Tuple3') {
-					switch (_p23._0) {
+				if (_p24.ctor === '_Tuple3') {
+					switch (_p24._0) {
 						case 'once':
-							if ((_p23._1 === 0) && (_p23._2 === '')) {
+							if ((_p24._1 === 0) && (_p24._2 === '')) {
 								return _user$project$Budget$Once;
 							} else {
-								break _v13_2;
+								break _v14_2;
 							}
 						case 'every':
 							return A2(
 								_user$project$Budget$Every,
-								_p23._1,
-								unit(_p23._2));
+								_p24._1,
+								unit(_p24._2));
 						default:
-							break _v13_2;
+							break _v14_2;
 					}
 				} else {
-					break _v13_2;
+					break _v14_2;
 				}
 			} while(false);
 			return _user$project$Budget$Once;
@@ -11872,11 +12094,11 @@ var _user$project$Budget$deserialize = function () {
 			'start',
 			A2(
 				_elm_lang$core$Json_Decode$object1,
-				function (_p24) {
+				function (_p25) {
 					return A2(
 						_elm_lang$core$Maybe$withDefault,
 						A3(_justinmimbs$elm_date_extra$Date_Extra$fromCalendarDate, 2016, _elm_lang$core$Date$Jan, 1),
-						_justinmimbs$elm_date_extra$Date_Extra$fromIsoString(_p24));
+						_justinmimbs$elm_date_extra$Date_Extra$fromIsoString(_p25));
 				},
 				_elm_lang$core$Json_Decode$string)));
 	return A2(
@@ -11887,15 +12109,19 @@ var _user$project$Budget$deserialize = function () {
 			'charges',
 			_elm_lang$core$Json_Decode$list(charge)));
 }();
-var _user$project$Budget$decoder = function (_p25) {
+var _user$project$Budget$decoder = function (_p26) {
 	return A2(
 		_elm_lang$core$Result$withDefault,
 		_user$project$Budget$model,
-		A2(_elm_lang$core$Json_Decode$decodeValue, _user$project$Budget$deserialize, _p25));
+		A2(_elm_lang$core$Json_Decode$decodeValue, _user$project$Budget$deserialize, _p26));
 };
 var _user$project$Budget$main = {
-	main: _elm_lang$html$Html_App$program(
-		A3(_user$project$DB$persistent, _user$project$Budget$serialize, _user$project$Budget$decoder, _user$project$Budget$app))
+	main: function () {
+		var unauthed = _user$project$Budget$nothingApp;
+		var authed = A3(_user$project$DB$persistent, _user$project$Budget$serialize, _user$project$Budget$decoder, _user$project$Budget$app);
+		return _elm_lang$html$Html_App$program(
+			A2(_user$project$Auth$authenticated, authed, unauthed));
+	}()
 };
 
 var Elm = {};
