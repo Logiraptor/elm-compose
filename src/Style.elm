@@ -13,7 +13,11 @@ type Ids
 
 
 type Classes
-    = UserHeader
+    = -- Structure
+      CenterContent
+      -- Skin
+    | Card
+    | Raised
 
 
 namespaceName : String
@@ -27,19 +31,26 @@ css =
         [ Elements.body
             [ margin (px 0)
             , fontFamilies [ "Roboto" ]
+            , backgroundColor (hex "eceff1")
             ]
         , (#) Header
             [ backgroundColor white
-              -- , boxShadow4 (px 0) (px 0) (dp 6) (hex "000000")
             , border3 (dp 1) solid (hex "cccccc")
-            , borderRadius (dp 3)
             , children
-                [ Elements.h1 [ fontSize (dp 20), display inlineBlock ]
+                [ Elements.h1 [ display inlineBlock, fontSize (dp 20) ]
                 ]
             ]
-        , (.) UserHeader
-            [ float right
-            , fontSize (dp 20)
+        , (.) CenterContent
+            [ width (dp 960), margin auto, position relative ]
+        , (.) Card
+            [ backgroundColor white
+            , borderRadius (dp 2)
+            , margin (Css.rem 1)
+            , padding (Css.rem 1)
+            ]
+        , (.) Raised
+            [ boxShadow4 (px 0) (px 1) (px 3) (rgba 0 0 0 0.12)
+            , boxShadow4 (px 0) (px 1) (px 2) (rgba 0 0 0 0.24)
             ]
         ]
 

@@ -10,6 +10,7 @@ type Msg
     | RenameCharge Int String
     | ChangeChargeAmount Int Float
     | ChangeChargeFreq Int Frequency
+    | ChangeChargeStart Int Date.Date
     | RemoveCharge Int
     | SignOut
 

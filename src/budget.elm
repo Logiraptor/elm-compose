@@ -86,10 +86,10 @@ update msg model =
             in
                 ( { model | charges = charges }, Cmd.none )
 
-        ChangeChargeAmount i value ->
+        ChangeChargeAmount i amount ->
             let
                 charges =
-                    replaceAt i model.charges (\c -> { c | amount = value })
+                    replaceAt i model.charges (\c -> { c | amount = amount })
             in
                 ( { model | charges = charges }, Cmd.none )
 
@@ -97,6 +97,13 @@ update msg model =
             let
                 charges =
                     replaceAt i model.charges (\c -> { c | freq = freq })
+            in
+                ( { model | charges = charges }, Cmd.none )
+
+        ChangeChargeStart i start ->
+            let
+                charges =
+                    replaceAt i model.charges (\c -> { c | start = start })
             in
                 ( { model | charges = charges }, Cmd.none )
 
