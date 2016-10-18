@@ -259,7 +259,7 @@ projectBalance : List Charge -> List Balance
 projectBalance charges =
     let
         endDate =
-            Date.Extra.fromCalendarDate 2016 Date.Jan 1
+            Date.Extra.fromCalendarDate 2017 Date.Jan 1
 
         transactions =
             List.concatMap (projectCharge endDate) charges
