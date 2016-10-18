@@ -15,6 +15,7 @@ type Ids
 type Classes
     = -- Structure
       CenterContent
+    | InlineBlock
       -- Skin
     | Card
     | Raised
@@ -42,6 +43,8 @@ css =
             ]
         , (.) CenterContent
             [ width (dp 960), margin auto, position relative ]
+        , (.) InlineBlock
+            [ display inlineBlock ]
         , (.) Card
             [ backgroundColor white
             , borderRadius (dp 2)

@@ -89,6 +89,7 @@ viewCharge i charge =
     in
         Html.div []
             [ Html.h2 [] [ Html.text header ]
+            , Html.a [ Html.Attributes.href "#", Html.Events.onClick (RemoveCharge i) ] [ Html.text "Remove" ]
             , editCharge i charge
             ]
 
@@ -132,9 +133,8 @@ editCharge i charge =
                 _ ->
                     Date.Extra.Month
     in
-        Html.li []
-            ([ Html.a [ Html.Attributes.href "#", Html.Events.onClick (RemoveCharge i) ] [ Html.text "Remove" ]
-             , datePicker (ChangeChargeStart i) charge.start
+        Html.div []
+            ([ datePicker (ChangeChargeStart i) charge.start
              , Html.input
                 [ Html.Attributes.type' "text"
                 , Html.Attributes.value charge.name
@@ -142,7 +142,8 @@ editCharge i charge =
                 ]
                 []
              , Html.input
-                [ Html.Attributes.type' "number"
+                [ Html.Attributes.type' "text"
+                , Html.Attributes.size 5
                 , Html.Attributes.value (toString charge.amount)
                 , Html.Events.onInput (String.toFloat >> (Result.withDefault charge.amount) >> ChangeChargeAmount i)
                 ]
@@ -160,7 +161,8 @@ editCharge i charge =
 
                         Every n unit ->
                             [ Html.input
-                                [ Html.Attributes.type' "number"
+                                [ Html.Attributes.type' "text"
+                                , Html.Attributes.size 2
                                 , Html.Attributes.value (toString n)
                                 , Html.Events.onInput (String.toInt >> (Result.withDefault n) >> (\n -> ChangeChargeFreq i (Every n unit)))
                                 ]
@@ -232,9 +234,10 @@ datePicker msg date =
                 _ ->
                     Date.Jan
     in
-        Html.div []
+        Html.div [ class [ Style.InlineBlock ] ]
             [ Html.input
                 [ Html.Attributes.type' "text"
+                , Html.Attributes.size 2
                 , Html.Attributes.value (toString day)
                 , Html.Events.onInput (String.toInt >> Result.withDefault 1 >> Date.Extra.fromCalendarDate year month >> msg)
                 ]
@@ -243,6 +246,7 @@ datePicker msg date =
                 (List.map monthOption [ Date.Jan, Date.Feb, Date.Mar, Date.Apr, Date.May, Date.Jun, Date.Jul, Date.Aug, Date.Sep, Date.Oct, Date.Nov, Date.Dec ])
             , Html.input
                 [ Html.Attributes.type' "text"
+                , Html.Attributes.size 4
                 , Html.Attributes.value (toString year)
                 , Html.Events.onInput (String.toInt >> Result.withDefault 2016 >> (\year -> Date.Extra.fromCalendarDate year month day) >> msg)
                 ]
